@@ -137,7 +137,16 @@ Share your achievement: "I found all 30 Easter eggs in @yusuf601's portfolio!"`
             // Ctrl+L - Clear terminal (when focused)
             if (e.ctrlKey && e.key === 'l' && isFocused) {
                 e.preventDefault();
-                setHistory([]);
+                setHistory([
+                    {
+                        type: 'output',
+                        text: `Welcome to the portfolio terminal. Type "help" for available commands.
+
+💡 Tip: This terminal has 30 hidden Easter eggs! Try exploring beyond the basics.
+    Hint: What happens if you try to get root access? 🔐
+    Type 'hint' for clues or 'achievements' to track your progress!`
+                    }
+                ]);
             }
 
             // Esc - Blur terminal
@@ -987,7 +996,7 @@ Threat level: ${threatLevel} (You're just having fun 😄)`
             {/* Hidden State Indicator - Shows when terminal is minimized */}
             {isMinimized && (
                 <div
-                    className="fixed bottom-0 left-0 right-0 bg-everblush-bg-light border-t border-everblush-green/30 px-4 py-2 flex items-center justify-between cursor-pointer hover:bg-everblush-bg-light/80 transition-colors z-40"
+                    className="fixed bottom-0 left-0 right-0 bg-everblush-bg-light border-t border-everblush-green/30 px-4 py-2 flex items-center justify-between cursor-pointer hover:bg-everblush-bg-light/80 transition-colors z-50"
                     onClick={() => setIsMinimized(false)}
                 >
                     <div className="flex items-center gap-3 text-everblush-fg/60 text-sm">
