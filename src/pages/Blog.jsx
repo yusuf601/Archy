@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import ScrollReveal from '../components/ScrollReveal';
 
 const Blog = () => {
     return (
@@ -8,39 +9,72 @@ const Blog = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="min-h-[80vh] flex items-center justify-center px-4 sm:px-6 lg:px-8"
+            className="min-h-screen py-20 px-4 sm:px-6 lg:px-8 flex items-center"
         >
-            <div className="max-w-4xl w-full">
-                <div className="border border-everblush-green/30 rounded-lg p-6 sm:p-8 bg-everblush-bg/50 backdrop-blur-sm">
+            <div className="max-w-4xl mx-auto w-full">
+                <div className="border border-everblush-green/30 rounded-lg p-8 sm:p-12 bg-everblush-bg/50 backdrop-blur-sm">
                     {/* Header */}
-                    <div className="mb-8">
-                        <h1 className="text-3xl sm:text-4xl font-mono font-bold mb-4">
-                            <span className="syntax-comment">// Blog</span>
-                        </h1>
-                        <p className="font-mono text-sm sm:text-base text-everblush-fg/70">
-                            <span className="syntax-keyword">struct</span> <span className="syntax-function">BlogPost</span> {'{'}
-                            <br />
-                            <span className="ml-4 text-everblush-fg/60">// Coming soon...</span>
-                            <br />
-                            <span className="ml-4 text-everblush-fg/60">// Technical articles on AI, Systems Programming, and more</span>
-                            <br />
-                            {'}'};
-                        </p>
-                    </div>
+                    <ScrollReveal>
+                        <div className="mb-12">
+                            <h1 className="text-5xl sm:text-6xl font-mono font-bold text-syntax-header mb-6">
+                                <span className="syntax-comment">// Blog</span>
+                            </h1>
+                            <p className="font-mono text-xl text-syntax-meta leading-relaxed">
+                                <span className="syntax-keyword">struct</span> <span className="syntax-function">BlogPost</span> {'{'}
+                            </p>
+                        </div>
+                    </ScrollReveal>
 
                     {/* Placeholder Content */}
-                    <div className="space-y-4 font-mono text-sm text-everblush-fg/60">
-                        <p className="syntax-comment">
-                            // This section is under construction
-                        </p>
-                        <p className="text-everblush-fg/80">
-                            → Future topics: Fuzzy C-Means optimization
-                            <br />
-                            → AI Code Stylometry research
-                            <br />
-                            → Linux kernel development insights
-                        </p>
-                    </div>
+                    <ScrollReveal delay={0.2}>
+                        <div className="space-y-6 font-mono ml-4 mb-8">
+                            <p className="text-syntax-meta text-lg leading-relaxed">
+                                <span className="syntax-comment">// Coming soon...</span>
+                            </p>
+                            <p className="text-syntax-meta text-lg leading-relaxed">
+                                <span className="syntax-comment">// Technical articles on AI, Systems Programming, and more</span>
+                            </p>
+                        </div>
+                    </ScrollReveal>
+
+                    {/* Future Topics */}
+                    <ScrollReveal delay={0.3}>
+                        <div className="space-y-4 font-mono text-base ml-4 mb-8">
+                            <p className="text-syntax-meta">
+                                <span className="syntax-comment">// Planned topics:</span>
+                            </p>
+                            <div className="space-y-3 text-syntax-content text-lg leading-relaxed">
+                                <p className="flex items-start gap-3">
+                                    <span className="text-everblush-green">→</span>
+                                    <span>Fuzzy C-Means optimization techniques</span>
+                                </p>
+                                <p className="flex items-start gap-3">
+                                    <span className="text-everblush-green">→</span>
+                                    <span>AI Code Stylometry research insights</span>
+                                </p>
+                                <p className="flex items-start gap-3">
+                                    <span className="text-everblush-green">→</span>
+                                    <span>Linux kernel development deep dives</span>
+                                </p>
+                                <p className="flex items-start gap-3">
+                                    <span className="text-everblush-green">→</span>
+                                    <span>Modern C++ best practices</span>
+                                </p>
+                            </div>
+                        </div>
+                    </ScrollReveal>
+
+                    {/* Footer */}
+                    <ScrollReveal delay={0.4}>
+                        <div className="font-mono text-base text-syntax-meta">
+                            <p>{'}'};'</p>
+                            <p className="mt-6 text-lg leading-relaxed">
+                                <span className="syntax-comment">
+                                    // Stay tuned for in-depth technical content!
+                                </span>
+                            </p>
+                        </div>
+                    </ScrollReveal>
                 </div>
             </div>
         </motion.div>

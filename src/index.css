@@ -119,3 +119,34 @@ body {
     transform: translateY(0);
   }
 }
+
+/* Smooth Scroll Behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced Glow Effects */
+.glow-on-hover {
+  transition: all 0.3s ease;
+}
+
+.glow-on-hover:hover {
+  box-shadow: 0 0 20px rgba(140, 207, 126, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Typography Utilities */
+.text-syntax-header {
+  color: #8ccf7e;
+  font-weight: 700;
+}
+
+.text-syntax-content {
+  color: #dadada;
+  font-weight: 400;
+}
+
+.text-syntax-meta {
+  color: #676f7d;
+  font-weight: 300;
+}

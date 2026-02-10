@@ -4,6 +4,7 @@ import { AnimatePresence } from 'framer-motion';
 import Sidebar from './components/Sidebar';
 import Terminal from './components/Terminal';
 import Footer from './components/Footer';
+import LoadingScreen from './components/LoadingScreen';
 import Home from './pages/Home';
 import Blog from './pages/Blog';
 import Projects from './pages/Projects';
@@ -11,10 +12,15 @@ import Contact from './pages/Contact';
 
 function AppContent() {
     const [editorMode, setEditorMode] = useState('NORMAL');
+    const [isLoading, setIsLoading] = useState(true);
     const location = useLocation();
 
     const handleModeChange = (mode) => {
         setEditorMode(mode);
+    };
+
+    const handleLoadingComplete = () => {
+        setIsLoading(false);
     };
 
     // Get current filename based on route
@@ -30,34 +36,40 @@ function AppContent() {
     };
 
     return (
-        <div className="flex h-screen bg-everblush-bg overflow-hidden">
-            {/* CRT Scanline Overlay */}
-            <div className="crt-overlay"></div>
+        <>
+            {/* Loading Screen */}
+            {isLoading && <LoadingScreen onLoadingComplete={handleLoadingComplete} />}
 
-            {/* Sidebar */}
-            <Sidebar />
+            {/* Main App */}
+            <div className="flex h-screen bg-everblush-bg overflow-hidden">
+                {/* CRT Scanline Overlay */}
+                <div className="crt-overlay"></div>
 
-            {/* Main Editor Area */}
-            <main className="flex-1 flex flex-col overflow-hidden">
-                {/* Content Area with Route Transitions */}
-                <div className="flex-1 overflow-y-auto section-transition">
-                    <AnimatePresence mode="wait">
-                        <Routes location={location} key={location.pathname}>
-                            <Route path="/" element={<Home />} />
-                            <Route path="/blog" element={<Blog />} />
-                            <Route path="/projects" element={<Projects />} />
-                            <Route path="/contact" element={<Contact />} />
-                        </Routes>
-                    </AnimatePresence>
-                </div>
+                {/* Sidebar */}
+                <Sidebar />
 
-                {/* Terminal */}
-                <Terminal onModeChange={handleModeChange} />
+                {/* Main Editor Area */}
+                <main className="flex-1 flex flex-col overflow-hidden">
+                    {/* Content Area with Route Transitions */}
+                    <div className="flex-1 overflow-y-auto section-transition">
+                        <AnimatePresence mode="wait">
+                            <Routes location={location} key={location.pathname}>
+                                <Route path="/" element={<Home />} />
+                                <Route path="/blog" element={<Blog />} />
+                                <Route path="/projects" element={<Projects />} />
+                                <Route path="/contact" element={<Contact />} />
+                            </Routes>
+                        </AnimatePresence>
+                    </div>
 
-                {/* Footer Status Bar */}
-                <Footer mode={editorMode} currentFile={getCurrentFileName()} />
-            </main>
-        </div>
+                    {/* Terminal */}
+                    <Terminal onModeChange={handleModeChange} />
+
+                    {/* Footer Status Bar */}
+                    <Footer mode={editorMode} currentFile={getCurrentFileName()} />
+                </main>
+            </div>
+        </>
     );
 }
 
