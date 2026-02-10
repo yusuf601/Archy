@@ -45,6 +45,15 @@ The portfolio includes a **fully functional terminal** at the bottom of the page
 - `ls`, `pwd`, `cd` - Navigate the portfolio
 - `cat main.cpp` - View source files
 - `neofetch` - Display system information
+- `hint` - Get clues about hidden Easter eggs
+- `achievements` - Track your Easter egg progress
+
+#### Keyboard Shortcuts
+The terminal supports VS Code-style keyboard shortcuts:
+- **Ctrl+`** - Toggle terminal visibility (show/hide)
+- **Ctrl+L** - Clear terminal history
+- **Esc** - Blur terminal (switch to NORMAL mode)
+- **↑/↓** - Navigate command history
 
 ### Everblush Color Scheme
 - Background: `#141b1e`
