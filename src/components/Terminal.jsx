@@ -1,10 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import AchievementToast from './AchievementToast';
 
 const Terminal = ({ onModeChange }) => {
     const [input, setInput] = useState('');
     const [history, setHistory] = useState([
-        { type: 'output', text: 'Welcome to the portfolio terminal. Type "help" for available commands.' }
+        {
+            type: 'output',
+            text: `Welcome to the portfolio terminal. Type "help" for available commands.
+
+💡 Tip: This terminal has 30 hidden Easter eggs! Try exploring beyond the basics.
+    Hint: What happens if you try to get root access? 🔐
+    Type 'hint' for clues or 'achievements' to track your progress!`
+        }
     ]);
     const [commandHistory, setCommandHistory] = useState([]);
     const [historyIndex, setHistoryIndex] = useState(-1);
@@ -13,11 +21,47 @@ const Terminal = ({ onModeChange }) => {
     const [sudoAttempts, setSudoAttempts] = useState(0);
     const [securityLog, setSecurityLog] = useState([]);
     const [easterEggsFound, setEasterEggsFound] = useState([]);
+    const [achievements, setAchievements] = useState([]);
+    const [hintsUsed, setHintsUsed] = useState(0);
     const [sessionStartTime] = useState(Date.now());
     const inputRef = useRef(null);
     const historyEndRef = useRef(null);
     const navigate = useNavigate();
     const location = useLocation();
+
+    // Easter egg metadata
+    const easterEggData = {
+        'sudo_rm': { title: 'Destructive Tendencies', description: 'Tried to delete everything!' },
+        'sudo_reboot': { title: 'Reboot Attempt', description: 'Wanted to restart the system' },
+        'xkcd_sandwich': { title: 'XKCD Fan', description: 'sudo make me a sandwich!' },
+        'shellshock': { title: 'Security Researcher', description: 'Tested for Shellshock' },
+        'heartbleed': { title: 'CVE Hunter', description: 'Checked for Heartbleed' },
+        'meltdown': { title: 'CPU Exploiter', description: 'Tested for Meltdown' },
+        'spectre': { title: 'Speculative Execution', description: 'Checked for Spectre' },
+        'nmap': { title: 'Network Scanner', description: 'Ran nmap scan' },
+        'metasploit': { title: 'Pentester', description: 'Launched Metasploit' },
+        'hydra': { title: 'Password Cracker', description: 'Used Hydra' },
+        'sqlmap': { title: 'SQL Injector', description: 'Ran SQLMap' },
+        'burpsuite': { title: 'Web Hacker', description: 'Started Burp Suite' },
+        'wireshark': { title: 'Packet Sniffer', description: 'Captured packets' },
+        'rm_rf': { title: 'Careful There!', description: 'Blocked dangerous command' },
+        'chmod_777': { title: 'Permission Chaos', description: 'Tried chmod 777 /' },
+        'dd': { title: 'Disk Destroyer', description: 'Attempted dd command' },
+        'fork_bomb': { title: 'Fork Bomb Expert', description: 'Classic attack detected!' },
+        'secret_files': { title: 'Hidden Files', description: 'Found the .secret directory' },
+        'backdoor': { title: 'Backdoor Hunter', description: 'Discovered backdoor.sh' },
+        'flag': { title: 'CTF Master', description: 'Captured the flag!' },
+        'hack_planet': { title: 'Hacker Movies', description: 'Hack the planet!' },
+        'matrix': { title: 'Red Pill', description: 'Entered the Matrix' },
+        'cowsay': { title: 'Moo!', description: 'Made the cow speak' },
+        'sl': { title: 'Train Enthusiast', description: 'Ran the steam locomotive' },
+        'fortune': { title: 'Fortune Teller', description: 'Got your fortune' },
+        'dijkstra': { title: 'Graph Theory', description: 'Shortest path algorithm' },
+        'quicksort': { title: 'Sorting Master', description: 'Quick sort joke' },
+        'binarysearch': { title: 'Binary Search', description: 'Divide and conquer' },
+        'konami': { title: 'Konami Code', description: 'Up up down down...' },
+        'xyzzy': { title: 'Adventure Game', description: 'Classic text adventure' }
+    };
 
     // Helper function to log security events
     const logSecurityEvent = (event) => {
@@ -28,8 +72,53 @@ const Terminal = ({ onModeChange }) => {
     // Helper function to track Easter egg discoveries
     const discoverEasterEgg = (eggName) => {
         if (!easterEggsFound.includes(eggName)) {
-            setEasterEggsFound(prev => [...prev, eggName]);
+            const newEggsFound = [...easterEggsFound, eggName];
+            setEasterEggsFound(newEggsFound);
+
+            // Show achievement toast
+            const eggInfo = easterEggData[eggName];
+            if (eggInfo) {
+                const achievement = {
+                    title: eggInfo.title,
+                    description: eggInfo.description,
+                    count: newEggsFound.length
+                };
+                setAchievements(prev => [...prev, achievement]);
+            }
+
+            // Check for milestones
+            if (newEggsFound.length === 10) {
+                setTimeout(() => {
+                    setHistory(prev => [...prev, {
+                        type: 'output',
+                        text: '🎊 MILESTONE! You\'ve found 10 Easter eggs! Keep going!'
+                    }]);
+                }, 500);
+            } else if (newEggsFound.length === 20) {
+                setTimeout(() => {
+                    setHistory(prev => [...prev, {
+                        type: 'output',
+                        text: '🔥 AMAZING! 20 Easter eggs found! You\'re unstoppable!'
+                    }]);
+                }, 500);
+            } else if (newEggsFound.length === 30) {
+                setTimeout(() => {
+                    setHistory(prev => [...prev, {
+                        type: 'output',
+                        text: `🏆 PERFECT SCORE! You found all 30 Easter eggs!
+You're a true explorer and hacker at heart! 🎉
+
+Congratulations! You've discovered every hidden secret in this terminal.
+Share your achievement: "I found all 30 Easter eggs in @yusuf601's portfolio!"`
+                    }]);
+                }, 500);
+            }
         }
+    };
+
+    // Dismiss achievement toast
+    const dismissAchievement = (index) => {
+        setAchievements(prev => prev.filter((_, i) => i !== index));
     };
 
     const commands = {
@@ -49,9 +138,124 @@ const Terminal = ({ onModeChange }) => {
   cat [file]    - Display file contents
   neofetch      - Display system information
   clear         - Clear terminal history
+  hint          - Get a clue about hidden Easter eggs
+  achievements  - View your Easter egg progress
 
 Try exploring! There might be hidden commands... 👀`
         }),
+
+        hint: () => {
+            const hints = [
+                "Try common Linux commands you'd use on a real system...",
+                "What happens if you try to get root access? 🔐",
+                "Security researchers: Test for known vulnerabilities (CVE references)",
+                "Pentesters: Your favorite tools might be here... nmap? metasploit?",
+                "Found a .secret directory? Explore what's inside! 🕵️",
+                "Classic hacker movie references are hidden throughout",
+                "Competitive programmers: Try typing algorithm names!",
+                "Try being destructive (don't worry, nothing will break! 😄)",
+                "XKCD fans will find something familiar...",
+                "Retro gamers: Classic references await",
+                "Have you tried all the CVE exploits? Shellshock, Heartbleed...",
+                "Network scanning tools might work here...",
+                "Password cracking tools? SQL injection? Give them a try!",
+                "Check for hidden files with 'ls -la'",
+                "What's in that .secret directory? Use 'cat' to find out!",
+                "Try running pentesting tools like hydra, sqlmap, burpsuite",
+                "Classic Unix commands might have surprises: fortune, cowsay, sl",
+                "Algorithm enthusiasts: dijkstra, quicksort, binarysearch",
+                "Old school gaming: konami code? Adventure game references?",
+                "Matrix fans might find something... red pill or blue pill?"
+            ];
+
+            const progressHints = [
+                { min: 0, max: 0, hint: "You haven't found any Easter eggs yet! Start with basic commands and see what happens..." },
+                { min: 1, max: 5, hint: "Nice start! You've found a few. Try exploring security tools and exploits..." },
+                { min: 6, max: 10, hint: "You're getting warmed up! Don't forget about hidden files and directories..." },
+                { min: 11, max: 15, hint: "Halfway there! Have you tried all the pentesting tools?" },
+                { min: 16, max: 20, hint: "Impressive progress! Check out algorithm commands and pop culture references..." },
+                { min: 21, max: 25, hint: "Almost there! You're missing just a few. Try everything you can think of!" },
+                { min: 26, max: 29, hint: "SO CLOSE! You've found almost all of them. Think outside the box!" }
+            ];
+
+            const eggCount = easterEggsFound.length;
+            let progressHint = progressHints.find(h => eggCount >= h.min && eggCount <= h.max);
+
+            const randomHint = hints[Math.floor(Math.random() * hints.length)];
+            setHintsUsed(prev => prev + 1);
+
+            return {
+                type: 'output',
+                text: `💡 Hint #${hintsUsed + 1}:
+${progressHint ? progressHint.hint : randomHint}
+
+Random clue: "${randomHint}"
+
+Progress: ${eggCount}/30 Easter eggs found
+Type 'achievements' to see what you've discovered!`
+            };
+        },
+
+        achievements: () => {
+            const discovered = easterEggsFound.map(eggName => ({
+                name: eggName,
+                ...easterEggData[eggName]
+            }));
+
+            const allEggs = Object.keys(easterEggData);
+            const locked = allEggs.filter(egg => !easterEggsFound.includes(egg));
+
+            const progress = easterEggsFound.length;
+            const percentage = Math.round((progress / 30) * 100);
+            const barLength = 20;
+            const filledLength = Math.round((progress / 30) * barLength);
+            const progressBar = '█'.repeat(filledLength) + '░'.repeat(barLength - filledLength);
+
+            let rank = 'Newcomer';
+            if (progress >= 26) rank = 'Easter Egg Master 🏆';
+            else if (progress >= 16) rank = 'Hacker Apprentice 🔓';
+            else if (progress >= 6) rank = 'Security Enthusiast 🛡️';
+            else if (progress >= 1) rank = 'Curious Explorer 🔍';
+
+            let discoveredList = discovered.length > 0
+                ? discovered.map((egg, i) => `  ${i + 1}. ✓ ${egg.title} - ${egg.description}`).join('\n')
+                : '  (None yet - start exploring!)';
+
+            let lockedList = locked.length > 0
+                ? locked.slice(0, 10).map((eggName, i) => {
+                    const hints = {
+                        'sudo_rm': 'Try destructive sudo commands...',
+                        'shellshock': 'Test for CVE-2014-6271',
+                        'nmap': 'Network scanning tool',
+                        'metasploit': 'Pentesting framework',
+                        'secret_files': 'Use ls -la to find hidden files',
+                        'hack_planet': 'Classic hacker movie quote',
+                        'dijkstra': 'Graph algorithm',
+                        'konami': 'Classic gaming cheat code'
+                    };
+                    return `  ${i + 1}. ? ${easterEggData[eggName].title} - ${hints[eggName] || 'Keep exploring...'}`;
+                }).join('\n')
+                : '  🎉 You found them all!';
+
+            return {
+                type: 'output',
+                text: `=== EASTER EGG ACHIEVEMENTS ===
+
+Progress: ${progress}/30 (${percentage}%) [${progressBar}]
+Rank: ${rank}
+
+🔓 DISCOVERED (${discovered.length}):
+${discoveredList}
+
+${locked.length > 0 ? `🔒 LOCKED (${locked.length} remaining):
+${lockedList}
+${locked.length > 10 ? `\n  ... and ${locked.length - 10} more!` : ''}
+
+💡 Tip: Type 'hint' for clues!` : ''}
+
+${progress === 30 ? '🏆 PERFECT SCORE! You are a true Easter egg hunter!' : ''}`
+            };
+        },
 
         ls: (args) => {
             if (args[0] === '-la' || args[0] === '-a') {
@@ -858,6 +1062,15 @@ Threat level: ${threatLevel} (You're just having fun 😄)`
                     </div>
                 </>
             )}
+
+            {/* Achievement Toasts */}
+            {achievements.map((achievement, index) => (
+                <AchievementToast
+                    key={index}
+                    achievement={achievement}
+                    onDismiss={() => dismissAchievement(index)}
+                />
+            ))}
         </div>
     );
 };
