@@ -1,9 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import TypewriterText from './TypewriterText';
 import ScrollReveal from './ScrollReveal';
 
 const Hero = () => {
+    const navigate = useNavigate();
+
     const systemFlags = [
         { label: 'UPTIME', value: '21 YEARS' },
         { label: 'LOC', value: 'MAKASSAR' },
@@ -92,29 +95,33 @@ const Hero = () => {
                     {/* Call to Action Buttons */}
                     <ScrollReveal delay={3.5}>
                         <div className="flex flex-col sm:flex-row gap-4 mt-10">
-                            {/* Primary Button */}
+                            {/* Primary Button - Navigate to Projects */}
                             <motion.button
+                                onClick={() => navigate('/projects')}
                                 whileHover={{ scale: 1.05, y: -2 }}
                                 whileTap={{ scale: 0.95 }}
                                 className="px-8 py-4 font-mono text-base sm:text-lg font-semibold
                                          bg-transparent border-2 border-everblush-green 
                                          text-everblush-green hover:bg-everblush-green 
                                          hover:text-everblush-bg transition-all duration-300 
-                                         rounded shadow-glow-green hover:shadow-glow-green-lg"
+                                         rounded shadow-glow-green hover:shadow-glow-green-lg cursor-pointer"
+                                aria-label="View my projects"
                             >
                                 <span className="syntax-keyword">sh</span>
                                 <span className="ml-2">view_work.sh</span>
                             </motion.button>
 
-                            {/* Secondary Button */}
+                            {/* Secondary Button - Navigate to Contact */}
                             <motion.button
+                                onClick={() => navigate('/contact')}
                                 whileHover={{ scale: 1.05, y: -2 }}
                                 whileTap={{ scale: 0.95 }}
                                 className="px-8 py-4 font-mono text-base sm:text-lg font-semibold
                                          bg-transparent border-2 border-everblush-blue/50 
                                          text-everblush-blue hover:border-everblush-blue 
                                          hover:bg-everblush-blue/10 transition-all duration-300 
-                                         rounded hover:shadow-glow-blue"
+                                         rounded hover:shadow-glow-blue cursor-pointer"
+                                aria-label="Check my status and contact me"
                             >
                                 <span className="syntax-keyword">git</span>
                                 <span className="ml-2">status</span>
