@@ -1,5 +1,6 @@
 import React from 'react';
 import ScrollReveal from './ScrollReveal';
+import SocialLinks from './SocialLinks';
 
 const SystemInfo = () => {
     return (
@@ -96,6 +97,11 @@ const SystemInfo = () => {
                         </ScrollReveal>
                     </div>
                 </div>
+
+                {/* Social Links Section */}
+                <ScrollReveal delay={0.5}>
+                    <SocialLinks />
+                </ScrollReveal>
             </div>
         </section>
     );

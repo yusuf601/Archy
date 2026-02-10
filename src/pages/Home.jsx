@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import Hero from '../components/Hero';
 import SystemInfo from '../components/SystemInfo';
 import TechStack from '../components/TechStack';
+import TechMarquee from '../components/TechMarquee';
 import RecentActivity from '../components/RecentActivity';
 
 const Home = () => {
@@ -16,6 +17,9 @@ const Home = () => {
         >
             {/* Hero Section */}
             <Hero />
+
+            {/* Tech Stack Marquee */}
+            <TechMarquee />
 
             {/* System Info Section */}
             <SystemInfo />

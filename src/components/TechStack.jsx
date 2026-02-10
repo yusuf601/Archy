@@ -3,16 +3,16 @@ import ScrollReveal from './ScrollReveal';
 import SkillGroup from './SkillGroup';
 
 const TechStack = () => {
-    const coreSkills = [
-        'C++', 'C', 'Python', 'Algorithms', 'Data Structures', 'Linux'
+    const competitiveProgramming = [
+        'C++20', 'STL', 'Algorithms', 'Data Structures', 'Graph Theory', 'Dynamic Programming'
     ];
 
-    const webTools = [
-        'React', 'JavaScript', 'Git', 'Neovim', 'Vite', 'Tailwind CSS'
+    const lowLevelSystems = [
+        'Linux Kernel', 'CMake', 'GCC/Clang', 'Multithreading', 'Memory Management', 'System Calls'
     ];
 
     const aiResearch = [
-        'Fuzzy Logic', 'Machine Learning', 'NumPy', 'Pandas', 'Scikit-learn'
+        'Fuzzy Logic', 'Machine Learning', 'Python', 'NumPy', 'Pandas', 'Scikit-learn'
     ];
 
     return (
@@ -31,17 +31,17 @@ const TechStack = () => {
 
                 <ScrollReveal delay={0.2}>
                     <SkillGroup
-                        title="Core Competencies"
-                        skills={coreSkills}
-                        icon="⚙️"
+                        title="Competitive Programming"
+                        skills={competitiveProgramming}
+                        icon="🏆"
                     />
                 </ScrollReveal>
 
                 <ScrollReveal delay={0.3}>
                     <SkillGroup
-                        title="Web & Tools"
-                        skills={webTools}
-                        icon="🛠️"
+                        title="Low-Level Systems"
+                        skills={lowLevelSystems}
+                        icon="⚙️"
                     />
                 </ScrollReveal>
 

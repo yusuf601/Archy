@@ -5,6 +5,7 @@ import Sidebar from './components/Sidebar';
 import Terminal from './components/Terminal';
 import Footer from './components/Footer';
 import LoadingScreen from './components/LoadingScreen';
+import ScrollProgress from './components/ScrollProgress';
 import Home from './pages/Home';
 import Blog from './pages/Blog';
 import Projects from './pages/Projects';
@@ -39,6 +40,9 @@ function AppContent() {
         <>
             {/* Loading Screen */}
             {isLoading && <LoadingScreen onLoadingComplete={handleLoadingComplete} />}
+
+            {/* Scroll Progress Bar */}
+            {!isLoading && <ScrollProgress />}
 
             {/* Main App */}
             <div className="flex h-screen bg-everblush-bg overflow-hidden">

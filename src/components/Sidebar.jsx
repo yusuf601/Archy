@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useLocation, useNavigate } from 'react-router-dom';
+import NowPlaying from './NowPlaying';
 
 const Sidebar = () => {
     const location = useLocation();
@@ -70,6 +71,9 @@ const Sidebar = () => {
                     ))}
                 </div>
             </div>
+
+            {/* Now Playing Widget */}
+            <NowPlaying />
 
             {/* Bottom Info */}
             <div className="p-3 border-t border-everblush-green/30 font-mono text-xs text-everblush-fg/50">

@@ -150,3 +150,95 @@ html {
   color: #676f7d;
   font-weight: 300;
 }
+
+/* Custom Cursor */
+* {
+  cursor: crosshair !important;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  cursor: pointer !important;
+}
+
+/* Dithered/Retro Image Effect */
+.avatar-dithered {
+  filter: grayscale(100%) contrast(1.2);
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.avatar-dithered:hover {
+  filter: grayscale(0%) contrast(1);
+  transition: filter 0.3s ease;
+}
+
+/* Glitch Effect */
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+
+  20% {
+    transform: translate(-2px, 2px);
+  }
+
+  40% {
+    transform: translate(-2px, -2px);
+  }
+
+  60% {
+    transform: translate(2px, 2px);
+  }
+
+  80% {
+    transform: translate(2px, -2px);
+  }
+
+  100% {
+    transform: translate(0);
+  }
+}
+
+.glitch-hover:hover {
+  animation: glitch 0.3s infinite;
+}
+
+/* Symbolic Link Style */
+.symlink {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.symlink:hover {
+  background: #8ccf7e;
+  color: #141b1e;
+}
+
+.symlink:hover::before {
+  content: '→ ';
+  position: absolute;
+  left: -15px;
+  color: #8ccf7e;
+}
+
+/* System Flag Badge */
+.system-flag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(140, 207, 126, 0.3);
+  background: rgba(140, 207, 126, 0.05);
+  color: #8ccf7e;
+  transition: all 0.3s ease;
+}
+
+.system-flag:hover {
+  border-color: #8ccf7e;
+  box-shadow: 0 0 15px rgba(140, 207, 126, 0.3);
+  transform: translateY(-2px);
+}
