@@ -121,6 +121,36 @@ Share your achievement: "I found all 30 Easter eggs in @yusuf601's portfolio!"`
         setAchievements(prev => prev.filter((_, i) => i !== index));
     };
 
+    // Global keyboard shortcuts
+    useEffect(() => {
+        const handleGlobalKeyDown = (e) => {
+            // Ctrl+` (backtick) - Toggle terminal
+            if (e.ctrlKey && e.key === '`') {
+                e.preventDefault();
+                setIsMinimized(prev => !prev);
+                if (isMinimized) {
+                    // Focus input when expanding
+                    setTimeout(() => inputRef.current?.focus(), 100);
+                }
+            }
+
+            // Ctrl+L - Clear terminal (when focused)
+            if (e.ctrlKey && e.key === 'l' && isFocused) {
+                e.preventDefault();
+                setHistory([]);
+            }
+
+            // Esc - Blur terminal
+            if (e.key === 'Escape' && isFocused) {
+                e.preventDefault();
+                inputRef.current?.blur();
+            }
+        };
+
+        window.addEventListener('keydown', handleGlobalKeyDown);
+        return () => window.removeEventListener('keydown', handleGlobalKeyDown);
+    }, [isMinimized, isFocused]);
+
     const commands = {
         help: () => ({
             type: 'output',
@@ -953,125 +983,152 @@ Threat level: ${threatLevel} (You're just having fun 😄)`
     };
 
     return (
-        <div className={`bg-everblush-bg border-t border-everblush-green/30 font-mono text-sm transition-all duration-300 ${isFocused ? 'shadow-lg shadow-everblush-green/20' : ''
-            } rounded-t-lg overflow-hidden`}>
-            {/* Terminal Title Bar */}
-            <div className="bg-everblush-bg-light border-b border-everblush-green/20 px-4 py-2 flex items-center justify-between select-none">
-                <div className="flex items-center gap-3">
-                    {/* Window Controls */}
-                    <div className="flex items-center gap-2">
-                        <button
-                            className="w-3 h-3 rounded-full bg-everblush-red hover:bg-everblush-red/80 transition-colors"
-                            onClick={() => setIsMinimized(!isMinimized)}
-                            title="Minimize"
-                        />
-                        <button
-                            className="w-3 h-3 rounded-full bg-everblush-yellow hover:bg-everblush-yellow/80 transition-colors"
-                            title="Maximize"
-                        />
-                        <button
-                            className="w-3 h-3 rounded-full bg-everblush-green hover:bg-everblush-green/80 transition-colors"
-                            title="Close"
-                        />
-                    </div>
-
-                    {/* Title */}
-                    <span className="text-everblush-fg/60 text-xs">
-                        guest@yusuf-portfolio: {getCurrentPath()}
-                    </span>
-                </div>
-
-                {/* Easter Eggs Counter */}
-                <div className="text-everblush-fg/40 text-xs flex items-center gap-2">
-                    <span>🎁 {easterEggsFound.length}/30</span>
-                </div>
-            </div>
-
-            {/* Tab Bar */}
-            <div className="bg-everblush-bg-light border-b border-everblush-green/20 px-4 py-1 flex items-center gap-2">
-                <div className="flex items-center gap-2 px-3 py-1 bg-everblush-bg rounded-t text-xs text-everblush-green">
-                    <span className="w-2 h-2 rounded-full bg-everblush-green animate-pulse" />
-                    <span>bash</span>
-                </div>
-                <button className="text-everblush-fg/40 hover:text-everblush-fg/60 text-xs px-2">+</button>
-            </div>
-
-            {/* Terminal Content */}
-            {!isMinimized && (
-                <>
-                    <div className="p-4 max-h-64 overflow-y-auto">
-                        <div className="space-y-2 mb-2">
-                            {history.map((entry, index) => (
-                                <div key={index}>
-                                    {entry.type === 'command' && (
-                                        <div className="text-everblush-green">
-                                            <span className="text-everblush-blue">guest@yusuf</span>
-                                            <span className="text-everblush-fg">:</span>
-                                            <span className="text-everblush-blue">{getCurrentPath()}</span>
-                                            <span className="text-everblush-green">$</span> {entry.text}
-                                        </div>
-                                    )}
-                                    {entry.type === 'output' && (
-                                        <div className="text-everblush-fg/80 whitespace-pre-line pl-4">
-                                            {entry.text}
-                                        </div>
-                                    )}
-                                    {entry.type === 'error' && (
-                                        <div className="text-everblush-red pl-4 whitespace-pre-line">
-                                            {entry.text}
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
-                            <div ref={historyEndRef} />
-                        </div>
-
-                        <form onSubmit={handleSubmit} className="flex items-center">
-                            <span className="text-everblush-blue">guest@yusuf</span>
-                            <span className="text-everblush-fg">:</span>
-                            <span className="text-everblush-blue">{getCurrentPath()}</span>
-                            <span className="text-everblush-green">$</span>
-                            <input
-                                ref={inputRef}
-                                type="text"
-                                value={input}
-                                onChange={(e) => setInput(e.target.value)}
-                                onKeyDown={handleKeyDown}
-                                onFocus={handleFocus}
-                                onBlur={handleBlur}
-                                className="flex-1 ml-2 bg-transparent outline-none text-everblush-fg caret-everblush-green"
-                                autoComplete="off"
-                                spellCheck="false"
-                            />
-                        </form>
-                    </div>
-
-                    {/* Status Bar */}
-                    <div className="bg-everblush-bg-light border-t border-everblush-green/20 px-4 py-1 flex items-center justify-between text-xs text-everblush-fg/50">
-                        <div className="flex items-center gap-4">
-                            <span className="text-everblush-green">{isFocused ? 'INSERT' : 'NORMAL'}</span>
-                            <span>{getCurrentPath()}</span>
-                            <span>{commandHistory.length} commands</span>
-                        </div>
-                        <div className="flex items-center gap-4">
-                            <span>Session: {getSessionUptime()}</span>
-                            {securityLog.length > 0 && (
+        <>
+            {/* Hidden State Indicator - Shows when terminal is minimized */}
+            {isMinimized && (
+                <div
+                    className="fixed bottom-0 left-0 right-0 bg-everblush-bg-light border-t border-everblush-green/30 px-4 py-2 flex items-center justify-between cursor-pointer hover:bg-everblush-bg-light/80 transition-colors z-40"
+                    onClick={() => setIsMinimized(false)}
+                >
+                    <div className="flex items-center gap-3 text-everblush-fg/60 text-sm">
+                        <span>📟 Terminal</span>
+                        <span className="text-everblush-fg/40">•</span>
+                        <span className="text-everblush-green">🎁 {easterEggsFound.length} Easter eggs found</span>
+                        {securityLog.length > 0 && (
+                            <>
+                                <span className="text-everblush-fg/40">•</span>
                                 <span className="text-everblush-yellow">⚠ {securityLog.length} events</span>
-                            )}
-                        </div>
+                            </>
+                        )}
                     </div>
-                </>
+                    <div className="flex items-center gap-2 text-xs text-everblush-fg/40">
+                        <span>Ctrl+` to open</span>
+                        <span>▲</span>
+                    </div>
+                </div>
             )}
 
-            {/* Achievement Toasts */}
-            {achievements.map((achievement, index) => (
-                <AchievementToast
-                    key={index}
-                    achievement={achievement}
-                    onDismiss={() => dismissAchievement(index)}
-                />
-            ))}
-        </div>
+            {/* Terminal Window */}
+            <div className={`bg-everblush-bg border-t border-everblush-green/30 font-mono text-sm transition-all duration-300 ${isFocused ? 'shadow-lg shadow-everblush-green/20' : ''
+                } rounded-t-lg overflow-hidden ${isMinimized ? 'hidden' : ''}`}>
+                {/* Terminal Title Bar */}
+                <div className="bg-everblush-bg-light border-b border-everblush-green/20 px-4 py-2 flex items-center justify-between select-none">
+                    <div className="flex items-center gap-3">
+                        {/* Window Controls */}
+                        <div className="flex items-center gap-2">
+                            <button
+                                className="w-3 h-3 rounded-full bg-everblush-red hover:bg-everblush-red/80 transition-colors"
+                                onClick={() => setIsMinimized(!isMinimized)}
+                                title="Minimize (Ctrl+`)"
+                            />
+                            <button
+                                className="w-3 h-3 rounded-full bg-everblush-yellow hover:bg-everblush-yellow/80 transition-colors"
+                                title="Maximize"
+                            />
+                            <button
+                                className="w-3 h-3 rounded-full bg-everblush-green hover:bg-everblush-green/80 transition-colors"
+                                title="Close"
+                            />
+                        </div>
+
+                        {/* Title */}
+                        <span className="text-everblush-fg/60 text-xs">
+                            guest@yusuf-portfolio: {getCurrentPath()}
+                        </span>
+                    </div>
+
+                    {/* Easter Eggs Counter */}
+                    <div className="text-everblush-fg/40 text-xs flex items-center gap-2">
+                        <span>🎁 {easterEggsFound.length}/30</span>
+                    </div>
+                </div>
+
+                {/* Tab Bar */}
+                <div className="bg-everblush-bg-light border-b border-everblush-green/20 px-4 py-1 flex items-center gap-2">
+                    <div className="flex items-center gap-2 px-3 py-1 bg-everblush-bg rounded-t text-xs text-everblush-green">
+                        <span className="w-2 h-2 rounded-full bg-everblush-green animate-pulse" />
+                        <span>bash</span>
+                    </div>
+                    <button className="text-everblush-fg/40 hover:text-everblush-fg/60 text-xs px-2">+</button>
+                </div>
+
+                {/* Terminal Content */}
+                {!isMinimized && (
+                    <>
+                        <div className="p-4 max-h-64 overflow-y-auto">
+                            <div className="space-y-2 mb-2">
+                                {history.map((entry, index) => (
+                                    <div key={index}>
+                                        {entry.type === 'command' && (
+                                            <div className="text-everblush-green">
+                                                <span className="text-everblush-blue">guest@yusuf</span>
+                                                <span className="text-everblush-fg">:</span>
+                                                <span className="text-everblush-blue">{getCurrentPath()}</span>
+                                                <span className="text-everblush-green">$</span> {entry.text}
+                                            </div>
+                                        )}
+                                        {entry.type === 'output' && (
+                                            <div className="text-everblush-fg/80 whitespace-pre-line pl-4">
+                                                {entry.text}
+                                            </div>
+                                        )}
+                                        {entry.type === 'error' && (
+                                            <div className="text-everblush-red pl-4 whitespace-pre-line">
+                                                {entry.text}
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                                <div ref={historyEndRef} />
+                            </div>
+
+                            <form onSubmit={handleSubmit} className="flex items-center">
+                                <span className="text-everblush-blue">guest@yusuf</span>
+                                <span className="text-everblush-fg">:</span>
+                                <span className="text-everblush-blue">{getCurrentPath()}</span>
+                                <span className="text-everblush-green">$</span>
+                                <input
+                                    ref={inputRef}
+                                    type="text"
+                                    value={input}
+                                    onChange={(e) => setInput(e.target.value)}
+                                    onKeyDown={handleKeyDown}
+                                    onFocus={handleFocus}
+                                    onBlur={handleBlur}
+                                    className="flex-1 ml-2 bg-transparent outline-none text-everblush-fg caret-everblush-green"
+                                    autoComplete="off"
+                                    spellCheck="false"
+                                />
+                            </form>
+                        </div>
+
+                        {/* Status Bar */}
+                        <div className="bg-everblush-bg-light border-t border-everblush-green/20 px-4 py-1 flex items-center justify-between text-xs text-everblush-fg/50">
+                            <div className="flex items-center gap-4">
+                                <span className="text-everblush-green">{isFocused ? 'INSERT' : 'NORMAL'}</span>
+                                <span>{getCurrentPath()}</span>
+                                <span>{commandHistory.length} commands</span>
+                            </div>
+                            <div className="flex items-center gap-4">
+                                <span>Session: {getSessionUptime()}</span>
+                                {securityLog.length > 0 && (
+                                    <span className="text-everblush-yellow">⚠ {securityLog.length} events</span>
+                                )}
+                            </div>
+                        </div>
+                    </>
+                )}
+
+                {/* Achievement Toasts */}
+                {achievements.map((achievement, index) => (
+                    <AchievementToast
+                        key={index}
+                        achievement={achievement}
+                        onDismiss={() => dismissAchievement(index)}
+                    />
+                ))}
+            </div>
+        </>
     );
 };
 
