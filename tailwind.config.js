@@ -9,10 +9,12 @@ export default {
             colors: {
                 // Everblush Theme Colors
                 'everblush-bg': '#141b1e',
+                'everblush-bg-light': '#1e2528',
                 'everblush-fg': '#dadada',
                 'everblush-green': '#8ccf7e',
                 'everblush-blue': '#6c8ed4',
                 'everblush-red': '#e57474',
+                'everblush-yellow': '#e5c76b',
                 'everblush-grey': '#676f7d',
             },
             fontFamily: {
