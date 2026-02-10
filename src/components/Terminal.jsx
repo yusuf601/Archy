@@ -20,6 +20,14 @@ const Terminal = ({ onModeChange }) => {
   ls            - List available pages
   cd [path]     - Navigate to page (blog, projects, contact, home, ..)
   pwd           - Print current directory
+  whoami        - Display current user
+  hostname      - Show system hostname
+  uname [-r]    - Print system information
+  date          - Display current date and time
+  uptime        - Show system uptime
+  echo [text]   - Display a line of text
+  cat [file]    - Display file contents
+  neofetch      - Display system information
   clear         - Clear terminal history`
         }),
         ls: () => ({
@@ -29,6 +37,98 @@ const Terminal = ({ onModeChange }) => {
         pwd: () => ({
             type: 'output',
             text: `/home/guest${location.pathname === '/' ? '' : location.pathname}`
+        }),
+        whoami: () => ({
+            type: 'output',
+            text: 'guest'
+        }),
+        hostname: () => ({
+            type: 'output',
+            text: 'yusuf-portfolio'
+        }),
+        uname: (args) => {
+            if (args[0] === '-r') {
+                return {
+                    type: 'output',
+                    text: '6.x (Zen)'
+                };
+            }
+            return {
+                type: 'output',
+                text: 'Linux yusuf-portfolio 6.x (Zen) x86_64 GNU/Linux'
+            };
+        },
+        date: () => {
+            const now = new Date();
+            return {
+                type: 'output',
+                text: now.toString()
+            };
+        },
+        uptime: () => ({
+            type: 'output',
+            text: '21 years, 4 months - building efficient software solutions.'
+        }),
+        echo: (args) => ({
+            type: 'output',
+            text: args.join(' ')
+        }),
+        cat: (args) => {
+            const file = args[0];
+            const files = {
+                'main.cpp': `// Muh Yusuf - Portfolio
+#include <iostream>
+#include <string>
+
+int main() {
+    std::cout << "Hi, I'm Muh Yusuf" << std::endl;
+    std::cout << "Competitive Programmer | AI Enthusiast" << std::endl;
+    std::cout << "Focus: Low-Level Systems & Algorithms" << std::endl;
+    return 0;
+}`,
+                'contact.txt': `Email: yusufmuhyusuh@gmail.com
+GitHub: github.com/yusuf601
+LinkedIn: linkedin.com/in/muh-yusuf-7154b7204
+Location: Makassar, Indonesia`,
+                'README.md': `# Muh Yusuf - Portfolio
+
+Terminal-style portfolio showcasing competitive programming,
+AI research, and low-level systems expertise.
+
+Built with React + Vite | Everblush Theme`
+            };
+
+            if (!file) {
+                return {
+                    type: 'error',
+                    text: 'cat: missing operand'
+                };
+            }
+
+            if (files[file]) {
+                return {
+                    type: 'output',
+                    text: files[file]
+                };
+            }
+
+            return {
+                type: 'error',
+                text: `cat: ${file}: No such file or directory`
+            };
+        },
+        neofetch: () => ({
+            type: 'output',
+            text: `       ___           guest@yusuf-portfolio
+      (.. |          ----------------------
+      (<> |          OS: CachyOS (Arch-based)
+     / __  \\         Host: Universitas Halu Oleo
+    ( /  \\ /|        Kernel: Linux 6.x (Zen)
+   _/\\ __)/_)        IDE: Neovim (NvChad)
+   \\/-____\\/         Shell: zsh
+                     Focus: AI & Low-Level Systems
+                     Uptime: 21 years
+                     Semester: 4`
         }),
         cd: (args) => {
             const target = args[0];
@@ -65,6 +165,7 @@ const Terminal = ({ onModeChange }) => {
         },
         clear: () => null
     };
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
