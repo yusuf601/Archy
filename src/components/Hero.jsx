@@ -121,10 +121,10 @@ const Hero = () => {
                                          text-everblush-blue hover:border-everblush-blue 
                                          hover:bg-everblush-blue/10 transition-all duration-300 
                                          rounded hover:shadow-glow-blue cursor-pointer"
-                                aria-label="Check my status and contact me"
+                                aria-label="View contact information"
                             >
-                                <span className="syntax-keyword">git</span>
-                                <span className="ml-2">status</span>
+                                <span className="syntax-keyword">cat</span>
+                                <span className="ml-2">contact.cpp</span>
                             </motion.button>
                         </div>
                     </ScrollReveal>

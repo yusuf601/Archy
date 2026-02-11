@@ -1,8 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import ScrollReveal from '../components/ScrollReveal';
 
 const Contact = () => {
+    const [wgetCommand, setWgetCommand] = useState('');
+    const [copied, setCopied] = useState(false);
+
+    const resumeFilename = "MuhYusuf_Resume.pdf";
+    const resumePath = `/${resumeFilename}`;
+
+    // Construct full URL for wget command on client side
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const fullUrl = `${window.location.origin}${resumePath}`;
+            setWgetCommand(`wget ${fullUrl}`);
+        }
+    }, []);
+
+    const copyCommand = () => {
+        navigator.clipboard.writeText(wgetCommand);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
+
     const socialLinks = [
         {
             name: 'GitHub',
@@ -47,55 +67,47 @@ const Contact = () => {
                     <ScrollReveal>
                         <div className="mb-12">
                             <h1 className="text-5xl sm:text-6xl font-mono font-bold text-syntax-header mb-6">
-                                <span className="syntax-comment">// Contact</span>
+                                <span className="syntax-comment">// contact.cpp</span>
                             </h1>
                             <p className="font-mono text-xl text-syntax-meta leading-relaxed">
-                                <span className="syntax-keyword">void</span> <span className="syntax-function">get_in_touch</span>() {'{'}
+                                <span className="syntax-keyword">struct</span> <span className="syntax-function">Contact</span> {'{'}
                             </p>
                         </div>
                     </ScrollReveal>
 
-                    {/* Contact Information */}
+                    {/* Contact Information - C++ Struct Style */}
                     <ScrollReveal delay={0.2}>
-                        <div className="space-y-6 font-mono text-base ml-4 mb-12">
-                            <div className="flex items-start gap-4">
-                                <span className="text-everblush-green text-xl">→</span>
-                                <div>
-                                    <span className="text-everblush-blue font-semibold text-lg">Email:</span>
-                                    <span className="text-syntax-content ml-3 text-lg">yusufmuhyusuh@gmail.com</span>
-                                </div>
+                        <div className="space-y-4 font-mono text-base ml-8 mb-12">
+                            <div>
+                                <span className="syntax-keyword">std::string</span>{' '}
+                                <span className="text-everblush-blue">email</span> =
+                                <span className="syntax-string"> "yusufmuhyusuh@gmail.com"</span>;
                             </div>
 
-                            <div className="flex items-start gap-4">
-                                <span className="text-everblush-green text-xl">→</span>
-                                <div>
-                                    <span className="text-everblush-blue font-semibold text-lg">GitHub:</span>
-                                    <span className="text-syntax-content ml-3 text-lg">github.com/yusuf601</span>
-                                </div>
+                            <div>
+                                <span className="syntax-keyword">std::string</span>{' '}
+                                <span className="text-everblush-blue">github</span> =
+                                <span className="syntax-string"> "github.com/yusuf601"</span>;
                             </div>
 
-                            <div className="flex items-start gap-4">
-                                <span className="text-everblush-green text-xl">→</span>
-                                <div>
-                                    <span className="text-everblush-blue font-semibold text-lg">LinkedIn:</span>
-                                    <span className="text-syntax-content ml-3 text-lg">linkedin.com/in/muh-yusuf-7154b7204</span>
-                                </div>
+                            <div>
+                                <span className="syntax-keyword">std::string</span>{' '}
+                                <span className="text-everblush-blue">linkedin</span> =
+                                <span className="syntax-string"> "linkedin.com/in/muh-yusuf-7154b7204"</span>;
                             </div>
 
-                            <div className="flex items-start gap-4">
-                                <span className="text-everblush-green text-xl">→</span>
-                                <div>
-                                    <span className="text-everblush-blue font-semibold text-lg">Location:</span>
-                                    <span className="text-syntax-content ml-3 text-lg">Makassar, Indonesia</span>
-                                </div>
+                            <div>
+                                <span className="syntax-keyword">std::string</span>{' '}
+                                <span className="text-everblush-blue">location</span> =
+                                <span className="syntax-string"> "Makassar, Indonesia"</span>;
                             </div>
                         </div>
                     </ScrollReveal>
 
                     {/* Social Links */}
                     <ScrollReveal delay={0.3}>
-                        <div className="mb-12">
-                            <p className="font-mono text-syntax-meta mb-6 text-lg">
+                        <div className="mb-12 ml-8">
+                            <p className="font-mono text-syntax-meta mb-6 text-base">
                                 <span className="syntax-comment">// Connect with me:</span>
                             </p>
                             <div className="flex gap-6">
@@ -120,33 +132,107 @@ const Contact = () => {
                         </div>
                     </ScrollReveal>
 
-                    {/* Download Resume CTA */}
+                    {/* Closing Brace */}
                     <ScrollReveal delay={0.4}>
-                        <div className="mb-8">
-                            <motion.button
-                                whileHover={{ scale: 1.05, y: -2 }}
-                                whileTap={{ scale: 0.95 }}
-                                className="w-full sm:w-auto px-8 py-4 font-mono text-lg font-semibold
-                                         bg-transparent border-2 border-everblush-green 
-                                         text-everblush-green hover:bg-everblush-green 
-                                         hover:text-everblush-bg transition-all duration-300 
-                                         rounded shadow-glow-green hover:shadow-glow-green-lg
-                                         inline-flex items-center justify-center gap-3"
-                            >
-                                <span className="syntax-keyword">wget</span>
-                                <span>resume.pdf</span>
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                                </svg>
-                            </motion.button>
+                        <div className="font-mono text-xl text-syntax-meta mb-12">
+                            <p>{'};'}</p>
                         </div>
                     </ScrollReveal>
 
-                    {/* Footer */}
+                    {/* Download Resume Section */}
                     <ScrollReveal delay={0.5}>
-                        <div className="font-mono text-base text-syntax-meta">
-                            <p>{'}'}</p>
-                            <p className="mt-6 leading-relaxed">
+                        <div className="border-t border-everblush-green/20 pt-12">
+                            <h2 className="font-mono text-2xl text-syntax-header mb-6">
+                                <span className="syntax-comment">// Download Resume</span>
+                            </h2>
+
+                            <p className="font-mono text-sm text-syntax-meta mb-6">
+                                Choose your preferred method:
+                            </p>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                                {/* Option 1: Direct Download */}
+                                <div className="border border-everblush-green/30 rounded-lg p-6 bg-everblush-bg/30">
+                                    <div className="flex items-center gap-2 mb-3">
+                                        <span className="text-2xl">📥</span>
+                                        <h3 className="font-mono text-lg font-semibold text-everblush-green">
+                                            Quick Download
+                                        </h3>
+                                    </div>
+                                    <p className="font-mono text-sm text-everblush-fg/60 mb-4">
+                                        Standard browser download
+                                    </p>
+                                    <motion.a
+                                        href={resumePath}
+                                        download={resumeFilename}
+                                        whileHover={{ scale: 1.05, y: -2 }}
+                                        whileTap={{ scale: 0.95 }}
+                                        className="w-full px-6 py-3 font-mono text-base font-semibold
+                                                 bg-transparent border-2 border-everblush-green 
+                                                 text-everblush-green hover:bg-everblush-green 
+                                                 hover:text-everblush-bg transition-all duration-300 
+                                                 rounded shadow-glow-green hover:shadow-glow-green-lg
+                                                 inline-flex items-center justify-center gap-2"
+                                    >
+                                        <span>Download PDF</span>
+                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                        </svg>
+                                    </motion.a>
+                                </div>
+
+                                {/* Option 2: Terminal Command */}
+                                <div className="border border-everblush-blue/30 rounded-lg p-6 bg-everblush-bg/30">
+                                    <div className="flex items-center gap-2 mb-3">
+                                        <span className="text-2xl">💻</span>
+                                        <h3 className="font-mono text-lg font-semibold text-everblush-blue">
+                                            Terminal Command
+                                        </h3>
+                                    </div>
+                                    <p className="font-mono text-sm text-everblush-fg/60 mb-4">
+                                        For developers
+                                    </p>
+                                    <div className="relative bg-everblush-bg border border-everblush-blue/30 rounded p-4 mb-3">
+                                        <code className="font-mono text-sm text-everblush-fg break-all">
+                                            $ {wgetCommand || 'Loading...'}
+                                        </code>
+                                    </div>
+                                    <motion.button
+                                        onClick={copyCommand}
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
+                                        className="w-full px-6 py-3 font-mono text-base font-semibold
+                                                 bg-transparent border-2 border-everblush-blue/50 
+                                                 text-everblush-blue hover:border-everblush-blue 
+                                                 hover:bg-everblush-blue/10 transition-all duration-300 
+                                                 rounded hover:shadow-glow-blue
+                                                 inline-flex items-center justify-center gap-2"
+                                    >
+                                        {copied ? (
+                                            <>
+                                                <span>✓ Copied!</span>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <span>📋 Copy Command</span>
+                                            </>
+                                        )}
+                                    </motion.button>
+                                </div>
+                            </div>
+
+                            <p className="font-mono text-xs text-syntax-meta text-center">
+                                <span className="syntax-comment">
+                                    // File: {resumeFilename} (~2.3MB)
+                                </span>
+                            </p>
+                        </div>
+                    </ScrollReveal>
+
+                    {/* Footer Comment */}
+                    <ScrollReveal delay={0.6}>
+                        <div className="font-mono text-base text-syntax-meta mt-12">
+                            <p className="leading-relaxed">
                                 <span className="syntax-comment">
                                     // Feel free to reach out for collaborations, discussions, or just to say hi!
                                 </span>

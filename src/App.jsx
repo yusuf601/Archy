@@ -31,7 +31,7 @@ function AppContent() {
             '/': 'main.cpp',
             '/blog': 'blog.md',
             '/projects': 'projects.cpp',
-            '/contact': 'contact.txt'
+            '/contact': 'contact.cpp'
         };
         return fileMap[path] || 'main.cpp';
     };
