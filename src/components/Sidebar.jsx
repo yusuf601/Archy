@@ -11,7 +11,7 @@ const Sidebar = () => {
         { name: 'main.cpp', icon: '📄', path: '/' },
         { name: 'blog/', icon: '📁', path: '/blog' },
         { name: 'projects/', icon: '📁', path: '/projects' },
-        { name: 'contact.txt', icon: '📄', path: '/contact' },
+        { name: 'contact.cpp', icon: '📄', path: '/contact' },
     ];
 
     // Get current path for display
