@@ -1,142 +1,125 @@
 # Archy - Terminal-Themed Portfolio
 
-> A creative coding portfolio with a heavy Terminal/IDE aesthetic, built with React + Vite + Tailwind CSS
+> A creative coding portfolio with a heavy Terminal/IDE aesthetic, built with React + Vite + Tailwind CSS.
+>
+> **Live Demo:** [https://kingyusuf.netlify.app](https://kingyusuf.netlify.app)
 
 ## 🎨 Design Philosophy
 
-This portfolio embraces a **"Standard Web Layout skinned with a C++ coding environment"** aesthetic, featuring:
+Archy embraces a **"Portfolio as an IDE"** aesthetic, blending standard web layouts with a C++ coding environment. It invites visitors to explore rather than just scroll.
 
-- **Everblush Theme**: Minimalist dark color scheme
-- **JetBrains Mono**: Monospace typography throughout
-- **Terminal Aesthetic**: Command-line inspired UI elements
-- **Syntax Highlighting**: C++ code-style presentation
+- **Theme:** Everblush (Dark, Minimalist)
+- **Typography:** JetBrains Mono (Nerd Font patched)
+- **Interaction:** Command-line inspired + GUI hybrid
+- **Vibe:** "Hacker/Developer" workspace
+
+## 🌟 Key Features
+
+### 1. 🖥️ Interactive Terminal
+A fully functional terminal emulator at the bottom of the page.
+- **Commands:** `ls`, `cd`, `cat`, `whoami`, `neofetch`, `security`, `hint`
+- **Gimmicks:** Real `wget` animation for CV download
+- **Easter Eggs:** 30+ hidden secrets, Matrix rain, sudo commands
+- **Shortcuts:** `Ctrl+` ` to toggle, `Ctrl+L` to clear, `Up/Down` for history
+
+### 2. 📂 VS Code-Style Sidebar
+A sophisticated navigation pane acting as your file explorer.
+- **EXPLORER:** Navigate pages like files (`main.cpp`, `projects.cpp`)
+- **OUTLINE:** Career history (Education & Experience)
+- **MODULES:** Tech stack categorized as system modules
+- **ACTIONS:** Quick command buttons (`make install_cv`, `./send_email`)
+- **Responsive:** Slides away on mobile with a hamburger toggle
+
+### 3. 💾 C++ & System Aesthetic
+- **Hero Section:** `std::cout` syntax highlighting with blinking cursor
+- **Projects:** Displayed as `struct Project` with compilation flags
+- **Contact:** `struct Contact` with `wget` download options
+- **Status Bar:** Vim-style mode indicators (NORMAL, INSERT)
+
+### 4. 🚀 Interactive Elements
+- **Tech Marquee:** Scrolling C++/CMake flags
+- **Music Player:** ncmpcpp-style media widget
+- **Buffer Bar:** Scroll progress indicator
+- **Theme Consistency:** All UI elements match the Everblush palette
+
+## 🛠️ Tech Stack
+
+- **Framework:** React 18
+- **Build Tool:** Vite
+- **Styling:** Tailwind CSS 3
+- **Animations:** Framer Motion
+- **Icons:** React Icons (Feather/FontAwesome)
+- **Routing:** React Router DOM
 
 ## 🚀 Quick Start
 
 ```bash
+# Clone the repository
+git clone https://github.com/yusuf601/Archy.git
+
+# Enter directory
+cd Archy
+
 # Install dependencies
 npm install
 
 # Start development server
 npm run dev
-
-# Build for production
-npm run build
 ```
 
 Visit **http://localhost:5173/** to view the portfolio.
 
-## 🎯 Features
+## 📖 Usage Guide
 
-### Terminal Prompt Navbar
-- Logo styled as `yusuf@uho:~$`
-- Navigation links as executable files (`./home`, `./projects`, etc.)
-- Inverted block cursor hover effect
+### Navigation
+- Click files in the **Sidebar** to navigate.
+- Click **"sh view_work.sh"** or **"cat contact.cpp"** in the Hero section.
+- Use terminal commands: `cd projects`, `cat contact.cpp`.
 
-### C++ Styled Hero Section
-- Syntax-highlighted headline: `std::cout << "Hi, I'm Muh Yusuf";`
-- Blinking cursor animation
-- Comment-style bio information
-- Terminal command buttons
+### Unique Commands
+| Command | Description |
+| :--- | :--- |
+| `neofetch` | Display system/profile stats |
+| `wget [url]` | Interactive CV download animation |
+| `matrix` | Enter the Matrix |
+| `sudo` | Try to get root access (Good luck!) |
+| `hint` | Get a clue for a hidden secret |
 
-### Interactive Terminal
-The portfolio includes a **fully functional terminal** at the bottom of the page. Try these commands:
-- `help` - See all available commands
-- `ls`, `pwd`, `cd` - Navigate the portfolio
-- `cat main.cpp` - View source files
-- `neofetch` - Display system information
-- `hint` - Get clues about hidden Easter eggs
-- `achievements` - Track your Easter egg progress
+### Downloading Resume
+- **GUI:** Click the "Download PDF" button on the Contact page.
+- **Terminal (Real):** Run `wget https://kingyusuf.netlify.app/MuhYusuf_Resume.pdf`
+- **Terminal (Gimmick):** Type the same `wget` command in the portfolio terminal!
 
-#### Keyboard Shortcuts
-The terminal supports VS Code-style keyboard shortcuts:
-- **Ctrl+`** - Toggle terminal visibility (show/hide)
-- **Ctrl+L** - Clear terminal history
-- **Esc** - Blur terminal (switch to NORMAL mode)
-- **↑/↓** - Navigate command history
+## ⚙️ Customization
 
-### Everblush Color Scheme
-- Background: `#141b1e`
-- Foreground: `#dadada`
-- Accents: Green `#8ccf7e`, Blue `#6c8ed4`, Red `#e57474`
+1. **Personal Info:** Edit `src/components/Hero.jsx` and `src/components/Sidebar.jsx`.
+2. **Projects:** update `src/data/projects.js`.
+3. **Resume:** Replace `public/MuhYusuf_Resume.pdf`.
+4. **Links:** Update social links in `src/components/SocialLinks.jsx`.
 
-## 🎁 Easter Eggs & Hidden Features
-
-**For the curious visitors:** This portfolio contains **30+ hidden Easter eggs** and security-themed interactions! 
-
-### 🔍 Hints for Exploration:
-- Try common Linux commands you'd use on a real system
-- What happens if you try to get root access? 🔐
-- Security researchers: Try testing for known vulnerabilities (CVE references)
-- Pentesters: Your favorite tools might be here... `nmap`, `metasploit`, anyone?
-- Found a `.secret` directory? Explore what's inside! 🕵️
-- Classic hacker movie references are hidden throughout
-- Competitive programmers: Algorithm commands might surprise you
-- Try being destructive (don't worry, nothing will break! 😄)
-- XKCD fans will find something familiar
-- Retro gamers: Classic references await
-
-### 🎯 Challenge:
-Can you find the hidden CTF flag? Start with `ls -la` and see where it takes you...
-
-**Hint:** Type `security-log` to track your discoveries!
-
-## 📁 Project Structure
+## � Project Structure
 
 ```
 src/
 ├── components/
-│   ├── Navbar.jsx           # Terminal prompt navigation
-│   ├── Hero.jsx             # C++ styled hero section
-│   ├── Terminal.jsx         # Interactive terminal with Easter eggs
-│   ├── ScrollProgress.jsx   # Buffer loading bar
-│   ├── NowPlaying.jsx       # Terminal music player widget
-│   ├── TechMarquee.jsx      # Scrolling compilation flags
-│   └── SocialLinks.jsx      # Symbolic link style social links
-├── App.jsx                  # Main application
-├── main.jsx                 # React entry point
-└── index.css                # Global styles & animations
+│   ├── Sidebar.jsx        # VS Code style explorer
+│   ├── Terminal.jsx       # Interactive terminal engine
+│   ├── Hero.jsx           # Landing page component
+│   ├── ProjectCard.jsx    # C++ struct style card
+│   └── ...
+├── data/
+│   └── projects.js        # Project data source
+├── pages/
+│   ├── Home.jsx           # Main entry
+│   ├── Projects.jsx       # Project gallery
+│   └── Contact.jsx        # Contact & CV download
+└── App.jsx                # Routing & Layout
 ```
-
-## 🛠️ Tech Stack
-
-- **React 19** - UI framework
-- **Vite 7** - Build tool
-- **Tailwind CSS 3** - Utility-first CSS
-- **Framer Motion** - Animations
-- **React Router** - Navigation
-- **JetBrains Mono** - Monospace font
-
-## 👨‍💻 About
-
-**Muh Yusuf**  
-Informatics Engineering Student @ Universitas Halu Oleo (4th Semester)
-
-**Focus Areas:**
-- Competitive Programming (C++20, STL, Algorithms)
-- Low-level Systems Programming
-- AI Research (Fuzzy Logic, Machine Learning)
-- Linux Enthusiast (CachyOS + Neovim)
-
-**Contact:**
-- Email: yusufmuhyusuh@gmail.com
-- GitHub: [@yusuf601](https://github.com/yusuf601)
-- LinkedIn: [muh-yusuf-7154b7204](https://www.linkedin.com/in/muh-yusuf-7154b7204)
-
-## 🎮 Interactive Features
-
-- **Custom Crosshair Cursor** - Terminal-style cursor throughout
-- **Scroll Progress Bar** - Buffer loading indicator at top
-- **Terminal Music Player** - ncmpcpp/cmus style widget with visualizer
-- **Tech Marquee** - Scrolling C++/CMake compilation flags
-- **Social Links** - Unix symbolic link style (`ln -s`)
-- **System Flags** - Personality badges (UPTIME, LOCATION, STATUS)
-- **Security Log** - Tracks all your terminal "exploits"
 
 ## 📝 License
 
-MIT License - see [LICENSE](LICENSE) file for details
+MIT License - see [LICENSE](LICENSE) file for details.
 
 ---
 
-**Pro Tip:** The terminal is more than just decoration. Explore it thoroughly - you might discover something interesting! 😉
+**Pro Tip:** Try typing `help` in the terminal to get started. Happy hacking! �️‍♂️
