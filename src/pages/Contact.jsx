@@ -1,21 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import ScrollReveal from '../components/ScrollReveal';
 
 const Contact = () => {
-    const [wgetCommand, setWgetCommand] = useState('');
     const [copied, setCopied] = useState(false);
 
     const resumeFilename = "MuhYusuf_Resume.pdf";
     const resumePath = `/${resumeFilename}`;
 
-    // Construct full URL for wget command on client side
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const fullUrl = `${window.location.origin}${resumePath}`;
-            setWgetCommand(`wget ${fullUrl}`);
-        }
-    }, []);
+    // Production URL for wget command
+    const wgetCommand = 'wget https://kingyusuf.netlify.app/MuhYusuf_Resume.pdf';
 
     const copyCommand = () => {
         navigator.clipboard.writeText(wgetCommand);

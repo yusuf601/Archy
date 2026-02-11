@@ -889,6 +889,59 @@ Threat level: ${threatLevel} (You're just having fun 😄)`
             };
         },
 
+        wget: (args) => {
+            const url = args.join(' ');
+
+            // Check if it's trying to download the resume
+            if (!url || (!url.includes('resume') && !url.includes('MuhYusuf_Resume') && !url.includes('Resume') && !url.includes('kingyusuf.netlify.app'))) {
+                return {
+                    type: 'error',
+                    text: `wget: missing URL\nUsage: wget [URL]\nTry: wget https://kingyusuf.netlify.app/MuhYusuf_Resume.pdf`
+                };
+            }
+
+            // Simulate download animation
+            const filename = 'MuhYusuf_Resume.pdf';
+            const filesize = '2.17M';
+            const timestamp = new Date().toISOString().replace('T', ' ').substring(0, 19);
+
+            // Extract hostname from URL or use default
+            let hostname = 'kingyusuf.netlify.app';
+            try {
+                if (url.startsWith('http')) {
+                    hostname = new URL(url).hostname;
+                }
+            } catch (e) {
+                // Use default hostname
+            }
+
+            // Trigger actual download after delay
+            setTimeout(() => {
+                const link = document.createElement('a');
+                link.href = '/MuhYusuf_Resume.pdf';
+                link.download = filename;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }, 2000); // 2 second delay for animation
+
+            return {
+                type: 'output',
+                text: `--${timestamp}--  ${url}
+Resolving ${hostname}... ${hostname}
+Connecting to ${hostname}|${hostname}|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2278683 (${filesize}) [application/pdf]
+Saving to: '${filename}'
+
+${filename}  100%[===================>]   ${filesize}  --.-KB/s    in 0.1s
+
+${timestamp} (21.5 MB/s) - '${filename}' saved [2278683/2278683]
+
+✅ Download complete! Check your downloads folder.`
+            };
+        },
+
         clear: () => null
     };
 
