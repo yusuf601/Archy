@@ -70,6 +70,7 @@ function AppContent() {
             <div className="flex md:h-screen bg-everblush-bg md:overflow-hidden min-h-screen flex-col md:flex-row">
                 {/* CRT Scanline Overlay */}
                 <div className="crt-overlay"></div>
+                <div className="crt-scan-beam"></div>
 
                 {/* Sidebar */}
                 <Sidebar />
