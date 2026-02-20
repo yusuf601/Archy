@@ -17,7 +17,7 @@ const Terminal = ({ onModeChange }) => {
     const [commandHistory, setCommandHistory] = useState([]);
     const [historyIndex, setHistoryIndex] = useState(-1);
     const [isFocused, setIsFocused] = useState(false);
-    const [isMinimized, setIsMinimized] = useState(false);
+    const [isMinimized, setIsMinimized] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
     const [sudoAttempts, setSudoAttempts] = useState(0);
     const [securityLog, setSecurityLog] = useState([]);
     const [easterEggsFound, setEasterEggsFound] = useState([]);
@@ -1049,7 +1049,7 @@ ${timestamp} (21.5 MB/s) - '${filename}' saved [2278683/2278683]
             {/* Hidden State Indicator - Shows when terminal is minimized */}
             {isMinimized && (
                 <div
-                    className="fixed bottom-0 left-0 right-0 bg-everblush-bg-light border-t border-everblush-green/30 px-4 py-2 flex items-center justify-between cursor-pointer hover:bg-everblush-bg-light/80 transition-colors z-50"
+                    className="hidden md:flex fixed bottom-0 left-0 right-0 bg-everblush-bg-light border-t border-everblush-green/30 px-4 py-2 items-center justify-between cursor-pointer hover:bg-everblush-bg-light/80 transition-colors z-30"
                     onClick={() => setIsMinimized(false)}
                 >
                     <div className="flex items-center gap-3 text-everblush-fg/60 text-sm">
@@ -1070,9 +1070,9 @@ ${timestamp} (21.5 MB/s) - '${filename}' saved [2278683/2278683]
                 </div>
             )}
 
-            {/* Terminal Window */}
-            <div className={`bg-everblush-bg border-t border-everblush-green/30 font-mono text-sm transition-all duration-300 ${isFocused ? 'shadow-lg shadow-everblush-green/20' : ''
-                } rounded-t-lg overflow-hidden ${isMinimized ? 'hidden' : ''}`}>
+            {/* Terminal Window - hidden on mobile when minimized */}
+            <div className={`bg-everblush-bg border-t border-everblush-green/30 font-mono text-xs sm:text-sm transition-all duration-300 ${isFocused ? 'shadow-lg shadow-everblush-green/20' : ''
+                } rounded-t-lg overflow-hidden md:block ${isMinimized ? 'hidden' : 'block'}`}>
                 {/* Terminal Title Bar */}
                 <div className="bg-everblush-bg-light border-b border-everblush-green/20 px-4 py-2 flex items-center justify-between select-none">
                     <div className="flex items-center gap-3">
@@ -1092,6 +1092,14 @@ ${timestamp} (21.5 MB/s) - '${filename}' saved [2278683/2278683]
                                 title="Close"
                             />
                         </div>
+                        {/* Mobile toggle button - larger tap target */}
+                        <button
+                            className="md:hidden ml-2 px-2 py-1 text-xs text-everblush-fg/50 hover:text-everblush-fg border border-everblush-green/20 rounded transition-colors"
+                            onClick={() => setIsMinimized(true)}
+                            aria-label="Hide terminal"
+                        >
+                            Hide ▼
+                        </button>
 
                         {/* Title */}
                         <span className="text-everblush-fg/60 text-xs">
@@ -1117,7 +1125,7 @@ ${timestamp} (21.5 MB/s) - '${filename}' saved [2278683/2278683]
                 {/* Terminal Content */}
                 {!isMinimized && (
                     <>
-                        <div className="p-4 max-h-64 overflow-y-auto">
+                        <div className="p-4 max-h-40 sm:max-h-64 overflow-y-auto">
                             <div className="space-y-2 mb-2">
                                 {history.map((entry, index) => (
                                     <div key={index}>

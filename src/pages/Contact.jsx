@@ -53,7 +53,7 @@ const Contact = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="min-h-screen py-20 px-4 sm:px-6 lg:px-8 flex items-center"
+            className="min-h-screen py-8 sm:py-20 px-4 sm:px-6 lg:px-8 flex items-center mobile-page-padding"
         >
             <div className="max-w-4xl mx-auto w-full">
                 <div className="border border-everblush-green/30 rounded-lg p-8 sm:p-12 bg-everblush-bg/50 backdrop-blur-sm">
@@ -71,23 +71,23 @@ const Contact = () => {
 
                     {/* Contact Information - C++ Struct Style */}
                     <ScrollReveal delay={0.2}>
-                        <div className="space-y-4 font-mono text-base ml-8 mb-12">
+                        <div className="space-y-4 font-mono text-sm sm:text-base md:ml-8 mb-12">
                             <div>
                                 <span className="syntax-keyword">std::string</span>{' '}
                                 <span className="text-everblush-blue">email</span> =
-                                <span className="syntax-string"> "yusufmuhyusuh@gmail.com"</span>;
+                                <span className="syntax-string break-all"> "yusufmuhyusuh@gmail.com"</span>;
                             </div>
 
                             <div>
                                 <span className="syntax-keyword">std::string</span>{' '}
                                 <span className="text-everblush-blue">github</span> =
-                                <span className="syntax-string"> "github.com/yusuf601"</span>;
+                                <span className="syntax-string break-all"> "github.com/yusuf601"</span>;
                             </div>
 
                             <div>
                                 <span className="syntax-keyword">std::string</span>{' '}
                                 <span className="text-everblush-blue">linkedin</span> =
-                                <span className="syntax-string"> "linkedin.com/in/muh-yusuf-7154b7204"</span>;
+                                <span className="syntax-string break-all"> "linkedin.com/in/muh-yusuf-7154b7204"</span>;
                             </div>
 
                             <div>
@@ -100,7 +100,7 @@ const Contact = () => {
 
                     {/* Social Links */}
                     <ScrollReveal delay={0.3}>
-                        <div className="mb-12 ml-8">
+                        <div className="mb-12 md:ml-8">
                             <p className="font-mono text-syntax-meta mb-6 text-base">
                                 <span className="syntax-comment">// Connect with me:</span>
                             </p>
@@ -186,8 +186,8 @@ const Contact = () => {
                                     <p className="font-mono text-sm text-everblush-fg/60 mb-4">
                                         For developers
                                     </p>
-                                    <div className="relative bg-everblush-bg border border-everblush-blue/30 rounded p-4 mb-3">
-                                        <code className="font-mono text-sm text-everblush-fg break-all">
+                                    <div className="relative bg-everblush-bg border border-everblush-blue/30 rounded p-4 mb-3 overflow-x-auto">
+                                        <code className="font-mono text-xs sm:text-sm text-everblush-fg whitespace-nowrap">
                                             $ {wgetCommand || 'Loading...'}
                                         </code>
                                     </div>

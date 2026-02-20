@@ -14,7 +14,12 @@ import {
     FaUser,
     FaBriefcase,
     FaGraduationCap,
-    FaCube
+    FaCube,
+    FaHome,
+    FaProjectDiagram,
+    FaBlog,
+    FaBars,
+    FaTimes
 } from 'react-icons/fa';
 
 const Sidebar = () => {
@@ -463,38 +468,17 @@ const Sidebar = () => {
         </div>
     );
 
+    // Bottom nav items for mobile
+    const bottomNavItems = [
+        { icon: FaHome, label: 'Home', path: '/' },
+        { icon: FaProjectDiagram, label: 'Projects', path: '/projects' },
+        { icon: FaBlog, label: 'Blog', path: '/blog' },
+        { icon: FaEnvelope, label: 'Contact', path: '/contact' },
+    ];
+
     return (
         <>
-            {/* Mobile Hamburger Button */}
-            <button
-                onClick={() => setIsMobileOpen(!isMobileOpen)}
-                className="md:hidden fixed top-4 left-4 z-50 p-2 bg-everblush-bg border border-everblush-green/30 rounded
-                    text-everblush-green hover:bg-everblush-green/10 transition-all"
-                aria-label="Toggle sidebar"
-            >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    {isMobileOpen ? (
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    ) : (
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                    )}
-                </svg>
-            </button>
-
-            {/* Mobile Overlay */}
-            <AnimatePresence>
-                {isMobileOpen && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        onClick={() => setIsMobileOpen(false)}
-                        className="md:hidden fixed inset-0 bg-black/50 z-40"
-                    />
-                )}
-            </AnimatePresence>
-
-            {/* Sidebar - Desktop */}
+            {/* ─── DESKTOP SIDEBAR ─────────────────────────────────────── */}
             <motion.aside
                 initial={{ x: -300 }}
                 animate={{ x: 0 }}
@@ -504,17 +488,155 @@ const Sidebar = () => {
                 {sidebarContent}
             </motion.aside>
 
-            {/* Sidebar - Mobile Slide-in */}
+            {/* ─── MOBILE BOTTOM NAVIGATION BAR ────────────────────────── */}
+            <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-everblush-bg border-t border-everblush-green/30 safe-bottom">
+                <div className="flex items-center justify-around h-16 px-2">
+                    {bottomNavItems.map((item) => {
+                        const active = isActive(item.path);
+                        return (
+                            <button
+                                key={item.path}
+                                onClick={() => navigate(item.path)}
+                                className={`flex flex-col items-center justify-center gap-1 flex-1 h-full transition-all duration-200
+                                    ${active
+                                        ? 'text-everblush-green'
+                                        : 'text-everblush-fg/50 hover:text-everblush-fg'
+                                    }`}
+                                aria-label={item.label}
+                            >
+                                <item.icon className={`text-lg transition-transform duration-200 ${active ? 'scale-125' : ''}`} />
+                                <span className="font-mono text-[10px] tracking-wide">{item.label}</span>
+                                {active && (
+                                    <span className="absolute h-0.5 w-8 bg-everblush-green rounded-full" style={{ top: 0 }} />
+                                )}
+                            </button>
+                        );
+                    })}
+
+                    {/* Menu button opens full sidebar drawer */}
+                    <button
+                        onClick={() => setIsMobileOpen(true)}
+                        className="flex flex-col items-center justify-center gap-1 flex-1 h-full transition-all duration-200
+                            text-everblush-fg/50 hover:text-everblush-fg"
+                        aria-label="Open menu"
+                    >
+                        <FaBars className="text-lg" />
+                        <span className="font-mono text-[10px] tracking-wide">Menu</span>
+                    </button>
+                </div>
+            </nav>
+
+            {/* ─── MOBILE FULL SIDEBAR DRAWER (via Menu button) ────────── */}
+            {/* Backdrop */}
+            <AnimatePresence>
+                {isMobileOpen && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setIsMobileOpen(false)}
+                        className="md:hidden fixed inset-0 bg-black/60 z-40"
+                    />
+                )}
+            </AnimatePresence>
+
+            {/* Drawer */}
             <AnimatePresence>
                 {isMobileOpen && (
                     <motion.aside
                         initial={{ x: -300 }}
                         animate={{ x: 0 }}
                         exit={{ x: -300 }}
-                        transition={{ duration: 0.3 }}
-                        className="md:hidden fixed left-0 top-0 w-64 bg-everblush-bg border-r border-everblush-green/30 h-screen z-50"
+                        transition={{ duration: 0.25, ease: 'easeInOut' }}
+                        className="md:hidden fixed left-0 top-0 w-72 bg-everblush-bg border-r border-everblush-green/30 h-screen z-50 flex flex-col"
                     >
-                        {sidebarContent}
+                        {/* Drawer Header with close button */}
+                        <div className="flex items-center justify-between p-4 border-b border-everblush-green/30">
+                            <div className="font-mono text-xs text-everblush-fg/70">
+                                <span className="text-everblush-green">guest</span>
+                                <span className="text-everblush-fg">@</span>
+                                <span className="text-everblush-green">yusuf</span>
+                                <span className="text-everblush-blue">
+                                    {location.pathname === '/' ? ':~' : `:~${location.pathname}`}
+                                </span>
+                                <span className="text-everblush-green">$</span>
+                            </div>
+                            <button
+                                onClick={() => setIsMobileOpen(false)}
+                                className="p-2 text-everblush-fg/60 hover:text-everblush-green transition-colors"
+                                aria-label="Close menu"
+                            >
+                                <FaTimes className="text-base" />
+                            </button>
+                        </div>
+                        <div className="flex-1 overflow-y-auto">
+                            {/* Reuse the scrollable section content (excluding header) */}
+                            <div className="flex-1 overflow-y-auto">
+                                {/* EXPLORER Section */}
+                                <div className="border-b border-everblush-green/30">
+                                    <SectionHeader
+                                        icon={FaFolder}
+                                        title="EXPLORER"
+                                        isOpen={openSections.explorer}
+                                        onClick={() => toggleSection('explorer')}
+                                    />
+                                    <AnimatePresence>
+                                        {openSections.explorer && (
+                                            <motion.div
+                                                initial={{ height: 0, opacity: 0 }}
+                                                animate={{ height: 'auto', opacity: 1 }}
+                                                exit={{ height: 0, opacity: 0 }}
+                                                transition={{ duration: 0.2 }}
+                                                className="overflow-hidden"
+                                            >
+                                                <FileItem icon={openSections.portfolio ? FaFolderOpen : FaFolder} name="portfolio/" isFolder isOpen={openSections.portfolio} onClick={() => toggleSection('portfolio')} indent={1} />
+                                                <AnimatePresence>
+                                                    {openSections.portfolio && (
+                                                        <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.15 }}>
+                                                            {portfolioFiles.map(file => (
+                                                                <FileItem key={file.name} icon={file.icon} name={file.name} path={file.path} indent={2} />
+                                                            ))}
+                                                        </motion.div>
+                                                    )}
+                                                </AnimatePresence>
+                                                <FileItem icon={openSections.blog ? FaFolderOpen : FaFolder} name="blog/" isFolder isOpen={openSections.blog} onClick={() => toggleSection('blog')} indent={1} />
+                                                <AnimatePresence>
+                                                    {openSections.blog && (
+                                                        <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.15 }}>
+                                                            {blogFiles.map(file => (
+                                                                <FileItem key={file.name} icon={file.icon} name={file.name} path={file.path} indent={2} />
+                                                            ))}
+                                                        </motion.div>
+                                                    )}
+                                                </AnimatePresence>
+                                                <FileItem icon={FaTerminal} name="contact.sh" path="/contact" indent={1} />
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+
+                                {/* ACTIONS Section */}
+                                <div className="border-b border-everblush-green/30">
+                                    <SectionHeader icon={FaTerminal} title="ACTIONS" isOpen={openSections.actions} onClick={() => toggleSection('actions')} />
+                                    <AnimatePresence>
+                                        {openSections.actions && (
+                                            <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }} className="overflow-hidden pb-2">
+                                                {actions.map((action, idx) => (
+                                                    <button key={idx} onClick={() => { action.action(); setIsMobileOpen(false); }}
+                                                        className="w-full px-3 py-2.5 font-mono text-xs text-left text-everblush-fg/80 hover:bg-everblush-green/10 hover:text-everblush-green transition-all duration-200 flex items-center gap-2"
+                                                        title={action.label}
+                                                    >
+                                                        <action.icon className="text-sm text-everblush-green" />
+                                                        <span className="text-everblush-blue">$</span>
+                                                        <span>{action.cmd}</span>
+                                                    </button>
+                                                ))}
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                            </div>
+                        </div>
                     </motion.aside>
                 )}
             </AnimatePresence>

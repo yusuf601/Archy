@@ -45,7 +45,7 @@ function AppContent() {
             {!isLoading && <ScrollProgress />}
 
             {/* Main App */}
-            <div className="flex h-screen bg-everblush-bg overflow-hidden">
+            <div className="flex md:h-screen bg-everblush-bg md:overflow-hidden min-h-screen flex-col md:flex-row">
                 {/* CRT Scanline Overlay */}
                 <div className="crt-overlay"></div>
 
@@ -53,9 +53,9 @@ function AppContent() {
                 <Sidebar />
 
                 {/* Main Editor Area */}
-                <main className="flex-1 flex flex-col overflow-hidden">
+                <main className="flex-1 flex flex-col md:overflow-hidden">
                     {/* Content Area with Route Transitions */}
-                    <div className="flex-1 overflow-y-auto section-transition">
+                    <div className="flex-1 md:overflow-y-auto section-transition">
                         <AnimatePresence mode="wait">
                             <Routes location={location} key={location.pathname}>
                                 <Route path="/" element={<Home />} />
@@ -66,7 +66,7 @@ function AppContent() {
                         </AnimatePresence>
                     </div>
 
-                    {/* Terminal */}
+                    {/* Terminal - hidden on mobile by default */}
                     <Terminal onModeChange={handleModeChange} />
 
                     {/* Footer Status Bar */}

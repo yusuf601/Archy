@@ -14,7 +14,7 @@ const Projects = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="min-h-screen py-20 px-4 sm:px-6 lg:px-8"
+            className="min-h-screen py-10 sm:py-20 px-4 sm:px-6 lg:px-8 mobile-page-padding"
         >
             <div className="max-w-6xl mx-auto">
                 {/* Header */}

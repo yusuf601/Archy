@@ -151,17 +151,42 @@ html {
   font-weight: 300;
 }
 
-/* Custom Cursor */
+/* Custom Cursor - desktop/mouse only */
+@media (pointer: fine) {
+  * {
+    cursor: crosshair !important;
+  }
+
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    cursor: pointer !important;
+  }
+}
+
+/* Mobile Touch Improvements */
 * {
-  cursor: crosshair !important;
+  -webkit-tap-highlight-color: transparent;
 }
 
 button,
 a,
-input,
-select,
-textarea {
-  cursor: pointer !important;
+[role="button"] {
+  touch-action: manipulation;
+}
+
+/* Safe Area for iPhone notch / home indicator */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Bottom nav spacing for pages on mobile */
+@media (max-width: 767px) {
+  .mobile-page-padding {
+    padding-bottom: calc(4rem + env(safe-area-inset-bottom, 0px));
+  }
 }
 
 /* Dithered/Retro Image Effect */
@@ -241,4 +266,98 @@ textarea {
   border-color: #8ccf7e;
   box-shadow: 0 0 15px rgba(140, 207, 126, 0.3);
   transform: translateY(-2px);
+}
+
+/* ─── GLITCH TEXT ─────────────────────────────────────── */
+@keyframes glitch-clip-1 {
+
+  0%,
+  100% {
+    clip-path: inset(0 0 95% 0);
+    transform: translate(-2px, 0);
+  }
+
+  20% {
+    clip-path: inset(30% 0 50% 0);
+    transform: translate(2px, 0);
+  }
+
+  40% {
+    clip-path: inset(70% 0 10% 0);
+    transform: translate(-1px, 0);
+  }
+
+  60% {
+    clip-path: inset(10% 0 80% 0);
+    transform: translate(1px, 0);
+  }
+
+  80% {
+    clip-path: inset(50% 0 30% 0);
+    transform: translate(-2px, 0);
+  }
+}
+
+@keyframes glitch-clip-2 {
+
+  0%,
+  100% {
+    clip-path: inset(80% 0 5% 0);
+    transform: translate(2px, 0);
+  }
+
+  20% {
+    clip-path: inset(10% 0 70% 0);
+    transform: translate(-2px, 0);
+  }
+
+  40% {
+    clip-path: inset(50% 0 20% 0);
+    transform: translate(1px, 0);
+  }
+
+  60% {
+    clip-path: inset(20% 0 60% 0);
+    transform: translate(-1px, 0);
+  }
+
+  80% {
+    clip-path: inset(60% 0 25% 0);
+    transform: translate(2px, 0);
+  }
+}
+
+/* Skill bar fill (Tailwind animation handles this via framer-motion; this is a fallback) */
+@keyframes fillBar {
+  from {
+    width: 0%;
+  }
+
+  to {
+    width: var(--bar-pct, 80%);
+  }
+}
+
+/* Blue glow shadow utility */
+.shadow-glow-blue {
+  box-shadow: 0 0 20px rgba(103, 176, 232, 0.3);
+}
+
+/* Stat counter number pulse on load */
+@keyframes countPop {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.15);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.stat-pop {
+  animation: countPop 0.3s ease-out;
 }
