@@ -4,6 +4,36 @@ import { useNavigate } from 'react-router-dom';
 import TypewriterText from './TypewriterText';
 import GlitchText from './GlitchText';
 
+// ── Live uptime hook ─────────────────────────────────────
+// Birth date: adjust to the real date if known
+const BIRTH_DATE = new Date('2004-02-20T00:00:00+07:00');
+
+const useLiveUptime = () => {
+    const [uptime, setUptime] = useState('');
+
+    useEffect(() => {
+        const format = () => {
+            const now = new Date();
+            const diff = now - BIRTH_DATE;
+            const totalSec = Math.floor(diff / 1000);
+            const secs = totalSec % 60;
+            const mins = Math.floor(totalSec / 60) % 60;
+            const hours = Math.floor(totalSec / 3600) % 24;
+            const days = Math.floor(totalSec / 86400) % 30;
+            const months = Math.floor(totalSec / (86400 * 30.44)) % 12;
+            const years = Math.floor(totalSec / (86400 * 365.25));
+            const pad = (n) => String(n).padStart(2, '0');
+            return `${years}Y ${pad(months)}M ${pad(days)}D ${pad(hours)}:${pad(mins)}:${pad(secs)}`;
+        };
+        setUptime(format());
+        const id = setInterval(() => setUptime(format()), 1000);
+        return () => clearInterval(id);
+    }, []);
+
+    return uptime;
+};
+
+
 // Animated counter hook
 const useCounter = (target, duration = 1500, startOnView = true) => {
     const [count, setCount] = useState(0);
@@ -42,9 +72,10 @@ const StatBox = ({ value, label, icon, color = 'text-everblush-green' }) => {
 
 const Hero = () => {
     const navigate = useNavigate();
+    const uptime = useLiveUptime();
 
     const systemFlags = [
-        { label: 'UPTIME', value: '21 YRS' },
+        { label: 'UPTIME', value: uptime || '...' },
         { label: 'LOC', value: 'MAKASSAR' },
         { label: 'STATUS', value: 'COMPILING...' }
     ];
