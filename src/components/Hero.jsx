@@ -166,9 +166,12 @@ const Hero = () => {
                         </div>
                         <div className="relative">
                             <div className="w-28 h-28 sm:w-32 sm:h-32 border-2 border-everblush-green/50 rounded-lg overflow-hidden">
-                                <div className="w-full h-full bg-everblush-fg/10 flex items-center justify-center avatar-dithered">
-                                    <span className="text-5xl">👨‍💻</span>
-                                </div>
+                                <img
+                                    src="/avatar.png"
+                                    alt="Muh Yusuf — pixel art avatar"
+                                    className="w-full h-full object-cover image-rendering-pixelated"
+                                    style={{ imageRendering: 'pixelated' }}
+                                />
                             </div>
                             <div className="absolute -bottom-2 -right-2 bg-everblush-green text-everblush-bg px-2 py-0.5 text-xs font-mono font-bold">
                                 [ONLINE]
@@ -267,10 +270,10 @@ const Hero = () => {
                         <span className="ml-2">contact.cpp</span>
                     </motion.button>
 
-                    {/* CV download quick link */}
                     <motion.a
-                        href="/cv.pdf"
-                        download
+                        href="https://kingyusuf.netlify.app/MuhYusuf_Resume.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         whileHover={{ scale: 1.03, y: -2 }}
                         whileTap={{ scale: 0.97 }}
                         className="flex-1 sm:flex-none px-8 py-4 font-mono text-base font-semibold
