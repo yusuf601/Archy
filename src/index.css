@@ -14,7 +14,42 @@ body {
   background-color: #141b1e;
   color: #dadada;
   line-height: 1.6;
+
+  /* ── Subtle dot-grid background ───────────────────────── */
+  background-image:
+    radial-gradient(circle, rgba(140, 207, 126, 0.10) 1px, transparent 1px);
+  background-size: 28px 28px;
 }
+
+/* Slow-panning ambient glow orb — lives behind everything */
+#root::before {
+  content: '';
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 30%, rgba(140, 207, 126, 0.055) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 40% at 80% 70%, rgba(108, 142, 212, 0.045) 0%, transparent 70%);
+  animation: bgOrb 18s ease-in-out infinite alternate;
+  z-index: 0;
+}
+
+@keyframes bgOrb {
+  0% {
+    background-position-x: 0%, 100%;
+    opacity: 0.8;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    background-position-x: 15%, 85%;
+    opacity: 0.8;
+  }
+}
+
 
 /* Blinking Cursor Animation */
 .cursor {

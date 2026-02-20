@@ -8,6 +8,7 @@ import LoadingScreen from './components/LoadingScreen';
 import ScrollProgress from './components/ScrollProgress';
 import CursorTrail from './components/CursorTrail';
 import OverclockMode, { MatrixRainOverlay } from './components/OverclockMode';
+import BackgroundFx from './components/BackgroundFx';
 import Home from './pages/Home';
 import Blog from './pages/Blog';
 import Projects from './pages/Projects';
@@ -43,6 +44,9 @@ function AppContent() {
 
     return (
         <>
+            {/* Ambient background: drifting code tokens (desktop only) */}
+            <BackgroundFx />
+
             {/* Cursor particle trail (desktop only) */}
             <CursorTrail />
 
