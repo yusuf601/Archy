@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
 import AchievementToast from './AchievementToast';
 
 const Terminal = ({ onModeChange, isOpen, onToggle }) => {
@@ -26,8 +25,6 @@ const Terminal = ({ onModeChange, isOpen, onToggle }) => {
     const [sessionStartTime] = useState(Date.now());
     const inputRef = useRef(null);
     const historyEndRef = useRef(null);
-    const navigate = useNavigate();
-    const location = useLocation();
 
     // Easter egg metadata
     const easterEggData = {
@@ -124,13 +121,6 @@ Share your achievement: "I found all 30 Easter eggs in @yusuf601's portfolio!"`
     // Global keyboard shortcuts
     useEffect(() => {
         const handleGlobalKeyDown = (e) => {
-            // Ctrl+` (backtick) - Toggle terminal handled by App.jsx, but we prevent default here just in case
-            if (e.ctrlKey && e.key === '`') {
-                e.preventDefault();
-                if (typeof onToggle === 'function') {
-                    onToggle();
-                }
-            }
 
             // Ctrl+L - Clear terminal (when focused)
             if (e.ctrlKey && e.key === 'l' && isFocused) {
@@ -340,7 +330,7 @@ drwx------ 2 guest guest 4096 Feb 10 22:57 .secret/`
 
         pwd: () => ({
             type: 'output',
-            text: `/home/guest${location.pathname === '/' ? '' : location.pathname}`
+            text: `/home/guest`
         }),
 
         whoami: () => ({
@@ -881,34 +871,19 @@ Threat level: ${threatLevel} (You're just having fun 😄)`
         cd: (args) => {
             const target = args[0];
 
-            const pathMap = {
-                'blog': '/blog',
-                'projects': '/projects',
-                'contact': '/contact',
-                'home': '/',
-                '~': '/',
-                '..': '/',
-            };
-
             if (!target) {
-                return {
-                    type: 'output',
-                    text: 'cd: missing operand'
-                };
+                return { type: 'output', text: 'cd: missing operand' };
             }
 
-            if (pathMap[target]) {
-                navigate(pathMap[target]);
-                return {
-                    type: 'output',
-                    text: `Navigating to ${target}...`
-                };
+            const hashTarget = (target === '~' || target === '..' || target === 'home' || target === '/') ? 'home' : target;
+            const validTargets = ['home', 'about', 'projects', 'contact'];
+
+            if (validTargets.includes(hashTarget)) {
+                window.location.hash = hashTarget;
+                return { type: 'output', text: `Navigating to ${hashTarget}...` };
             }
 
-            return {
-                type: 'error',
-                text: `cd: ${target}: No such file or directory`
-            };
+            return { type: 'error', text: `cd: ${target}: No such directory. Try 'home', 'about', 'projects', or 'contact'.` };
         },
 
         wget: (args) => {
@@ -1068,9 +1043,14 @@ ${timestamp} (21.5 MB/s) - '${filename}' saved [2278683/2278683]
     };
 
     const getCurrentPath = () => {
-        const path = location.pathname;
-        if (path === '/') return '~';
-        return `~${path}`;
+        // Read hash location since we use single-page scrolling
+        try {
+            const path = window.location.hash.replace('#', '');
+            if (!path || path === 'home') return '~';
+            return `~/${path}`;
+        } catch (e) {
+            return '~';
+        }
     };
 
     return (
