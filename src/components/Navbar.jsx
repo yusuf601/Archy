@@ -1,40 +1,56 @@
 import React from 'react';
 
-const Navbar = () => {
+const Navbar = ({ onTerminalToggle, terminalOpen }) => {
     const navLinks = [
-        { name: './home', href: '#home' },
-        { name: './projects', href: '#projects' },
-        { name: './blog', href: '#blog' },
-        { name: './contact', href: '#contact' },
+        { name: 'Home', href: '#home' },
+        { name: 'About', href: '#about' },
+        { name: 'Projects', href: '#projects' },
+        { name: 'Contact', href: '#contact' },
     ];
 
     return (
-        <nav className="fixed top-0 left-0 right-0 z-50 bg-everblush-bg border-b border-everblush-green/30">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between h-16">
-                    {/* Left Side - Terminal Prompt Logo */}
-                    <div className="flex items-center space-x-0 font-mono text-sm sm:text-base">
-                        <span className="text-everblush-green font-semibold">yusuf</span>
-                        <span className="text-everblush-fg">@</span>
-                        <span className="text-everblush-green font-semibold">uho</span>
-                        <span className="text-everblush-fg">:~$</span>
-                    </div>
+        <nav className="fixed top-0 left-0 right-0 z-40 bg-[var(--bg-navbar)] border-b border-[var(--border-light)] backdrop-blur-sm bg-opacity-90">
+            <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
+                {/* Brand */}
+                <a href="#home" className="text-sm font-bold text-[var(--accent-blue)]">
+                    yusuf.cpp
+                </a>
 
-                    {/* Right Side - Navigation Links */}
-                    <div className="flex items-center space-x-2 sm:space-x-4">
-                        {navLinks.map((link) => (
-                            <a
-                                key={link.name}
-                                href={link.href}
-                                className="px-3 py-1 text-xs sm:text-sm font-mono text-everblush-fg 
-                         hover:bg-everblush-green hover:text-everblush-bg 
-                         transition-all duration-200 border border-transparent 
-                         hover:border-everblush-green rounded"
-                            >
-                                {link.name}
-                            </a>
-                        ))}
-                    </div>
+                {/* Desktop Nav */}
+                <div className="hidden md:flex items-center space-x-6">
+                    {navLinks.map((link) => (
+                        <a
+                            key={link.name}
+                            href={link.href}
+                            className="text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+                        >
+                            {link.name}
+                        </a>
+                    ))}
+                    <button
+                        onClick={onTerminalToggle}
+                        className={`text-xs px-3 py-1 border rounded transition-colors ${terminalOpen
+                                ? 'border-[var(--accent-green)] text-[var(--accent-green)] bg-[var(--accent-green)] bg-opacity-10'
+                                : 'border-[var(--border-light)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--text-secondary)]'
+                            }`}
+                    >
+                        &gt;_ terminal
+                    </button>
+                </div>
+
+                {/* Mobile Menu Button - simple for now */}
+                <div className="md:hidden flex items-center gap-4">
+                    <button
+                        onClick={onTerminalToggle}
+                        className="text-xs text-[var(--accent-green)]"
+                    >
+                        &gt;_
+                    </button>
+                    <button className="text-[var(--text-secondary)]">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                    </button>
                 </div>
             </div>
         </nav>

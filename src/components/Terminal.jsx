@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import AchievementToast from './AchievementToast';
 
-const Terminal = ({ onModeChange }) => {
+const Terminal = ({ onModeChange, isOpen, onToggle }) => {
     const [input, setInput] = useState('');
     const [history, setHistory] = useState([
         {
@@ -17,7 +17,7 @@ const Terminal = ({ onModeChange }) => {
     const [commandHistory, setCommandHistory] = useState([]);
     const [historyIndex, setHistoryIndex] = useState(-1);
     const [isFocused, setIsFocused] = useState(false);
-    const [isMinimized, setIsMinimized] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
+    // Removed isMinimized as it's handled by parent overlay now
     const [sudoAttempts, setSudoAttempts] = useState(0);
     const [securityLog, setSecurityLog] = useState([]);
     const [easterEggsFound, setEasterEggsFound] = useState([]);
@@ -179,10 +179,34 @@ Share your achievement: "I found all 30 Easter eggs in @yusuf601's portfolio!"`
   clear         - Clear terminal history
   hint          - Get a clue about hidden Easter eggs
   achievements  - View your Easter egg progress
+  
+  [C++ Developer Tools]
+  g++           - GNU C++ compiler
+  make          - Build automation tool
+  gdb           - GNU Debugger
+  valgrind      - Memory debugging tool
 
 Try exploring! There might be hidden commands... 👀`
         }),
 
+        'g++': (args) => {
+            if (args.length === 0) return { type: 'error', text: 'g++: fatal error: no input files\ncompilation terminated.' };
+            const filename = args[0] || 'main.cpp';
+            const outname = filename.split('.')[0] || 'a.out';
+            return { type: 'output', text: `[100%] Building CXX object ${filename}.o\n[100%] Linking CXX executable ${outname}\n[100%] Built target` };
+        },
+
+        make: () => {
+            return { type: 'output', text: "g++ -O3 -Wall -std=c++20 src/main.cpp -o build/main\nmake: target `all` is up to date." };
+        },
+
+        gdb: () => {
+            return { type: 'output', text: "GNU gdb (GDB) 14.1\nCopyright (C) 2023 Free Software Foundation, Inc.\nReading symbols from ./a.out...\n(gdb) quit" };
+        },
+
+        valgrind: () => {
+            return { type: 'output', text: "==1337== Memcheck, a memory error detector\n==1337== HEAP SUMMARY:\n==1337==     in use at exit: 0 bytes in 0 blocks\n==1337==   total heap usage: 42 allocs, 42 frees, 1,024 bytes allocated\n==1337== All heap blocks were freed -- no leaks are possible" };
+        },
         hint: () => {
             const hints = [
                 "Try common Linux commands you'd use on a real system...",
@@ -1046,158 +1070,125 @@ ${timestamp} (21.5 MB/s) - '${filename}' saved [2278683/2278683]
 
     return (
         <>
-            {/* Hidden State Indicator - Shows when terminal is minimized */}
-            {isMinimized && (
-                <div
-                    className="hidden md:flex fixed bottom-0 left-0 right-0 bg-everblush-bg-light border-t border-everblush-green/30 px-4 py-2 items-center justify-between cursor-pointer hover:bg-everblush-bg-light/80 transition-colors z-30"
-                    onClick={() => setIsMinimized(false)}
-                >
-                    <div className="flex items-center gap-3 text-everblush-fg/60 text-sm">
-                        <span>📟 Terminal</span>
-                        <span className="text-everblush-fg/40">•</span>
-                        <span className="text-everblush-green">🎁 {easterEggsFound.length} Easter eggs found</span>
-                        {securityLog.length > 0 && (
-                            <>
-                                <span className="text-everblush-fg/40">•</span>
-                                <span className="text-everblush-yellow">⚠ {securityLog.length} events</span>
-                            </>
-                        )}
+            {/* Terminal Window - controlled exclusively by isOpen prop */}
+            {isOpen && (
+                <div className={`bg-[#0D1117] h-full flex flex-col font-mono text-xs sm:text-sm transition-all duration-300 ${isFocused ? 'shadow-[0_-10px_40px_rgba(77,91,206,0.15)]' : ''} overflow-hidden`}>
+
+                    {/* Terminal Title Bar */}
+                    <div className="bg-[#161B22] border-b border-[#30363D] px-4 py-2 flex items-center justify-between select-none shrink-0">
+                        <div className="flex items-center gap-3">
+                            {/* Window Controls */}
+                            <div className="flex items-center gap-2">
+                                <button
+                                    className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-opacity-80 transition-colors"
+                                    onClick={onToggle}
+                                    title="Close (Ctrl+`)"
+                                />
+                                <button
+                                    className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-opacity-80 transition-colors"
+                                    title="Minimize"
+                                    onClick={onToggle}
+                                />
+                                <button
+                                    className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-opacity-80 transition-colors"
+                                    title="Maximize"
+                                />
+                            </div>
+
+                            {/* Title */}
+                            <span className="text-[#8B949E] text-xs">
+                                yusuf@cpp-machine: {getCurrentPath()}
+                            </span>
+                        </div>
+
+                        {/* Easter Eggs Counter */}
+                        <div className="text-[#8B949E] text-xs flex items-center gap-2">
+                            <span>🎁 {easterEggsFound.length}/30</span>
+                        </div>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-everblush-fg/40">
-                        <span>Ctrl+` to open</span>
-                        <span>▲</span>
+
+                    {/* Tab Bar */}
+                    <div className="bg-[#0D1117] border-b border-[#30363D] px-4 py-1 flex items-center gap-2 shrink-0">
+                        <div className="flex items-center gap-2 px-3 py-1 bg-[#161B22] border-t border-l border-r border-[#30363D] rounded-t text-xs text-[#58A6FF]">
+                            <span className="w-2 h-2 rounded-full bg-[#3FB950] animate-pulse" />
+                            <span>bash</span>
+                        </div>
+                        <button className="text-[#8B949E] hover:text-[#C9D1D9] text-xs px-2">+</button>
+                    </div>
+
+                    {/* Terminal Content */}
+                    <div className="p-4 flex-1 overflow-y-auto" onClick={() => inputRef.current?.focus()}>
+                        <div className="space-y-2 mb-2">
+                            {history.map((entry, index) => (
+                                <div key={index}>
+                                    {entry.type === 'command' && (
+                                        <div className="text-[#C9D1D9]">
+                                            <span className="text-[#3FB950]">yusuf@cpp-machine</span>
+                                            <span className="text-[#C9D1D9]">:</span>
+                                            <span className="text-[#58A6FF]">{getCurrentPath()}</span>
+                                            <span className="text-[#3FB950]">$</span> {entry.text}
+                                        </div>
+                                    )}
+                                    {entry.type === 'output' && (
+                                        <div className="text-[#8B949E] whitespace-pre-line pl-4 font-normal">
+                                            {entry.text}
+                                        </div>
+                                    )}
+                                    {entry.type === 'error' && (
+                                        <div className="text-[#F85149] pl-4 whitespace-pre-line font-normal">
+                                            {entry.text}
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                            <div ref={historyEndRef} />
+                        </div>
+
+                        <form onSubmit={handleSubmit} className="flex items-center mt-2">
+                            <span className="text-[#3FB950]">yusuf@cpp-machine</span>
+                            <span className="text-[#C9D1D9]">:</span>
+                            <span className="text-[#58A6FF]">{getCurrentPath()}</span>
+                            <span className="text-[#3FB950]">$</span>
+                            <input
+                                ref={inputRef}
+                                type="text"
+                                value={input}
+                                onChange={(e) => setInput(e.target.value)}
+                                onKeyDown={handleKeyDown}
+                                onFocus={handleFocus}
+                                onBlur={handleBlur}
+                                className="flex-1 ml-2 bg-transparent outline-none text-[#C9D1D9] caret-[#C9D1D9]"
+                                autoComplete="off"
+                                spellCheck="false"
+                            />
+                        </form>
+                    </div>
+
+                    {/* Status Bar */}
+                    <div className="bg-[#161B22] border-t border-[#30363D] px-4 py-1.5 flex items-center justify-between text-xs text-[#8B949E] shrink-0">
+                        <div className="flex items-center gap-4">
+                            <span className="text-[#58A6FF]">{isFocused ? 'INSERT' : 'NORMAL'}</span>
+                            <span>{getCurrentPath()}</span>
+                            <span>{commandHistory.length} commands</span>
+                        </div>
+                        <div className="flex items-center gap-4">
+                            <span>Session: {getSessionUptime()}</span>
+                            {securityLog.length > 0 && (
+                                <span className="text-[#D29922]">⚠ {securityLog.length} events</span>
+                            )}
+                        </div>
                     </div>
                 </div>
             )}
 
-            {/* Terminal Window - hidden on mobile when minimized */}
-            <div className={`bg-everblush-bg border-t border-everblush-green/30 font-mono text-xs sm:text-sm transition-all duration-300 ${isFocused ? 'shadow-lg shadow-everblush-green/20' : ''
-                } rounded-t-lg overflow-hidden md:block ${isMinimized ? 'hidden' : 'block'}`}>
-                {/* Terminal Title Bar */}
-                <div className="bg-everblush-bg-light border-b border-everblush-green/20 px-4 py-2 flex items-center justify-between select-none">
-                    <div className="flex items-center gap-3">
-                        {/* Window Controls */}
-                        <div className="flex items-center gap-2">
-                            <button
-                                className="w-3 h-3 rounded-full bg-everblush-red hover:bg-everblush-red/80 transition-colors"
-                                onClick={() => setIsMinimized(!isMinimized)}
-                                title="Minimize (Ctrl+`)"
-                            />
-                            <button
-                                className="w-3 h-3 rounded-full bg-everblush-yellow hover:bg-everblush-yellow/80 transition-colors"
-                                title="Maximize"
-                            />
-                            <button
-                                className="w-3 h-3 rounded-full bg-everblush-green hover:bg-everblush-green/80 transition-colors"
-                                title="Close"
-                            />
-                        </div>
-                        {/* Mobile toggle button - larger tap target */}
-                        <button
-                            className="md:hidden ml-2 px-2 py-1 text-xs text-everblush-fg/50 hover:text-everblush-fg border border-everblush-green/20 rounded transition-colors"
-                            onClick={() => setIsMinimized(true)}
-                            aria-label="Hide terminal"
-                        >
-                            Hide ▼
-                        </button>
-
-                        {/* Title */}
-                        <span className="text-everblush-fg/60 text-xs">
-                            guest@yusuf-portfolio: {getCurrentPath()}
-                        </span>
-                    </div>
-
-                    {/* Easter Eggs Counter */}
-                    <div className="text-everblush-fg/40 text-xs flex items-center gap-2">
-                        <span>🎁 {easterEggsFound.length}/30</span>
-                    </div>
-                </div>
-
-                {/* Tab Bar */}
-                <div className="bg-everblush-bg-light border-b border-everblush-green/20 px-4 py-1 flex items-center gap-2">
-                    <div className="flex items-center gap-2 px-3 py-1 bg-everblush-bg rounded-t text-xs text-everblush-green">
-                        <span className="w-2 h-2 rounded-full bg-everblush-green animate-pulse" />
-                        <span>bash</span>
-                    </div>
-                    <button className="text-everblush-fg/40 hover:text-everblush-fg/60 text-xs px-2">+</button>
-                </div>
-
-                {/* Terminal Content */}
-                {!isMinimized && (
-                    <>
-                        <div className="p-4 max-h-40 sm:max-h-64 overflow-y-auto">
-                            <div className="space-y-2 mb-2">
-                                {history.map((entry, index) => (
-                                    <div key={index}>
-                                        {entry.type === 'command' && (
-                                            <div className="text-everblush-green">
-                                                <span className="text-everblush-blue">guest@yusuf</span>
-                                                <span className="text-everblush-fg">:</span>
-                                                <span className="text-everblush-blue">{getCurrentPath()}</span>
-                                                <span className="text-everblush-green">$</span> {entry.text}
-                                            </div>
-                                        )}
-                                        {entry.type === 'output' && (
-                                            <div className="text-everblush-fg/80 whitespace-pre-line pl-4">
-                                                {entry.text}
-                                            </div>
-                                        )}
-                                        {entry.type === 'error' && (
-                                            <div className="text-everblush-red pl-4 whitespace-pre-line">
-                                                {entry.text}
-                                            </div>
-                                        )}
-                                    </div>
-                                ))}
-                                <div ref={historyEndRef} />
-                            </div>
-
-                            <form onSubmit={handleSubmit} className="flex items-center">
-                                <span className="text-everblush-blue">guest@yusuf</span>
-                                <span className="text-everblush-fg">:</span>
-                                <span className="text-everblush-blue">{getCurrentPath()}</span>
-                                <span className="text-everblush-green">$</span>
-                                <input
-                                    ref={inputRef}
-                                    type="text"
-                                    value={input}
-                                    onChange={(e) => setInput(e.target.value)}
-                                    onKeyDown={handleKeyDown}
-                                    onFocus={handleFocus}
-                                    onBlur={handleBlur}
-                                    className="flex-1 ml-2 bg-transparent outline-none text-everblush-fg caret-everblush-green"
-                                    autoComplete="off"
-                                    spellCheck="false"
-                                />
-                            </form>
-                        </div>
-
-                        {/* Status Bar */}
-                        <div className="bg-everblush-bg-light border-t border-everblush-green/20 px-4 py-1 flex items-center justify-between text-xs text-everblush-fg/50">
-                            <div className="flex items-center gap-4">
-                                <span className="text-everblush-green">{isFocused ? 'INSERT' : 'NORMAL'}</span>
-                                <span>{getCurrentPath()}</span>
-                                <span>{commandHistory.length} commands</span>
-                            </div>
-                            <div className="flex items-center gap-4">
-                                <span>Session: {getSessionUptime()}</span>
-                                {securityLog.length > 0 && (
-                                    <span className="text-everblush-yellow">⚠ {securityLog.length} events</span>
-                                )}
-                            </div>
-                        </div>
-                    </>
-                )}
-
-                {/* Achievement Toasts */}
-                {achievements.map((achievement, index) => (
-                    <AchievementToast
-                        key={index}
-                        achievement={achievement}
-                        onDismiss={() => dismissAchievement(index)}
-                    />
-                ))}
-            </div>
+            {/* Achievement Toasts */}
+            {achievements.map((achievement, index) => (
+                <AchievementToast
+                    key={index}
+                    achievement={achievement}
+                    onDismiss={() => dismissAchievement(index)}
+                />
+            ))}
         </>
     );
 };

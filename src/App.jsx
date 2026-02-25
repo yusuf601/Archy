@@ -1,110 +1,52 @@
-import React, { useState, useCallback } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
-import Sidebar from './components/Sidebar';
-import Terminal from './components/Terminal';
-import Footer from './components/Footer';
-import LoadingScreen from './components/LoadingScreen';
-import ScrollProgress from './components/ScrollProgress';
-import CursorTrail from './components/CursorTrail';
-import OverclockMode, { MatrixRainOverlay } from './components/OverclockMode';
-import BackgroundFx from './components/BackgroundFx';
+import React, { useState, useEffect } from 'react';
+import Navbar from './components/Navbar';
 import Home from './pages/Home';
-import Blog from './pages/Blog';
+import About from './pages/About';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
-
-function AppContent() {
-    const [editorMode, setEditorMode] = useState('NORMAL');
-    const [isLoading, setIsLoading] = useState(true);
-    const [overclockActive, setOverclockActive] = useState(false);
-
-    const handleOverclock = useCallback(() => setOverclockActive(true), []);
-    const location = useLocation();
-
-    const handleModeChange = (mode) => {
-        setEditorMode(mode);
-    };
-
-    const handleLoadingComplete = () => {
-        setIsLoading(false);
-    };
-
-    // Get current filename based on route
-    const getCurrentFileName = () => {
-        const path = location.pathname;
-        const fileMap = {
-            '/': 'main.cpp',
-            '/blog': 'blog.md',
-            '/projects': 'projects.cpp',
-            '/contact': 'contact.cpp'
-        };
-        return fileMap[path] || 'main.cpp';
-    };
-
-    return (
-        <>
-            {/* Ambient background: drifting code tokens (desktop only) */}
-            <BackgroundFx />
-
-            {/* Cursor particle trail (desktop only) */}
-            <CursorTrail />
-
-            {/* Konami Code listener */}
-            <OverclockMode onActivate={handleOverclock} />
-
-            {/* Matrix rain easter egg overlay */}
-            <AnimatePresence>
-                {overclockActive && (
-                    <MatrixRainOverlay onDone={() => setOverclockActive(false)} />
-                )}
-            </AnimatePresence>
-
-            {/* Loading Screen */}
-            {isLoading && <LoadingScreen onLoadingComplete={handleLoadingComplete} />}
-
-            {/* Scroll Progress Bar */}
-            {!isLoading && <ScrollProgress />}
-
-            {/* Main App */}
-            <div className="flex md:h-screen bg-everblush-bg md:overflow-hidden min-h-screen flex-col md:flex-row">
-                {/* CRT Scanline Overlay */}
-                <div className="crt-overlay"></div>
-                <div className="crt-scan-beam"></div>
-
-                {/* Sidebar */}
-                <Sidebar />
-
-                {/* Main Editor Area */}
-                <main className="flex-1 flex flex-col md:overflow-hidden">
-                    {/* Content Area with Route Transitions */}
-                    <div className="flex-1 md:overflow-y-auto section-transition">
-                        <AnimatePresence mode="wait">
-                            <Routes location={location} key={location.pathname}>
-                                <Route path="/" element={<Home />} />
-                                <Route path="/blog" element={<Blog />} />
-                                <Route path="/projects" element={<Projects />} />
-                                <Route path="/contact" element={<Contact />} />
-                            </Routes>
-                        </AnimatePresence>
-                    </div>
-
-                    {/* Terminal - hidden on mobile by default */}
-                    <Terminal onModeChange={handleModeChange} />
-
-                    {/* Footer Status Bar */}
-                    <Footer mode={editorMode} currentFile={getCurrentFileName()} />
-                </main>
-            </div>
-        </>
-    );
-}
+import Terminal from './components/Terminal';
 
 function App() {
+    const [terminalOpen, setTerminalOpen] = useState(false);
+
+    // Global toggle for terminal via Ctrl+`
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === '`') {
+                e.preventDefault();
+                setTerminalOpen(prev => !prev);
+            }
+            if (e.key === 'Escape' && terminalOpen) {
+                setTerminalOpen(false);
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [terminalOpen]);
+
+    const toggleTerminal = () => setTerminalOpen(!terminalOpen);
+
     return (
-        <BrowserRouter>
-            <AppContent />
-        </BrowserRouter>
+        <div className="min-h-screen bg-[var(--bg-body)] text-[var(--text-primary)] font-mono selection:bg-[var(--accent-blue)] selection:text-white">
+            <Navbar onTerminalToggle={toggleTerminal} terminalOpen={terminalOpen} />
+
+            {/* Main Single Page Scrollable Content */}
+            <main className="flex flex-col">
+                <div id="home"><Home /></div>
+                <div id="about"><About /></div>
+                <div id="projects"><Projects /></div>
+                <div id="contact"><Contact /></div>
+            </main>
+
+            {/* Terminal Overlay */}
+            <div className={`fixed bottom-0 left-0 right-0 z-50 transition-transform duration-300 ease-in-out ${terminalOpen ? 'translate-y-0' : 'translate-y-full'}`}>
+                {terminalOpen && (
+                    <div className="h-[50vh] border-t border-[var(--border-light)] shadow-2xl relative">
+                        <Terminal isOpen={terminalOpen} onToggle={toggleTerminal} />
+                    </div>
+                )}
+            </div>
+        </div>
     );
 }
 

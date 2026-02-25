@@ -9,16 +9,25 @@
   box-sizing: border-box;
 }
 
+:root {
+  --bg-body: #181B1F;
+  --bg-navbar: #13161A;
+  --bg-panel: #1E2228;
+  --bg-panel-hover: #2A2D33;
+  --text-primary: #E5E9F0;
+  --text-secondary: #A8B0B9;
+  --accent-blue: #4D5BCE;
+  --accent-green: #43D9AD;
+  --border-light: #2A2D33;
+}
+
 body {
   font-family: 'JetBrains Mono', monospace;
-  background-color: #141b1e;
-  color: #dadada;
+  background-color: var(--bg-body) !important;
+  color: var(--text-primary);
   line-height: 1.6;
-
-  /* ── Subtle dot-grid background ───────────────────────── */
-  background-image:
-    radial-gradient(circle, rgba(140, 207, 126, 0.10) 1px, transparent 1px);
-  background-size: 28px 28px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Slow-panning ambient glow orb — lives behind everything */
