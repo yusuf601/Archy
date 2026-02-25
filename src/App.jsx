@@ -40,11 +40,9 @@ function App() {
 
             {/* Terminal Overlay */}
             <div className={`fixed bottom-0 left-0 right-0 z-50 transition-transform duration-300 ease-in-out ${terminalOpen ? 'translate-y-0' : 'translate-y-full'}`}>
-                {terminalOpen && (
-                    <div className="h-[50vh] border-t border-[var(--border-light)] shadow-2xl relative">
-                        <Terminal isOpen={terminalOpen} onToggle={toggleTerminal} />
-                    </div>
-                )}
+                <div className="h-[50vh] border-t border-[var(--border-light)] shadow-2xl relative bg-[#0D1117]">
+                    <Terminal isOpen={terminalOpen} onToggle={toggleTerminal} />
+                </div>
             </div>
         </div>
     );

@@ -124,13 +124,11 @@ Share your achievement: "I found all 30 Easter eggs in @yusuf601's portfolio!"`
     // Global keyboard shortcuts
     useEffect(() => {
         const handleGlobalKeyDown = (e) => {
-            // Ctrl+` (backtick) - Toggle terminal
+            // Ctrl+` (backtick) - Toggle terminal handled by App.jsx, but we prevent default here just in case
             if (e.ctrlKey && e.key === '`') {
                 e.preventDefault();
-                setIsMinimized(prev => !prev);
-                if (isMinimized) {
-                    // Focus input when expanding
-                    setTimeout(() => inputRef.current?.focus(), 100);
+                if (typeof onToggle === 'function') {
+                    onToggle();
                 }
             }
 
@@ -158,7 +156,7 @@ Share your achievement: "I found all 30 Easter eggs in @yusuf601's portfolio!"`
 
         window.addEventListener('keydown', handleGlobalKeyDown);
         return () => window.removeEventListener('keydown', handleGlobalKeyDown);
-    }, [isMinimized, isFocused]);
+    }, [isFocused, onToggle]);
 
     const commands = {
         help: () => ({
@@ -1053,6 +1051,13 @@ ${timestamp} (21.5 MB/s) - '${filename}' saved [2278683/2278683]
         historyEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [history]);
 
+    // Auto-focus input when terminal opens
+    useEffect(() => {
+        if (isOpen) {
+            setTimeout(() => inputRef.current?.focus(), 300); // Wait for slide animation
+        }
+    }, [isOpen]);
+
     // Calculate session uptime
     const getSessionUptime = () => {
         const uptime = Math.floor((Date.now() - sessionStartTime) / 1000);
@@ -1070,116 +1075,114 @@ ${timestamp} (21.5 MB/s) - '${filename}' saved [2278683/2278683]
 
     return (
         <>
-            {/* Terminal Window - controlled exclusively by isOpen prop */}
-            {isOpen && (
-                <div className={`bg-[#0D1117] h-full flex flex-col font-mono text-xs sm:text-sm transition-all duration-300 ${isFocused ? 'shadow-[0_-10px_40px_rgba(77,91,206,0.15)]' : ''} overflow-hidden`}>
+            {/* Terminal Window - always rendered to maintain state, visually hidden by parent */}
+            <div className={`bg-[#0D1117] h-full flex flex-col font-mono text-xs sm:text-sm transition-all duration-300 ${isFocused ? 'shadow-[0_-10px_40px_rgba(77,91,206,0.15)]' : ''} overflow-hidden`}>
 
-                    {/* Terminal Title Bar */}
-                    <div className="bg-[#161B22] border-b border-[#30363D] px-4 py-2 flex items-center justify-between select-none shrink-0">
-                        <div className="flex items-center gap-3">
-                            {/* Window Controls */}
-                            <div className="flex items-center gap-2">
-                                <button
-                                    className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-opacity-80 transition-colors"
-                                    onClick={onToggle}
-                                    title="Close (Ctrl+`)"
-                                />
-                                <button
-                                    className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-opacity-80 transition-colors"
-                                    title="Minimize"
-                                    onClick={onToggle}
-                                />
-                                <button
-                                    className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-opacity-80 transition-colors"
-                                    title="Maximize"
-                                />
-                            </div>
-
-                            {/* Title */}
-                            <span className="text-[#8B949E] text-xs">
-                                yusuf@cpp-machine: {getCurrentPath()}
-                            </span>
-                        </div>
-
-                        {/* Easter Eggs Counter */}
-                        <div className="text-[#8B949E] text-xs flex items-center gap-2">
-                            <span>🎁 {easterEggsFound.length}/30</span>
-                        </div>
-                    </div>
-
-                    {/* Tab Bar */}
-                    <div className="bg-[#0D1117] border-b border-[#30363D] px-4 py-1 flex items-center gap-2 shrink-0">
-                        <div className="flex items-center gap-2 px-3 py-1 bg-[#161B22] border-t border-l border-r border-[#30363D] rounded-t text-xs text-[#58A6FF]">
-                            <span className="w-2 h-2 rounded-full bg-[#3FB950] animate-pulse" />
-                            <span>bash</span>
-                        </div>
-                        <button className="text-[#8B949E] hover:text-[#C9D1D9] text-xs px-2">+</button>
-                    </div>
-
-                    {/* Terminal Content */}
-                    <div className="p-4 flex-1 overflow-y-auto" onClick={() => inputRef.current?.focus()}>
-                        <div className="space-y-2 mb-2">
-                            {history.map((entry, index) => (
-                                <div key={index}>
-                                    {entry.type === 'command' && (
-                                        <div className="text-[#C9D1D9]">
-                                            <span className="text-[#3FB950]">yusuf@cpp-machine</span>
-                                            <span className="text-[#C9D1D9]">:</span>
-                                            <span className="text-[#58A6FF]">{getCurrentPath()}</span>
-                                            <span className="text-[#3FB950]">$</span> {entry.text}
-                                        </div>
-                                    )}
-                                    {entry.type === 'output' && (
-                                        <div className="text-[#8B949E] whitespace-pre-line pl-4 font-normal">
-                                            {entry.text}
-                                        </div>
-                                    )}
-                                    {entry.type === 'error' && (
-                                        <div className="text-[#F85149] pl-4 whitespace-pre-line font-normal">
-                                            {entry.text}
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
-                            <div ref={historyEndRef} />
-                        </div>
-
-                        <form onSubmit={handleSubmit} className="flex items-center mt-2">
-                            <span className="text-[#3FB950]">yusuf@cpp-machine</span>
-                            <span className="text-[#C9D1D9]">:</span>
-                            <span className="text-[#58A6FF]">{getCurrentPath()}</span>
-                            <span className="text-[#3FB950]">$</span>
-                            <input
-                                ref={inputRef}
-                                type="text"
-                                value={input}
-                                onChange={(e) => setInput(e.target.value)}
-                                onKeyDown={handleKeyDown}
-                                onFocus={handleFocus}
-                                onBlur={handleBlur}
-                                className="flex-1 ml-2 bg-transparent outline-none text-[#C9D1D9] caret-[#C9D1D9]"
-                                autoComplete="off"
-                                spellCheck="false"
+                {/* Terminal Title Bar */}
+                <div className="bg-[#161B22] border-b border-[#30363D] px-4 py-2 flex items-center justify-between select-none shrink-0">
+                    <div className="flex items-center gap-3">
+                        {/* Window Controls */}
+                        <div className="flex items-center gap-2">
+                            <button
+                                className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-opacity-80 transition-colors"
+                                onClick={onToggle}
+                                title="Close (Ctrl+`)"
                             />
-                        </form>
+                            <button
+                                className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-opacity-80 transition-colors"
+                                title="Minimize"
+                                onClick={onToggle}
+                            />
+                            <button
+                                className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-opacity-80 transition-colors"
+                                title="Maximize"
+                            />
+                        </div>
+
+                        {/* Title */}
+                        <span className="text-[#8B949E] text-xs">
+                            yusuf@cpp-machine: {getCurrentPath()}
+                        </span>
                     </div>
 
-                    {/* Status Bar */}
-                    <div className="bg-[#161B22] border-t border-[#30363D] px-4 py-1.5 flex items-center justify-between text-xs text-[#8B949E] shrink-0">
-                        <div className="flex items-center gap-4">
-                            <span className="text-[#58A6FF]">{isFocused ? 'INSERT' : 'NORMAL'}</span>
-                            <span>{getCurrentPath()}</span>
-                            <span>{commandHistory.length} commands</span>
-                        </div>
-                        <div className="flex items-center gap-4">
-                            <span>Session: {getSessionUptime()}</span>
-                            {securityLog.length > 0 && (
-                                <span className="text-[#D29922]">⚠ {securityLog.length} events</span>
-                            )}
-                        </div>
+                    {/* Easter Eggs Counter */}
+                    <div className="text-[#8B949E] text-xs flex items-center gap-2">
+                        <span>🎁 {easterEggsFound.length}/30</span>
                     </div>
                 </div>
-            )}
+
+                {/* Tab Bar */}
+                <div className="bg-[#0D1117] border-b border-[#30363D] px-4 py-1 flex items-center gap-2 shrink-0">
+                    <div className="flex items-center gap-2 px-3 py-1 bg-[#161B22] border-t border-l border-r border-[#30363D] rounded-t text-xs text-[#58A6FF]">
+                        <span className="w-2 h-2 rounded-full bg-[#3FB950] animate-pulse" />
+                        <span>bash</span>
+                    </div>
+                    <button className="text-[#8B949E] hover:text-[#C9D1D9] text-xs px-2">+</button>
+                </div>
+
+                {/* Terminal Content */}
+                <div className="p-4 flex-1 overflow-y-auto" onClick={() => inputRef.current?.focus()}>
+                    <div className="space-y-2 mb-2">
+                        {history.map((entry, index) => (
+                            <div key={index}>
+                                {entry.type === 'command' && (
+                                    <div className="text-[#C9D1D9]">
+                                        <span className="text-[#3FB950]">yusuf@cpp-machine</span>
+                                        <span className="text-[#C9D1D9]">:</span>
+                                        <span className="text-[#58A6FF]">{getCurrentPath()}</span>
+                                        <span className="text-[#3FB950]">$</span> {entry.text}
+                                    </div>
+                                )}
+                                {entry.type === 'output' && (
+                                    <div className="text-[#8B949E] whitespace-pre-line pl-4 font-normal">
+                                        {entry.text}
+                                    </div>
+                                )}
+                                {entry.type === 'error' && (
+                                    <div className="text-[#F85149] pl-4 whitespace-pre-line font-normal">
+                                        {entry.text}
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                        <div ref={historyEndRef} />
+                    </div>
+
+                    <form onSubmit={handleSubmit} className="flex items-center mt-2">
+                        <span className="text-[#3FB950]">yusuf@cpp-machine</span>
+                        <span className="text-[#C9D1D9]">:</span>
+                        <span className="text-[#58A6FF]">{getCurrentPath()}</span>
+                        <span className="text-[#3FB950]">$</span>
+                        <input
+                            ref={inputRef}
+                            type="text"
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            onKeyDown={handleKeyDown}
+                            onFocus={handleFocus}
+                            onBlur={handleBlur}
+                            className="flex-1 ml-2 bg-transparent outline-none text-[#C9D1D9] caret-[#C9D1D9]"
+                            autoComplete="off"
+                            spellCheck="false"
+                        />
+                    </form>
+                </div>
+
+                {/* Status Bar */}
+                <div className="bg-[#161B22] border-t border-[#30363D] px-4 py-1.5 flex items-center justify-between text-xs text-[#8B949E] shrink-0">
+                    <div className="flex items-center gap-4">
+                        <span className="text-[#58A6FF]">{isFocused ? 'INSERT' : 'NORMAL'}</span>
+                        <span>{getCurrentPath()}</span>
+                        <span>{commandHistory.length} commands</span>
+                    </div>
+                    <div className="flex items-center gap-4">
+                        <span>Session: {getSessionUptime()}</span>
+                        {securityLog.length > 0 && (
+                            <span className="text-[#D29922]">⚠ {securityLog.length} events</span>
+                        )}
+                    </div>
+                </div>
+            </div>
 
             {/* Achievement Toasts */}
             {achievements.map((achievement, index) => (
