@@ -48,8 +48,29 @@ const About = () => {
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.5, delay: 0.15 }}
+                    className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4 border-y border-[var(--border-light)] py-6"
+                >
+                    {[
+                        { value: '3+', label: 'Years C++' },
+                        { value: '7', label: 'Projects' },
+                        { value: '10K+', label: 'Lines written' },
+                        { value: '42', label: 'Memory bugs fixed 😄' },
+                    ].map((stat, i) => (
+                        <div key={i} className="text-center">
+                            <div className="text-2xl font-black text-[var(--text-primary)]">{stat.value}</div>
+                            <div className="text-xs text-[var(--text-secondary)] mt-1">{stat.label}</div>
+                        </div>
+                    ))}
+                </motion.div>
+
+                <motion.div
+                    variants={fadeUp}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
-                    className="mt-10"
+                    className="mt-8"
                 >
                     <p className="mb-4 text-sm text-[var(--accent-blue)] font-medium">// core_technologies</p>
                     <div className="flex flex-wrap gap-3">

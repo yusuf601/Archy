@@ -89,8 +89,23 @@ const Home = () => {
     };
 
     return (
-        <section className="min-h-screen flex items-center justify-center -mt-14 pt-20 px-6">
+        <section className="min-h-screen flex items-center justify-center -mt-14 pt-20 px-6 relative">
             <div className="max-w-3xl w-full flex flex-col items-center md:items-start text-center md:text-left">
+
+                {/* $ whoami breadcrumb */}
+                <motion.p
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4 }}
+                    className="text-xs text-[var(--text-secondary)] mb-5 flex items-center gap-2"
+                >
+                    <span style={{ color: '#43D9AD' }}>$</span> whoami
+                    <span className="text-[var(--border-light)]">|</span>
+                    <span>Systems Programmer</span>
+                    <span className="text-[var(--border-light)]">|</span>
+                    <span>Kendari</span>
+                </motion.p>
+
                 <motion.h1
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -131,17 +146,29 @@ const Home = () => {
                     )}
                 </motion.div>
 
-                <motion.a
+                {/* Social links row */}
+                <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.5, delay: 0.5 }}
-                    href="https://github.com/yusuf601"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] border-b border-[var(--text-secondary)] hover:border-[var(--text-primary)] pb-0.5 transition-colors"
+                    className="flex flex-wrap items-center gap-x-6 gap-y-2"
                 >
-                    github.com/yusuf601
-                </motion.a>
+                    {[
+                        { label: 'github.com/yusuf601', href: 'https://github.com/yusuf601' },
+                        { label: 'Build-X-From-Scratch', href: 'https://github.com/Build-X-From-Scratch' },
+                        { label: 'yusufmuhyusuh@gmail.com', href: 'mailto:yusufmuhyusuh@gmail.com' },
+                    ].map(link => (
+                        <a
+                            key={link.href}
+                            href={link.href}
+                            target={link.href.startsWith('http') ? '_blank' : undefined}
+                            rel="noopener noreferrer"
+                            className="text-xs text-[var(--text-secondary)] hover:text-[var(--accent-green)] transition-colors border-b border-transparent hover:border-[var(--accent-green)] pb-0.5"
+                        >
+                            {link.label}
+                        </a>
+                    ))}
+                </motion.div>
 
                 {/* Scroll Indicator */}
                 <motion.div

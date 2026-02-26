@@ -49,6 +49,7 @@ export default {
                 'blink': 'blink 1s step-end infinite',
                 'fade-in': 'fadeIn 0.5s ease-in-out',
                 'slide-up': 'slideUp 0.5s ease-out',
+                'marquee': 'marquee 30s linear infinite',
             },
             keyframes: {
                 blink: {
@@ -62,6 +63,10 @@ export default {
                 slideUp: {
                     '0%': { transform: 'translateY(20px)', opacity: '0' },
                     '100%': { transform: 'translateY(0)', opacity: '1' },
+                },
+                marquee: {
+                    '0%': { transform: 'translateX(0)' },
+                    '100%': { transform: 'translateX(-50%)' },
                 }
             }
         },
