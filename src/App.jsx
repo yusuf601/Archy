@@ -5,6 +5,7 @@ import About from './pages/About';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
 import Terminal from './components/Terminal';
+import CppStatusBar from './components/CppStatusBar';
 
 function App() {
     const [terminalOpen, setTerminalOpen] = useState(false);
@@ -30,8 +31,7 @@ function App() {
         <div className="min-h-screen bg-[var(--bg-body)] text-[var(--text-primary)] font-mono selection:bg-[var(--accent-blue)] selection:text-white">
             <Navbar onTerminalToggle={toggleTerminal} terminalOpen={terminalOpen} />
 
-            {/* Main Single Page Scrollable Content */}
-            <main className="flex flex-col">
+            <main className="flex flex-col pb-8">
                 <div id="home"><Home /></div>
                 <div id="about"><About /></div>
                 <div id="projects"><Projects /></div>
@@ -44,6 +44,9 @@ function App() {
                     <Terminal isOpen={terminalOpen} onToggle={toggleTerminal} />
                 </div>
             </div>
+
+            {/* C++ Compiler Status Bar */}
+            <CppStatusBar />
         </div>
     );
 }
