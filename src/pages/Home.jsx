@@ -5,7 +5,7 @@ const Home = () => {
     const messages = [
         'std::cout << "Segmentation fault (core dumped) - Just kidding!" << std::endl;',
         'std::cout << "Iterative > Recursive. Always." << std::endl;',
-        'std::cout << "g++ -O3 -std=c++20 main.cpp..." << std::endl;\nstd::cout << "Optimizing memory layout..." << std::endl;',
+        'std::cout << "g++ -O3 -std=c++20 main.cpp..." << std::endl;',
         'std::cout << "Implementing custom STL containers..." << std::endl;',
         'std::cout << "Manual memory management is an art" << std::endl;',
         'std::cout << "King Yusuf is Here" << std::endl;'
