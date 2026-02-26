@@ -72,12 +72,12 @@ const Home = () => {
                             const toShow = token.substring(0, charsAllowed);
                             charsAllowed -= token.length;
 
-                            let colorClass = 'text-[#ABB2BF]'; // Gray for strings and operators
+                            let colorStyle = { color: '#ABB2BF' }; // Gray for strings and operators
                             if (token === 'std::cout' || token === 'std::endl') {
-                                colorClass = 'text-[#61AFEF]'; // Blue for keywords
+                                colorStyle = { color: '#61AFEF' }; // Blue for keywords
                             }
 
-                            return <span key={i} className={colorClass}>{toShow}</span>;
+                            return <span key={i} style={colorStyle}>{toShow}</span>;
                         })}
                         {lineIdx === lines.length - 1 && (
                             <span className="inline-block w-[0.5em] h-[1em] bg-[var(--text-secondary)] ml-1 animate-[blink_1s_step-end_infinite] align-middle"></span>
