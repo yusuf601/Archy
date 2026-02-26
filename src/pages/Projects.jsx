@@ -1,4 +1,10 @@
 import React from 'react';
+import { motion } from 'framer-motion';
+
+const fadeUp = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0 }
+};
 
 const Projects = () => {
     const projects = [
@@ -31,14 +37,26 @@ const Projects = () => {
     return (
         <section className="min-h-screen flex items-center justify-center py-20 px-6">
             <div className="max-w-4xl w-full">
-                <h3 className="text-xl font-bold text-[var(--text-primary)] mb-10 flex items-center">
+                <motion.h3
+                    variants={fadeUp}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.5 }}
+                    className="text-xl font-bold text-[var(--text-primary)] mb-10 flex items-center"
+                >
                     <span className="text-[var(--accent-blue)] mr-2">&gt;</span> ./projects
-                </h3>
+                </motion.h3>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {projects.map((project, idx) => (
-                        <div
+                        <motion.div
                             key={idx}
+                            variants={fadeUp}
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, amount: 0.15 }}
+                            transition={{ duration: 0.5, delay: idx * 0.1 }}
                             className="p-6 border border-[var(--border-light)] rounded-lg bg-[var(--bg-panel)] hover:bg-[var(--bg-panel-hover)] transition-colors flex flex-col"
                         >
                             <div className="flex justify-between items-start mb-3">
@@ -66,7 +84,7 @@ const Projects = () => {
                                     </span>
                                 ))}
                             </div>
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
             </div>
