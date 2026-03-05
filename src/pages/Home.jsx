@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import GitHubStatsStrip from '../components/GitHubStatsStrip';
 
 const Home = () => {
     const messages = [
@@ -114,11 +115,21 @@ const Home = () => {
                         initial={{ opacity: 0, y: 12 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.35 }}
-                        className="text-sm font-medium mb-8 tracking-widest uppercase"
+                        className="text-sm font-medium mb-4 tracking-widest uppercase"
                         style={{ color: 'var(--accent-blue)' }}
                     >
                         C++ · Systems · ML Researcher
                     </motion.h2>
+
+                    {/* Live GitHub stats strip */}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.5, delay: 0.45 }}
+                        className="mb-6"
+                    >
+                        <GitHubStatsStrip />
+                    </motion.div>
 
                     {/* Social links */}
                     <motion.div
