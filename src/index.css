@@ -18,7 +18,11 @@
   --text-secondary: #A8B0B9;
   --accent-blue: #4D5BCE;
   --accent-green: #43D9AD;
+  --accent-red: #e57474;
+  --accent-dim: rgba(67, 217, 173, 0.35);
   --border-light: #2A2D33;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
 body {
@@ -482,21 +486,101 @@ a,
   box-shadow: 0 0 20px rgba(103, 176, 232, 0.3);
 }
 
-/* Stat counter number pulse on load */
-@keyframes countPop {
-  0% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.15);
-  }
-
-  100% {
-    transform: scale(1);
-  }
+/* ─── Section Divider ──────────────────────────────────── */
+.section-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.5rem 1.5rem;
+  color: var(--text-secondary);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
 }
 
-.stat-pop {
-  animation: countPop 0.3s ease-out;
+.section-divider::before,
+.section-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-light);
+}
+
+/* ─── Terminal Chrome ──────────────────────────────────── */
+.terminal-chrome {
+  border: 1px solid var(--border-light);
+  background: rgba(13, 17, 23, 0.6);
+}
+
+.terminal-chrome-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border-light);
+  background: rgba(30, 34, 40, 0.8);
+}
+
+.terminal-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+/* ─── Code Block (About page) ──────────────────────────── */
+.code-block {
+  background: rgba(77, 91, 206, 0.05);
+  border: 1px solid var(--border-light);
+  border-left: 2px solid var(--accent-blue);
+  padding: 0.75rem 1rem;
+}
+
+/* ─── Left Vertical Rule (About page) ─────────────────── */
+.left-rule {
+  border-left: 2px solid rgba(67, 217, 173, 0.35);
+  padding-left: 1.25rem;
+  position: relative;
+}
+
+.left-rule::before {
+  content: '▶';
+  position: absolute;
+  left: -0.55em;
+  top: -0.1em;
+  font-size: 0.6rem;
+  color: var(--accent-green);
+  opacity: 0.5;
+}
+
+/* ─── Terminal Button ──────────────────────────────────── */
+.terminal-btn {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  padding: 0.65rem 1.25rem;
+  border: 1px solid var(--border-light);
+  background: transparent;
+  color: var(--text-primary);
+  transition: border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.terminal-btn-primary {
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+}
+
+.terminal-btn:hover {
+  box-shadow: 0 0 16px rgba(67, 217, 173, 0.2);
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+}
+
+.terminal-btn-secondary:hover {
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+  box-shadow: 0 0 16px rgba(77, 91, 206, 0.2);
 }

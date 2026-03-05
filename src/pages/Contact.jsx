@@ -2,23 +2,29 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const fadeUp = {
-    hidden: { opacity: 0, y: 40 },
+    hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 }
 };
 
 const Contact = () => {
+    const triggerTerminal = () => {
+        const event = new KeyboardEvent('keydown', { key: '`', ctrlKey: true });
+        window.dispatchEvent(event);
+    };
+
     return (
         <section className="min-h-screen flex items-center justify-center py-20 px-6">
             <div className="max-w-2xl w-full text-center">
+
                 <motion.h3
                     variants={fadeUp}
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.5 }}
-                    className="text-xl font-bold text-[var(--accent-blue)] mb-6 flex items-center justify-center"
+                    transition={{ duration: 0.4 }}
+                    className="text-[0.7rem] uppercase tracking-[0.18em] text-[var(--accent-blue)] mb-8 flex items-center justify-center gap-2"
                 >
-                    <span className="text-[var(--text-primary)] mr-2">&gt;</span> ./contact
+                    <span className="text-[var(--text-secondary)]">&gt;</span> ./init_connection.sh
                 </motion.h3>
 
                 <motion.h4
@@ -26,10 +32,12 @@ const Contact = () => {
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.5, delay: 0.1 }}
-                    className="text-3xl md:text-5xl font-black text-[var(--text-primary)] mb-8 tracking-tight"
+                    transition={{ duration: 0.4, delay: 0.1 }}
+                    className="text-3xl md:text-5xl font-black tracking-tight mb-6"
+                    style={{ fontFamily: 'var(--font-display)', color: 'var(--text-primary)' }}
                 >
-                    Let's Build Something
+                    Ping me.<br />
+                    <span style={{ color: 'var(--accent-green)' }}>I compile fast.</span>
                 </motion.h4>
 
                 <motion.p
@@ -37,61 +45,76 @@ const Contact = () => {
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
-                    className="text-[var(--text-secondary)] mb-12 max-w-lg mx-auto"
+                    transition={{ duration: 0.4, delay: 0.2 }}
+                    className="text-[var(--text-secondary)] mb-10 max-w-md mx-auto text-sm leading-relaxed"
                 >
-                    Whether you have a question about systems architecture, want to collaborate on a C++ project,
-                    or just want to talk about algorithms, my inbox is always open.
+                    Systems architecture questions, C++ collaboration, algorithm deep-dives —
+                    all packets accepted.
                 </motion.p>
 
+                {/* Terminal trigger — primary CTA */}
                 <motion.div
                     variants={fadeUp}
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.5, delay: 0.3 }}
-                    className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16"
+                    transition={{ duration: 0.4, delay: 0.3 }}
+                    className="mb-10"
+                >
+                    <button
+                        onClick={triggerTerminal}
+                        className="group w-full sm:w-auto border border-[var(--accent-green)] px-8 py-5 text-left font-mono transition-all duration-200 hover:bg-[rgba(67,217,173,0.05)] hover:shadow-[0_0_24px_rgba(67,217,173,0.15)]"
+                    >
+                        <div className="text-[0.65rem] uppercase tracking-[0.18em] text-[var(--accent-green)] opacity-60 mb-1">
+                            // primary interface
+                        </div>
+                        <div className="text-[var(--text-primary)] flex items-center gap-2">
+                            <span className="text-[var(--accent-green)]">$</span>
+                            <span>open terminal</span>
+                            <span className="animate-[blink_1s_step-end_infinite] text-[var(--accent-green)]">_</span>
+                        </div>
+                        <div className="text-[0.65rem] text-[var(--text-secondary)] mt-2 opacity-50">
+                            Press <kbd className="px-1 bg-[var(--bg-panel)] border border-[var(--border-light)]">Ctrl</kbd> + <kbd className="px-1 bg-[var(--bg-panel)] border border-[var(--border-light)]">`</kbd>
+                        </div>
+                    </button>
+                </motion.div>
+
+                {/* Secondary links */}
+                <motion.div
+                    variants={fadeUp}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.4, delay: 0.4 }}
+                    className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-16"
                 >
                     <a
                         href="mailto:yusufmuhyusuh@gmail.com"
-                        className="px-6 py-3 bg-[var(--text-primary)] text-[var(--bg-body)] font-bold rounded hover:bg-[var(--accent-green)] transition-colors w-full sm:w-auto text-center"
+                        className="terminal-btn terminal-btn-primary w-full sm:w-auto justify-center"
                     >
-                        Say Hello
+                        <span className="text-[var(--accent-green)]">→</span> send_email()
                     </a>
                     <a
                         href="https://linkedin.com/in/yusufxxxx"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-6 py-3 border border-[var(--border-light)] text-[var(--text-primary)] font-bold rounded hover:border-[var(--text-primary)] transition-colors w-full sm:w-auto text-center"
+                        className="terminal-btn terminal-btn-secondary w-full sm:w-auto justify-center"
                     >
-                        LinkedIn
+                        <span style={{ color: 'var(--accent-blue)' }}>→</span> connect --platform=linkedin
                     </a>
                 </motion.div>
 
-                <motion.div
+                {/* Exit line */}
+                <motion.p
                     variants={fadeUp}
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.5, delay: 0.4 }}
-                    className="pt-10 border-t border-[var(--border-light)]"
+                    transition={{ duration: 0.4, delay: 0.5 }}
+                    className="text-[0.65rem] text-[var(--text-secondary)] opacity-30 font-mono"
                 >
-                    <p className="text-xs text-[var(--text-secondary)] mb-4">
-                        Press <kbd className="px-1.5 py-0.5 bg-[var(--bg-panel)] rounded border border-[var(--border-light)]">Ctrl</kbd> + <kbd className="px-1.5 py-0.5 bg-[var(--bg-panel)] rounded border border-[var(--border-light)]">`</kbd> to open terminal
-                    </p>
-                    <button
-                        className="text-xs hover:text-[var(--accent-green)] transition-colors text-[var(--text-secondary)]"
-                        onClick={() => {
-                            const event = new KeyboardEvent('keydown', {
-                                key: '`',
-                                ctrlKey: true
-                            });
-                            window.dispatchEvent(event);
-                        }}
-                    >
-                        [ force_trigger_terminal() ]
-                    </button>
-                </motion.div>
+                    exit 0 <span className="opacity-60">// thanks for reading</span>
+                </motion.p>
             </div>
         </section>
     );

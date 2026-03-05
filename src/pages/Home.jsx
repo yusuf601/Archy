@@ -13,35 +13,28 @@ const Home = () => {
 
     const [messageIndex, setMessageIndex] = useState(0);
     const [textIndex, setTextIndex] = useState(0);
-    const [phase, setPhase] = useState('typing'); // 'typing', 'pausing', 'fading_out'
+    const [phase, setPhase] = useState('typing');
     const [copied, setCopied] = useState(false);
 
     const currentText = messages[messageIndex];
 
-    // Typing and rotation effect
     useEffect(() => {
         let timeout;
-
         if (phase === 'typing') {
             if (textIndex < currentText.length) {
-                timeout = setTimeout(() => {
-                    setTextIndex(prev => prev + 1);
-                }, 50); // 50ms per character
+                timeout = setTimeout(() => setTextIndex(prev => prev + 1), 50);
             } else {
                 setPhase('pausing');
             }
         } else if (phase === 'pausing') {
-            timeout = setTimeout(() => {
-                setPhase('fading_out');
-            }, 3000); // 3 seconds pause before fade out
+            timeout = setTimeout(() => setPhase('fading_out'), 3000);
         } else if (phase === 'fading_out') {
             timeout = setTimeout(() => {
                 setMessageIndex(prev => (prev + 1) % messages.length);
                 setTextIndex(0);
                 setPhase('typing');
-            }, 500); // 0.5s fade out duration
+            }, 500);
         }
-
         return () => clearTimeout(timeout);
     }, [phase, textIndex, currentText.length, messages.length]);
 
@@ -51,36 +44,32 @@ const Home = () => {
         setTimeout(() => setCopied(false), 2000);
     };
 
-    // Syntax highlighting rendering
     const renderCode = () => {
         const lines = currentText.split('\n');
         let charsAllowed = textIndex;
 
         return lines.map((line, lineIdx) => {
-            if (lineIdx > 0) charsAllowed--; // Account for the newline character
-
-            // Tokenize the full line to ensure colors are applied even while typing
+            if (lineIdx > 0) charsAllowed--;
             const tokens = line.split(/(std::cout|std::endl)/g).filter(Boolean);
 
             return (
-                <div key={lineIdx} className={`flex items-start w-full ${lineIdx > 0 ? "mt-1" : ""}`}>
-                    <span className="text-[var(--text-secondary)] w-6 shrink-0 select-none mr-4">{lineIdx + 1}</span>
+                <div key={lineIdx} className={`flex items-start w-full ${lineIdx > 0 ? 'mt-1' : ''}`}>
+                    <span className="text-[var(--text-secondary)] w-6 shrink-0 select-none mr-4 opacity-40">
+                        {lineIdx + 1}
+                    </span>
                     <div className="flex-1 text-left break-all sm:break-normal whitespace-pre-wrap">
                         {tokens.map((token, i) => {
                             if (charsAllowed <= 0) return null;
-
                             const toShow = token.substring(0, charsAllowed);
                             charsAllowed -= token.length;
-
-                            let colorStyle = { color: '#ABB2BF' }; // Gray for strings and operators
+                            let colorStyle = { color: '#ABB2BF' };
                             if (token === 'std::cout' || token === 'std::endl') {
-                                colorStyle = { color: '#61AFEF' }; // Blue for keywords
+                                colorStyle = { color: '#61AFEF' };
                             }
-
                             return <span key={i} style={colorStyle}>{toShow}</span>;
                         })}
                         {lineIdx === lines.length - 1 && (
-                            <span className="inline-block w-[0.5em] h-[1em] bg-[var(--text-secondary)] ml-1 animate-[blink_1s_step-end_infinite] align-middle"></span>
+                            <span className="inline-block w-[0.5em] h-[1em] bg-[var(--text-secondary)] ml-1 animate-[blink_1s_step-end_infinite] align-middle opacity-70" />
                         )}
                     </div>
                 </div>
@@ -90,97 +79,119 @@ const Home = () => {
 
     return (
         <section className="min-h-screen flex items-center justify-center -mt-14 pt-20 px-6 relative">
-            <div className="max-w-3xl w-full flex flex-col items-center md:items-start text-center md:text-left">
+            <div className="max-w-5xl w-full flex flex-col md:flex-row md:items-center md:gap-16">
 
-                {/* $ whoami breadcrumb */}
-                <motion.p
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4 }}
-                    className="text-xs text-[var(--text-secondary)] mb-5 flex items-center gap-2"
-                >
-                    <span style={{ color: '#43D9AD' }}>$</span> whoami
-                    <span className="text-[var(--border-light)]">|</span>
-                    <span>Systems Programmer</span>
-                    <span className="text-[var(--border-light)]">|</span>
-                    <span>Kendari</span>
-                </motion.p>
+                {/* ── Left: Identity ── */}
+                <div className="flex-none md:w-[52%] flex flex-col items-start mb-10 md:mb-0">
+                    {/* $ whoami breadcrumb */}
+                    <motion.p
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4 }}
+                        className="text-[0.7rem] uppercase tracking-[0.18em] text-[var(--text-secondary)] mb-6 flex items-center gap-2"
+                    >
+                        <span style={{ color: '#43D9AD' }}>$</span> whoami
+                        <span className="text-[var(--border-light)]">|</span>
+                        <span>Systems Programmer</span>
+                        <span className="text-[var(--border-light)]">|</span>
+                        <span>Kendari</span>
+                    </motion.p>
 
-                <motion.h1
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="text-6xl sm:text-7xl md:text-8xl font-black tracking-tighter mb-4 text-[var(--text-primary)] relative"
-                >
-                    YUSUF
-                </motion.h1>
+                    {/* Name — display font, wipe-reveal */}
+                    <div className="overflow-hidden mb-3">
+                        <motion.h1
+                            initial={{ y: '102%' }}
+                            animate={{ y: 0 }}
+                            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                            className="text-6xl sm:text-7xl md:text-8xl font-black tracking-tighter text-[var(--text-primary)]"
+                            style={{ fontFamily: 'var(--font-display)' }}
+                        >
+                            YUSUF
+                        </motion.h1>
+                    </div>
 
-                <motion.h2
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.1 }}
-                    className="text-lg sm:text-xl font-medium text-[var(--accent-blue)] mb-8 tracking-wide"
-                >
-                    C++ | Systems | ML Researcher
-                </motion.h2>
+                    <motion.h2
+                        initial={{ opacity: 0, y: 12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.35 }}
+                        className="text-sm font-medium mb-8 tracking-widest uppercase"
+                        style={{ color: 'var(--accent-blue)' }}
+                    >
+                        C++ · Systems · ML Researcher
+                    </motion.h2>
 
-                {/* Animated C++ Line */}
+                    {/* Social links */}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.5, delay: 0.55 }}
+                        className="flex flex-col gap-1.5"
+                    >
+                        {[
+                            { label: 'github.com/yusuf601', href: 'https://github.com/yusuf601' },
+                            { label: 'Build-X-From-Scratch', href: 'https://github.com/Build-X-From-Scratch' },
+                            { label: 'yusufmuhyusuh@gmail.com', href: 'mailto:yusufmuhyusuh@gmail.com' },
+                        ].map(link => (
+                            <a
+                                key={link.href}
+                                href={link.href}
+                                target={link.href.startsWith('http') ? '_blank' : undefined}
+                                rel="noopener noreferrer"
+                                className="text-xs text-[var(--text-secondary)] hover:text-[var(--accent-green)] transition-colors flex items-center gap-1.5 group"
+                            >
+                                <span className="text-[var(--accent-dim)] group-hover:text-[var(--accent-green)] transition-colors">→</span>
+                                {link.label}
+                            </a>
+                        ))}
+                    </motion.div>
+                </div>
+
+                {/* ── Right: Terminal Code Snippet ── */}
                 <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.3 }}
-                    className="mb-8 relative group cursor-pointer w-full max-w-2xl mx-auto md:mx-0"
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.45 }}
+                    className="flex-1 terminal-chrome cursor-pointer group relative"
                     onClick={handleCopy}
-                    title="Copy to clipboard"
+                    title="Click to copy"
                 >
-                    <div className="bg-transparent rounded py-5 font-mono text-sm sm:text-base md:text-[1.1rem] min-h-[6rem] flex flex-col justify-center">
+                    {/* Chrome header */}
+                    <div className="terminal-chrome-header">
+                        <span className="terminal-dot" style={{ background: '#e57474' }} />
+                        <span className="terminal-dot" style={{ background: '#e5c07b' }} />
+                        <span className="terminal-dot" style={{ background: '#43D9AD' }} />
+                        <span className="text-[0.65rem] text-[var(--text-secondary)] ml-2 tracking-wide opacity-60">
+                            main.cpp
+                        </span>
+                        <span className="ml-auto text-[0.6rem] text-[var(--text-secondary)] opacity-40 group-hover:opacity-80 transition-opacity">
+                            {copied ? '✓ copied' : 'click to copy'}
+                        </span>
+                    </div>
+
+                    {/* Code body */}
+                    <div className="p-4 font-mono text-sm sm:text-[0.9rem] min-h-[6rem] flex flex-col justify-center">
                         <div className={`w-full transition-opacity duration-500 ${phase === 'fading_out' ? 'opacity-0' : 'opacity-100'}`}>
                             {renderCode()}
                         </div>
                     </div>
-                    {/* Copied tooltip */}
-                    {copied && (
-                        <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-[var(--accent-green)] text-[var(--bg-body)] text-xs font-bold px-2 py-1 rounded">
-                            Copied!
-                        </div>
-                    )}
-                </motion.div>
-
-                {/* Social links row */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                    className="flex flex-wrap items-center gap-x-6 gap-y-2"
-                >
-                    {[
-                        { label: 'github.com/yusuf601', href: 'https://github.com/yusuf601' },
-                        { label: 'Build-X-From-Scratch', href: 'https://github.com/Build-X-From-Scratch' },
-                        { label: 'yusufmuhyusuh@gmail.com', href: 'mailto:yusufmuhyusuh@gmail.com' },
-                    ].map(link => (
-                        <a
-                            key={link.href}
-                            href={link.href}
-                            target={link.href.startsWith('http') ? '_blank' : undefined}
-                            rel="noopener noreferrer"
-                            className="text-xs text-[var(--text-secondary)] hover:text-[var(--accent-green)] transition-colors border-b border-transparent hover:border-[var(--accent-green)] pb-0.5"
-                        >
-                            {link.label}
-                        </a>
-                    ))}
-                </motion.div>
-
-                {/* Scroll Indicator */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 1, delay: 1 }}
-                    className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center text-[var(--text-secondary)]"
-                >
-                    <span className="text-xs mb-2">scroll</span>
-                    <div className="w-[1px] h-8 bg-gradient-to-b from-[var(--text-secondary)] to-transparent"></div>
                 </motion.div>
             </div>
+
+            {/* Scroll indicator — blinking ▼ */}
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, delay: 1.2 }}
+                className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-[var(--text-secondary)]"
+            >
+                <span className="text-[0.6rem] tracking-[0.2em] uppercase opacity-50">scroll</span>
+                <span
+                    className="text-[var(--accent-green)] text-xs animate-[blink_1.4s_step-end_infinite]"
+                    style={{ opacity: 0.7 }}
+                >
+                    ▼
+                </span>
+            </motion.div>
         </section>
     );
 };
