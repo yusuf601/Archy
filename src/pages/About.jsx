@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import ContributionHeatmap from '../components/ContributionHeatmap';
 
 const fadeUp = {
     hidden: { opacity: 0, y: 20 },
@@ -95,6 +96,9 @@ const About = () => {
                             </motion.div>
                         ))}
                     </motion.div>
+
+                    {/* Contribution heatmap */}
+                    <ContributionHeatmap />
 
                     {/* Skills */}
                     <motion.div
