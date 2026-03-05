@@ -7,7 +7,7 @@ const fadeUp = {
 };
 
 const About = () => {
-    const skills = ['C++', 'Python', 'Linux', 'Docker', 'ML'];
+    const skills = ['C++', 'Python', 'Linux', 'Julia', 'Haskell', 'ML'];
 
     const dossier = [
         { key: 'OS', value: 'Arch Linux' },
