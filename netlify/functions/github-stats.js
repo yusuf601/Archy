@@ -41,13 +41,18 @@ export const handler = async () => {
 
         // ── 2. GraphQL: contribution heatmap ─────────────────────
         const now = new Date();
-        const fromDate = new Date(now.getFullYear(), 0, 1).toISOString(); // Jan 1 this year
+        // Rolling 52-week window: exactly 1 year ago → today (matches GitHub's own heatmap)
+        const toDate = now.toISOString();
+        const oneYearAgo = new Date(now);
+        oneYearAgo.setFullYear(now.getFullYear() - 1);
+        const fromDate = oneYearAgo.toISOString();
+
 
         const graphqlQuery = {
             query: `
-                query($login: String!, $from: DateTime!) {
+                query($login: String!, $from: DateTime!, $to: DateTime!) {
                     user(login: $login) {
-                        contributionsCollection(from: $from) {
+                        contributionsCollection(from: $from, to: $to) {
                             totalCommitContributions
                             contributionCalendar {
                                 totalContributions
@@ -63,7 +68,7 @@ export const handler = async () => {
                     }
                 }
             `,
-            variables: { login: GITHUB_USERNAME, from: fromDate },
+            variables: { login: GITHUB_USERNAME, from: fromDate, to: toDate },
         };
 
         const gqlRes = await fetch('https://api.github.com/graphql', {
