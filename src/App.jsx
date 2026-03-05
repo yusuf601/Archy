@@ -6,6 +6,7 @@ import Projects from './pages/Projects';
 import Contact from './pages/Contact';
 import Terminal from './components/Terminal';
 import CppStatusBar from './components/CppStatusBar';
+import SectionDivider from './components/SectionDivider';
 
 function App() {
     const [terminalOpen, setTerminalOpen] = useState(false);
@@ -33,8 +34,11 @@ function App() {
 
             <main className="flex flex-col pb-8">
                 <div id="home"><Home /></div>
+                <SectionDivider label="about" />
                 <div id="about"><About /></div>
+                <SectionDivider label="projects" />
                 <div id="projects"><Projects /></div>
+                <SectionDivider label="contact" />
                 <div id="contact"><Contact /></div>
             </main>
 
