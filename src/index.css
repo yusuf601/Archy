@@ -11,22 +11,36 @@
 
 :root {
   --bg-body: #0F1216;
+  --bg-body-rgb: 15 18 22;
   --bg-navbar: #11151B;
+  --bg-navbar-rgb: 17 21 27;
   --bg-panel: #171C23;
+  --bg-panel-rgb: 23 28 35;
   --bg-panel-hover: #202732;
+  --bg-panel-hover-rgb: 32 39 50;
   --bg-terminal: #0B0F14;
+  --bg-terminal-rgb: 11 15 20;
 
   --text-primary: #E6EDF3;
+  --text-primary-rgb: 230 237 243;
   --text-secondary: #9AA7B2;
+  --text-secondary-rgb: 154 167 178;
   --text-muted: #66717D;
+  --text-muted-rgb: 102 113 125;
 
   --accent-success: #3DDC97;
+  --accent-success-rgb: 61 220 151;
   --accent-info: #5AA9FF;
+  --accent-info-rgb: 90 169 255;
   --accent-warning: #E6B450;
+  --accent-warning-rgb: 230 180 80;
   --accent-danger: #FF6B6B;
+  --accent-danger-rgb: 255 107 107;
 
   --border-light: #27313D;
+  --border-light-rgb: 39 49 61;
   --border-strong: #354252;
+  --border-strong-rgb: 53 66 82;
 
   --accent-green: var(--accent-success);
   --accent-blue: var(--accent-info);
@@ -522,6 +536,7 @@ a,
 /* ─── Terminal Chrome ──────────────────────────────────── */
 .terminal-chrome {
   border: 1px solid var(--border-light);
+  background: var(--bg-terminal);
   background: color-mix(in srgb, var(--bg-terminal) 86%, transparent);
 }
 
@@ -531,6 +546,7 @@ a,
   gap: 0.5rem;
   padding: 0.5rem 0.75rem;
   border-bottom: 1px solid var(--border-light);
+  background: var(--bg-panel);
   background: color-mix(in srgb, var(--bg-panel) 88%, transparent);
 }
 
@@ -542,6 +558,7 @@ a,
 
 /* ─── Code Block (About page) ──────────────────────────── */
 .code-block {
+  background: var(--bg-panel);
   background: color-mix(in srgb, var(--accent-info) 7%, transparent);
   border: 1px solid var(--border-light);
   border-left: 2px solid var(--accent-info);
@@ -550,6 +567,7 @@ a,
 
 /* ─── Left Vertical Rule (About page) ─────────────────── */
 .left-rule {
+  border-left: 2px solid var(--accent-success);
   border-left: 2px solid color-mix(in srgb, var(--accent-success) 35%, transparent);
   padding-left: 1.25rem;
   position: relative;
@@ -595,4 +613,8 @@ a,
   border-color: var(--accent-info);
   color: var(--accent-info);
   box-shadow: 0 0 16px rgba(90, 169, 255, 0.16);
+}
+
+.terminal-focus-shadow {
+  box-shadow: 0 -10px 40px rgb(var(--accent-info-rgb) / 0.15);
 }

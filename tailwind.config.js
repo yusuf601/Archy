@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const compilerColor = (token) => `rgb(var(${token}-rgb) / <alpha-value>)`;
+
 export default {
     content: [
         "./index.html",
@@ -7,37 +9,37 @@ export default {
     theme: {
         extend: {
             colors: {
-                'bg-body': 'var(--bg-body)',
-                'bg-navbar': 'var(--bg-navbar)',
-                'bg-panel': 'var(--bg-panel)',
-                'bg-panel-hover': 'var(--bg-panel-hover)',
-                'bg-terminal': 'var(--bg-terminal)',
+                'bg-body': compilerColor('--bg-body'),
+                'bg-navbar': compilerColor('--bg-navbar'),
+                'bg-panel': compilerColor('--bg-panel'),
+                'bg-panel-hover': compilerColor('--bg-panel-hover'),
+                'bg-terminal': compilerColor('--bg-terminal'),
 
-                'text-primary': 'var(--text-primary)',
-                'text-secondary': 'var(--text-secondary)',
-                'text-muted': 'var(--text-muted)',
+                'text-primary': compilerColor('--text-primary'),
+                'text-secondary': compilerColor('--text-secondary'),
+                'text-muted': compilerColor('--text-muted'),
 
-                'accent-success': 'var(--accent-success)',
-                'accent-info': 'var(--accent-info)',
-                'accent-warning': 'var(--accent-warning)',
-                'accent-danger': 'var(--accent-danger)',
+                'accent-success': compilerColor('--accent-success'),
+                'accent-info': compilerColor('--accent-info'),
+                'accent-warning': compilerColor('--accent-warning'),
+                'accent-danger': compilerColor('--accent-danger'),
 
-                'border-light': 'var(--border-light)',
-                'border-strong': 'var(--border-strong)',
+                'border-light': compilerColor('--border-light'),
+                'border-strong': compilerColor('--border-strong'),
 
-                'accent-blue': 'var(--accent-blue)',
-                'accent-green': 'var(--accent-green)',
+                'accent-blue': compilerColor('--accent-info'),
+                'accent-green': compilerColor('--accent-success'),
 
-                'everblush-bg': 'var(--bg-body)',
-                'everblush-bg-light': 'var(--bg-panel)',
-                'everblush-fg': 'var(--text-primary)',
-                'everblush-grey': 'var(--text-muted)',
-                'everblush-green': 'var(--accent-success)',
-                'everblush-blue': 'var(--accent-info)',
-                'everblush-yellow': 'var(--accent-warning)',
-                'everblush-red': 'var(--accent-danger)',
-                'everblush-cyan': 'var(--accent-info)',
-                'everblush-magenta': 'var(--accent-danger)',
+                'everblush-bg': compilerColor('--bg-body'),
+                'everblush-bg-light': compilerColor('--bg-panel'),
+                'everblush-fg': compilerColor('--text-primary'),
+                'everblush-grey': compilerColor('--text-muted'),
+                'everblush-green': compilerColor('--accent-success'),
+                'everblush-blue': compilerColor('--accent-info'),
+                'everblush-yellow': compilerColor('--accent-warning'),
+                'everblush-red': compilerColor('--accent-danger'),
+                'everblush-cyan': compilerColor('--accent-info'),
+                'everblush-magenta': compilerColor('--accent-danger'),
             },
             fontFamily: {
                 mono: ['"JetBrains Mono"', 'monospace'],

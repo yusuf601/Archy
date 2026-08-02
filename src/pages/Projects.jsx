@@ -108,7 +108,7 @@ const Projects = () => {
                             whileInView="visible"
                             viewport={{ once: true, amount: 0.15 }}
                             transition={{ duration: 0.4, delay: idx * 0.08 }}
-                            className="p-5 border border-[var(--accent-success)] bg-[var(--bg-panel)] hover:bg-[var(--bg-panel-hover)] transition-all duration-200 hover:-translate-y-[3px] hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)] flex flex-col sm:flex-row sm:gap-8"
+                            className="p-5 border border-[var(--border-strong)] border-l-2 border-l-accent-success/60 bg-[var(--bg-panel)] hover:bg-[var(--bg-panel-hover)] transition-all duration-200 hover:-translate-y-[3px] hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)] flex flex-col sm:flex-row sm:gap-8"
                         >
                             <div className="flex-1">
                                 <div className="flex items-center gap-2 mb-2">

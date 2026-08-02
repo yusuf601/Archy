@@ -25,22 +25,22 @@ const AchievementToast = ({ achievement, onDismiss }) => {
                 setTimeout(onDismiss, 300);
             }}
         >
-            <div className="bg-everblush-bg-light border border-everblush-green rounded-lg shadow-lg shadow-everblush-green/20 p-4 min-w-[300px] max-w-[400px] cursor-pointer hover:border-everblush-green/80 transition-colors">
+            <div className="bg-[var(--bg-panel)] border border-accent-success/60 rounded-lg shadow-lg shadow-accent-success/20 p-4 min-w-[300px] max-w-[400px] cursor-pointer hover:border-accent-success/80 transition-colors">
                 <div className="flex items-start gap-3">
                     <div className="text-2xl">🎉</div>
                     <div className="flex-1">
                         <div className="flex items-center justify-between mb-1">
-                            <span className="text-everblush-green font-bold text-sm">
+                            <span className="text-accent-success font-bold text-sm">
                                 Easter Egg! ({achievement.count}/30)
                             </span>
-                            <span className="text-everblush-fg/40 text-xs">
+                            <span className="text-text-primary/40 text-xs">
                                 Click to dismiss
                             </span>
                         </div>
-                        <div className="text-everblush-fg font-semibold mb-1">
+                        <div className="text-text-primary font-semibold mb-1">
                             {achievement.title}
                         </div>
-                        <div className="text-everblush-fg/60 text-sm">
+                        <div className="text-text-primary/60 text-sm">
                             {achievement.description}
                         </div>
                     </div>

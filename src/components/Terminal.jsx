@@ -1056,10 +1056,10 @@ ${timestamp} (21.5 MB/s) - '${filename}' saved [2278683/2278683]
     return (
         <>
             {/* Terminal Window - always rendered to maintain state, visually hidden by parent */}
-            <div className={`bg-[#0D1117] h-full flex flex-col font-mono text-xs sm:text-sm transition-all duration-300 ${isFocused ? 'shadow-[0_-10px_40px_rgba(77,91,206,0.15)]' : ''} overflow-hidden`}>
+            <div className={`bg-[var(--bg-terminal)] h-full flex flex-col font-mono text-xs sm:text-sm transition-all duration-300 ${isFocused ? 'terminal-focus-shadow' : ''} overflow-hidden`}>
 
                 {/* Terminal Title Bar */}
-                <div className="bg-[#161B22] border-b border-[#30363D] px-4 py-2 flex items-center justify-between select-none shrink-0">
+                <div className="bg-[var(--bg-panel)] border-b border-[var(--border-light)] px-4 py-2 flex items-center justify-between select-none shrink-0">
                     <div className="flex items-center gap-3">
                         {/* Window Controls */}
                         <div className="flex items-center gap-2">
@@ -1080,24 +1080,24 @@ ${timestamp} (21.5 MB/s) - '${filename}' saved [2278683/2278683]
                         </div>
 
                         {/* Title */}
-                        <span className="text-[#8B949E] text-xs">
+                        <span className="text-[var(--text-muted)] text-xs">
                             yusuf@cpp-machine: {getCurrentPath()}
                         </span>
                     </div>
 
                     {/* Easter Eggs Counter */}
-                    <div className="text-[#8B949E] text-xs flex items-center gap-2">
+                    <div className="text-[var(--text-muted)] text-xs flex items-center gap-2">
                         <span>🎁 {easterEggsFound.length}/30</span>
                     </div>
                 </div>
 
                 {/* Tab Bar */}
-                <div className="bg-[#0D1117] border-b border-[#30363D] px-4 py-1 flex items-center gap-2 shrink-0">
-                    <div className="flex items-center gap-2 px-3 py-1 bg-[#161B22] border-t border-l border-r border-[#30363D] rounded-t text-xs text-[#58A6FF]">
-                        <span className="w-2 h-2 rounded-full bg-[#3FB950] animate-pulse" />
+                <div className="bg-[var(--bg-terminal)] border-b border-[var(--border-light)] px-4 py-1 flex items-center gap-2 shrink-0">
+                    <div className="flex items-center gap-2 px-3 py-1 bg-[var(--bg-panel)] border-t border-l border-r border-[var(--border-light)] rounded-t text-xs text-[var(--accent-info)]">
+                        <span className="w-2 h-2 rounded-full bg-[var(--accent-success)] animate-pulse" />
                         <span>bash</span>
                     </div>
-                    <button className="text-[#8B949E] hover:text-[#C9D1D9] text-xs px-2">+</button>
+                    <button className="text-[var(--text-muted)] hover:text-[var(--text-primary)] text-xs px-2">+</button>
                 </div>
 
                 {/* Terminal Content */}
@@ -1106,20 +1106,20 @@ ${timestamp} (21.5 MB/s) - '${filename}' saved [2278683/2278683]
                         {history.map((entry, index) => (
                             <div key={index}>
                                 {entry.type === 'command' && (
-                                    <div className="text-[#C9D1D9]">
-                                        <span className="text-[#3FB950]">yusuf@cpp-machine</span>
-                                        <span className="text-[#C9D1D9]">:</span>
-                                        <span className="text-[#58A6FF]">{getCurrentPath()}</span>
-                                        <span className="text-[#3FB950]">$</span> {entry.text}
+                                    <div className="text-[var(--text-primary)]">
+                                        <span className="text-[var(--accent-success)]">yusuf@cpp-machine</span>
+                                        <span className="text-[var(--text-primary)]">:</span>
+                                        <span className="text-[var(--accent-info)]">{getCurrentPath()}</span>
+                                        <span className="text-[var(--accent-success)]">$</span> {entry.text}
                                     </div>
                                 )}
                                 {entry.type === 'output' && (
-                                    <div className="text-[#8B949E] whitespace-pre-line pl-4 font-normal">
+                                    <div className="text-[var(--text-muted)] whitespace-pre-line pl-4 font-normal">
                                         {entry.text}
                                     </div>
                                 )}
                                 {entry.type === 'error' && (
-                                    <div className="text-[#F85149] pl-4 whitespace-pre-line font-normal">
+                                    <div className="text-[var(--accent-danger)] pl-4 whitespace-pre-line font-normal">
                                         {entry.text}
                                     </div>
                                 )}
@@ -1129,10 +1129,10 @@ ${timestamp} (21.5 MB/s) - '${filename}' saved [2278683/2278683]
                     </div>
 
                     <form onSubmit={handleSubmit} className="flex items-center mt-2">
-                        <span className="text-[#3FB950]">yusuf@cpp-machine</span>
-                        <span className="text-[#C9D1D9]">:</span>
-                        <span className="text-[#58A6FF]">{getCurrentPath()}</span>
-                        <span className="text-[#3FB950]">$</span>
+                        <span className="text-[var(--accent-success)]">yusuf@cpp-machine</span>
+                        <span className="text-[var(--text-primary)]">:</span>
+                        <span className="text-[var(--accent-info)]">{getCurrentPath()}</span>
+                        <span className="text-[var(--accent-success)]">$</span>
                         <input
                             ref={inputRef}
                             type="text"
@@ -1141,7 +1141,7 @@ ${timestamp} (21.5 MB/s) - '${filename}' saved [2278683/2278683]
                             onKeyDown={handleKeyDown}
                             onFocus={handleFocus}
                             onBlur={handleBlur}
-                            className="flex-1 ml-2 bg-transparent outline-none text-[#C9D1D9] caret-[#C9D1D9]"
+                            className="flex-1 ml-2 bg-transparent outline-none text-[var(--text-primary)] caret-[var(--text-primary)]"
                             autoComplete="off"
                             spellCheck="false"
                         />
@@ -1149,16 +1149,16 @@ ${timestamp} (21.5 MB/s) - '${filename}' saved [2278683/2278683]
                 </div>
 
                 {/* Status Bar */}
-                <div className="bg-[#161B22] border-t border-[#30363D] px-4 py-1.5 flex items-center justify-between text-xs text-[#8B949E] shrink-0">
+                <div className="bg-[var(--bg-panel)] border-t border-[var(--border-light)] px-4 py-1.5 flex items-center justify-between text-xs text-[var(--text-muted)] shrink-0">
                     <div className="flex items-center gap-4">
-                        <span className="text-[#58A6FF]">{isFocused ? 'INSERT' : 'NORMAL'}</span>
+                        <span className="text-[var(--accent-info)]">{isFocused ? 'INSERT' : 'NORMAL'}</span>
                         <span>{getCurrentPath()}</span>
                         <span>{commandHistory.length} commands</span>
                     </div>
                     <div className="flex items-center gap-4">
                         <span>Session: {getSessionUptime()}</span>
                         {securityLog.length > 0 && (
-                            <span className="text-[#D29922]">⚠ {securityLog.length} events</span>
+                            <span className="text-[var(--accent-warning)]">⚠ {securityLog.length} events</span>
                         )}
                     </div>
                 </div>
