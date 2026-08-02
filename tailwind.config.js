@@ -7,16 +7,37 @@ export default {
     theme: {
         extend: {
             colors: {
-                // CSS Variable Mappings for strict theming
                 'bg-body': 'var(--bg-body)',
                 'bg-navbar': 'var(--bg-navbar)',
                 'bg-panel': 'var(--bg-panel)',
                 'bg-panel-hover': 'var(--bg-panel-hover)',
+                'bg-terminal': 'var(--bg-terminal)',
+
                 'text-primary': 'var(--text-primary)',
                 'text-secondary': 'var(--text-secondary)',
+                'text-muted': 'var(--text-muted)',
+
+                'accent-success': 'var(--accent-success)',
+                'accent-info': 'var(--accent-info)',
+                'accent-warning': 'var(--accent-warning)',
+                'accent-danger': 'var(--accent-danger)',
+
+                'border-light': 'var(--border-light)',
+                'border-strong': 'var(--border-strong)',
+
                 'accent-blue': 'var(--accent-blue)',
                 'accent-green': 'var(--accent-green)',
-                'border-light': 'var(--border-light)',
+
+                'everblush-bg': 'var(--bg-body)',
+                'everblush-bg-light': 'var(--bg-panel)',
+                'everblush-fg': 'var(--text-primary)',
+                'everblush-grey': 'var(--text-muted)',
+                'everblush-green': 'var(--accent-success)',
+                'everblush-blue': 'var(--accent-info)',
+                'everblush-yellow': 'var(--accent-warning)',
+                'everblush-red': 'var(--accent-danger)',
+                'everblush-cyan': 'var(--accent-info)',
+                'everblush-magenta': 'var(--accent-danger)',
             },
             fontFamily: {
                 mono: ['"JetBrains Mono"', 'monospace'],
