@@ -129,7 +129,7 @@ const CppStatusBar = () => {
                     <span style={{ color: 'var(--accent-warning)' }}>
                         LN:{String(lineNum).padStart(3, '0')} COL:1
                     </span>
-                    <span style={{ color: '#89DDFF' }}>
+                    <span style={{ color: 'var(--accent-info)' }}>
                         [{gitBranch} +0~2]
                     </span>
                     <span style={{ color: 'var(--text-secondary)' }}>{now}</span>
@@ -146,7 +146,7 @@ const CppStatusBar = () => {
                 </button>
                 <span style={{ color: currentStatus.color }}>{currentStatus.label}</span>
                 <span style={{ color: 'var(--accent-warning)' }}>{lineNum}:1</span>
-                <span style={{ color: '#89DDFF' }}>[{gitBranch}]</span>
+                <span style={{ color: 'var(--accent-info)' }}>[{gitBranch}]</span>
             </div>
         </div>
     );

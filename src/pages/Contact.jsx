@@ -63,7 +63,7 @@ const Contact = () => {
                 >
                     <button
                         onClick={triggerTerminal}
-                        className="group w-full sm:w-auto border border-[var(--accent-success)] px-8 py-5 text-left font-mono transition-all duration-200 hover:bg-[rgba(67,217,173,0.05)] hover:shadow-[0_0_24px_rgba(67,217,173,0.15)]"
+                        className="group w-full sm:w-auto border border-[var(--accent-success)] px-8 py-5 text-left font-mono transition-all duration-200 hover:bg-[color-mix(in_srgb,var(--accent-success)_5%,transparent)] hover:shadow-[0_0_24px_color-mix(in_srgb,var(--accent-success)_15%,transparent)]"
                     >
                         <div className="text-[0.65rem] uppercase tracking-[0.18em] text-[var(--accent-success)] opacity-60 mb-1">
                             // primary interface
