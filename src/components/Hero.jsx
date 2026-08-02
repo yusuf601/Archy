@@ -119,9 +119,9 @@ const Hero = () => {
                     </div>
 
                     <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-mono font-bold leading-tight overflow-hidden">
-                        <span className="syntax-function text-syntax-header">std</span>
-                        <span className="text-everblush-fg">::</span>
-                        <span className="syntax-function text-syntax-header">cout</span>
+                        <span className="text-text-secondary">std</span>
+                        <span className="text-text-muted">::</span>
+                        <span className="text-accent-info">cout</span>
                         <span className="text-everblush-fg"> &lt;&lt; </span>
                         <TypewriterText
                             text={`"Hi, I'm Muh Yusuf";`}

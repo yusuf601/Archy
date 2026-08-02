@@ -117,7 +117,7 @@ const PostView = ({ post, onBack }) => (
 const PostCard = ({ post, onClick }) => (
     <motion.button
         onClick={onClick}
-        whileHover={{ x: 4, borderColor: 'rgba(140,207,126,0.5)' }}
+        whileHover={{ x: 4, borderColor: 'rgba(125,211,252,0.5)' }}
         className="w-full text-left border border-everblush-green/20 rounded-lg p-5 bg-everblush-bg/40
                    hover:bg-everblush-bg/60 transition-all duration-300 group"
     >

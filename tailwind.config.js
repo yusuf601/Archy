@@ -63,8 +63,8 @@ export default {
                 'loose': '2',
             },
             boxShadow: {
-                'glow-green': '0 0 20px rgba(140, 207, 126, 0.3)',
-                'glow-green-lg': '0 0 30px rgba(140, 207, 126, 0.5)',
+                'glow-green': '0 0 20px rgb(var(--accent-success-rgb) / 0.3)',
+                'glow-green-lg': '0 0 30px rgb(var(--accent-success-rgb) / 0.45)',
                 'glow-blue': '0 0 20px rgba(108, 142, 212, 0.3)',
                 'glow-blue-lg': '0 0 30px rgba(108, 142, 212, 0.5)',
             },

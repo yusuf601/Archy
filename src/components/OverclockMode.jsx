@@ -53,14 +53,14 @@ export const MatrixRainOverlay = ({ onDone }) => {
         const draw = () => {
             ctx.fillStyle = 'rgba(35, 42, 45, 0.05)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#8ccf7e';
+            ctx.fillStyle = '#7DD3FC';
             ctx.font = `${fontSize}px "JetBrains Mono", monospace`;
 
             for (let i = 0; i < drops.length; i++) {
                 const char = MATRIX_CHARS[Math.floor(Math.random() * MATRIX_CHARS.length)];
                 ctx.fillStyle = drops[i] * fontSize < 30
                     ? '#ffffff'
-                    : `rgba(140, 207, 126, ${0.4 + Math.random() * 0.6})`;
+                    : `rgba(125, 211, 252, ${0.4 + Math.random() * 0.6})`;
                 ctx.fillText(char, i * fontSize, drops[i] * fontSize);
                 if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
                     drops[i] = 0;
@@ -97,7 +97,7 @@ export const MatrixRainOverlay = ({ onDone }) => {
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
             >
-                <div className="text-everblush-green text-4xl sm:text-6xl font-bold mb-2 drop-shadow-[0_0_20px_rgba(140,207,126,0.9)]">
+                <div className="text-everblush-green text-4xl sm:text-6xl font-bold mb-2 drop-shadow-[0_0_20px_rgba(125,211,252,0.72)]">
                     OVERCLOCK MODE
                 </div>
                 <div className="text-everblush-green/70 text-sm tracking-[0.5em]">

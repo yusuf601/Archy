@@ -1074,7 +1074,7 @@ ${timestamp} (21.5 MB/s) - '${filename}' saved [2278683/2278683]
                                 onClick={onToggle}
                             />
                             <button
-                                className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-opacity-80 transition-colors"
+                                className="w-3 h-3 rounded-full bg-accent-success hover:bg-opacity-80 transition-colors"
                                 title="Maximize"
                             />
                         </div>

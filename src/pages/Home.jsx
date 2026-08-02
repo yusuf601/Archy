@@ -51,7 +51,7 @@ const Home = () => {
 
         return lines.map((line, lineIdx) => {
             if (lineIdx > 0) charsAllowed--;
-            const tokens = line.split(/(std::cout|std::endl)/g).filter(Boolean);
+            const tokens = line.split(/("[^"]*"|std|cout|endl|::)/g).filter(Boolean);
 
             return (
                 <div key={lineIdx} className={`flex items-start w-full ${lineIdx > 0 ? 'mt-1' : ''}`}>
@@ -64,8 +64,12 @@ const Home = () => {
                             const toShow = token.substring(0, charsAllowed);
                             charsAllowed -= token.length;
                             let colorStyle = { color: 'var(--text-secondary)' };
-                            if (token === 'std::cout' || token === 'std::endl') {
+                            if (token === 'cout' || token === 'endl') {
                                 colorStyle = { color: 'var(--accent-info)' };
+                            } else if (token.startsWith('"') && token.endsWith('"')) {
+                                colorStyle = { color: 'var(--syntax-string)' };
+                            } else if (token === '::') {
+                                colorStyle = { color: 'var(--text-muted)' };
                             }
                             return <span key={i} style={colorStyle}>{toShow}</span>;
                         })}

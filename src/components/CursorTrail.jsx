@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
  * at the cursor position. Desktop-only (skipped on touch devices).
  */
 const CHARS = ['0', '1', '>', '_', '#', '$'];
-const COLOR = '140, 207, 126'; // everblush-green rgb
+const COLOR = '125, 211, 252'; // compiler cyan rgb
 
 const CursorTrail = () => {
     const canvasRef = useRef(null);

@@ -6,7 +6,7 @@ import GlitchText from './GlitchText';
 
 const EVERBLUSH_PALETTE = [
     '#2d3135', '#232a2d', '#404a4d',
-    '#e57474', '#8ccf7e', '#e5c76b',
+    '#e57474', '#7DD3FC', '#e5c76b',
     '#67b0e8', '#c47fd5', '#6cbfbf',
     '#b3b9b8',
 ];

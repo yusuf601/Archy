@@ -17,7 +17,7 @@ const CODE_TOKENS = [
     'posix_spawn', 'pthread_t', 'std::atomic', 'volatile',
 ];
 
-const COL = '140, 207, 126'; // everblush green rgb
+const COL = '125, 211, 252'; // compiler cyan rgb
 
 function randomToken() {
     return CODE_TOKENS[Math.floor(Math.random() * CODE_TOKENS.length)];
