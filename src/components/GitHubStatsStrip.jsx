@@ -24,7 +24,7 @@ const Skeleton = () => (
 
 const Stat = ({ value, label, icon }) => (
     <span className="flex items-center gap-1.5">
-        <span style={{ color: 'var(--accent-green)' }} className="text-xs">{icon}</span>
+        <span style={{ color: 'var(--accent-success)' }} className="text-xs">{icon}</span>
         <span className="text-xs font-bold" style={{ color: 'var(--text-primary)' }}>
             {value}
         </span>

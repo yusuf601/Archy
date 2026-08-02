@@ -82,7 +82,7 @@ const Projects = () => {
                 >
                     <span
                         className="w-[3px] self-stretch rounded"
-                        style={{ background: 'var(--accent-blue)', opacity: 0.7 }}
+                        style={{ background: 'var(--accent-info)', opacity: 0.7 }}
                     />
                     ./projects
                 </motion.h3>
@@ -93,7 +93,7 @@ const Projects = () => {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.4, delay: 0.05 }}
-                    className="text-[0.7rem] uppercase tracking-[0.15em] text-[var(--accent-blue)] mb-10 ml-5"
+                    className="text-[0.7rem] uppercase tracking-[0.15em] text-[var(--accent-info)] mb-10 ml-5"
                 >
                     // Build-X-From-Scratch — hand-crafted in C++
                 </motion.p>
@@ -108,11 +108,11 @@ const Projects = () => {
                             whileInView="visible"
                             viewport={{ once: true, amount: 0.15 }}
                             transition={{ duration: 0.4, delay: idx * 0.08 }}
-                            className="p-5 border border-[var(--accent-green)] bg-[var(--bg-panel)] hover:bg-[var(--bg-panel-hover)] transition-all duration-200 hover:-translate-y-[3px] hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)] flex flex-col sm:flex-row sm:gap-8"
+                            className="p-5 border border-[var(--accent-success)] bg-[var(--bg-panel)] hover:bg-[var(--bg-panel-hover)] transition-all duration-200 hover:-translate-y-[3px] hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)] flex flex-col sm:flex-row sm:gap-8"
                         >
                             <div className="flex-1">
                                 <div className="flex items-center gap-2 mb-2">
-                                    <span className="text-[0.6rem] uppercase tracking-[0.15em] text-[var(--accent-green)] opacity-70">
+                                    <span className="text-[0.6rem] uppercase tracking-[0.15em] text-[var(--accent-success)] opacity-70">
                                         ≥ featured
                                     </span>
                                 </div>
@@ -122,14 +122,14 @@ const Projects = () => {
                             <div className="flex flex-col justify-between items-start sm:items-end mt-4 sm:mt-0 sm:w-36 shrink-0">
                                 <div className="flex flex-wrap gap-1.5 sm:flex-col sm:items-end">
                                     {project.tech.map(t => (
-                                        <span key={t} className="text-[0.7rem] text-[var(--accent-blue)] font-mono">#{t}</span>
+                                        <span key={t} className="text-[0.7rem] text-[var(--accent-info)] font-mono">#{t}</span>
                                     ))}
                                 </div>
                                 <a
                                     href={project.github}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="mt-3 text-xs text-[var(--accent-green)] hover:underline font-mono flex items-center gap-1"
+                                    className="mt-3 text-xs text-[var(--accent-success)] hover:underline font-mono flex items-center gap-1"
                                 >
                                     github ↗
                                 </a>
@@ -157,8 +157,8 @@ const Projects = () => {
                                         <span
                                             className="text-[0.6rem] px-1.5 py-0.5 border font-mono"
                                             style={{
-                                                borderColor: 'var(--accent-red)',
-                                                color: 'var(--accent-red)',
+                                                borderColor: 'var(--accent-danger)',
+                                                color: 'var(--accent-danger)',
                                                 opacity: 0.8,
                                             }}
                                         >
@@ -171,7 +171,7 @@ const Projects = () => {
                                         href={project.github}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="text-[var(--accent-green)] hover:underline text-xs shrink-0 flex items-center gap-1 translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-200"
+                                        className="text-[var(--accent-success)] hover:underline text-xs shrink-0 flex items-center gap-1 translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-200"
                                     >
                                         → github
                                     </a>
@@ -180,7 +180,7 @@ const Projects = () => {
                             <p className="text-xs text-[var(--text-secondary)] mb-4 flex-grow leading-relaxed">{project.desc}</p>
                             <div className="flex flex-wrap gap-2 mt-auto">
                                 {project.tech.map(t => (
-                                    <span key={t} className="text-[0.65rem] text-[var(--accent-blue)] font-mono">#{t}</span>
+                                    <span key={t} className="text-[0.65rem] text-[var(--accent-info)] font-mono">#{t}</span>
                                 ))}
                             </div>
                         </motion.div>

@@ -63,9 +63,9 @@ const Home = () => {
                             if (charsAllowed <= 0) return null;
                             const toShow = token.substring(0, charsAllowed);
                             charsAllowed -= token.length;
-                            let colorStyle = { color: '#ABB2BF' };
+                            let colorStyle = { color: 'var(--text-secondary)' };
                             if (token === 'std::cout' || token === 'std::endl') {
-                                colorStyle = { color: '#61AFEF' };
+                                colorStyle = { color: 'var(--accent-info)' };
                             }
                             return <span key={i} style={colorStyle}>{toShow}</span>;
                         })}
@@ -91,7 +91,7 @@ const Home = () => {
                         transition={{ duration: 0.4 }}
                         className="text-[0.7rem] uppercase tracking-[0.18em] text-[var(--text-secondary)] mb-6 flex items-center gap-2"
                     >
-                        <span style={{ color: '#43D9AD' }}>$</span> whoami
+                        <span style={{ color: 'var(--accent-success)' }}>$</span> whoami
                         <span className="text-[var(--border-light)]">|</span>
                         <span>Systems Programmer</span>
                         <span className="text-[var(--border-light)]">|</span>
@@ -116,7 +116,7 @@ const Home = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.35 }}
                         className="text-sm font-medium mb-4 tracking-widest uppercase"
-                        style={{ color: 'var(--accent-blue)' }}
+                        style={{ color: 'var(--accent-info)' }}
                     >
                         C++ · Systems · ML Researcher
                     </motion.h2>
@@ -148,9 +148,9 @@ const Home = () => {
                                 href={link.href}
                                 target={link.href.startsWith('http') ? '_blank' : undefined}
                                 rel="noopener noreferrer"
-                                className="text-xs text-[var(--text-secondary)] hover:text-[var(--accent-green)] transition-colors flex items-center gap-1.5 group"
+                                className="text-xs text-[var(--text-secondary)] hover:text-[var(--accent-success)] transition-colors flex items-center gap-1.5 group"
                             >
-                                <span className="text-[var(--accent-dim)] group-hover:text-[var(--accent-green)] transition-colors">→</span>
+                                <span className="text-[var(--accent-dim)] group-hover:text-[var(--accent-success)] transition-colors">→</span>
                                 {link.label}
                             </a>
                         ))}
@@ -168,9 +168,9 @@ const Home = () => {
                 >
                     {/* Chrome header */}
                     <div className="terminal-chrome-header">
-                        <span className="terminal-dot" style={{ background: '#e57474' }} />
-                        <span className="terminal-dot" style={{ background: '#e5c07b' }} />
-                        <span className="terminal-dot" style={{ background: '#43D9AD' }} />
+                        <span className="terminal-dot" style={{ background: 'var(--accent-danger)' }} />
+                        <span className="terminal-dot" style={{ background: 'var(--accent-warning)' }} />
+                        <span className="terminal-dot" style={{ background: 'var(--accent-success)' }} />
                         <span className="text-[0.65rem] text-[var(--text-secondary)] ml-2 tracking-wide opacity-60">
                             main.cpp
                         </span>
@@ -197,7 +197,7 @@ const Home = () => {
             >
                 <span className="text-[0.6rem] tracking-[0.2em] uppercase opacity-50">scroll</span>
                 <span
-                    className="text-[var(--accent-green)] text-xs animate-[blink_1.4s_step-end_infinite]"
+                    className="text-[var(--accent-success)] text-xs animate-[blink_1.4s_step-end_infinite]"
                     style={{ opacity: 0.7 }}
                 >
                     ▼

@@ -34,7 +34,7 @@ const About = () => {
                     >
                         <span
                             className="w-[3px] self-stretch rounded"
-                            style={{ background: 'var(--accent-green)', opacity: 0.7 }}
+                            style={{ background: 'var(--accent-success)', opacity: 0.7 }}
                         />
                         ./about-me
                     </motion.h3>
@@ -87,7 +87,7 @@ const About = () => {
                                     className="text-4xl font-black mb-1 pb-1 inline-block"
                                     style={{
                                         color: 'var(--text-primary)',
-                                        borderBottom: '1px solid var(--accent-green)',
+                                        borderBottom: '1px solid var(--accent-success)',
                                     }}
                                 >
                                     {stat.value}
@@ -109,7 +109,7 @@ const About = () => {
                         transition={{ duration: 0.4, delay: 0.2 }}
                     >
                         <div className="code-block mb-0">
-                            <p className="text-[0.7rem] uppercase tracking-[0.15em] text-[var(--accent-blue)] mb-3">
+                            <p className="text-[0.7rem] uppercase tracking-[0.15em] text-[var(--accent-info)] mb-3">
                                 // core_technologies
                             </p>
                             <div className="flex flex-wrap gap-2">
@@ -140,7 +140,7 @@ const About = () => {
                     transition={{ duration: 0.4, delay: 0.25 }}
                     className="hidden md:flex flex-col gap-3 w-36 shrink-0 mt-16"
                 >
-                    <p className="text-[0.6rem] uppercase tracking-[0.2em] text-[var(--accent-blue)] mb-1 opacity-60">
+                    <p className="text-[0.6rem] uppercase tracking-[0.2em] text-[var(--accent-info)] mb-1 opacity-60">
                         // sys_info
                     </p>
                     {dossier.map((item) => (
@@ -154,7 +154,7 @@ const About = () => {
                         </div>
                     ))}
                     <div className="mt-auto pt-4 border-t border-[var(--border-light)]">
-                        <span className="text-[0.6rem] text-[var(--accent-green)] opacity-50 font-mono">
+                        <span className="text-[0.6rem] text-[var(--accent-success)] opacity-50 font-mono">
                             status: active
                         </span>
                     </div>

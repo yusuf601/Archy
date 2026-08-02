@@ -29,7 +29,7 @@ function App() {
     const toggleTerminal = () => setTerminalOpen(!terminalOpen);
 
     return (
-        <div className="min-h-screen bg-[var(--bg-body)] text-[var(--text-primary)] font-mono selection:bg-[var(--accent-blue)] selection:text-white">
+        <div className="min-h-screen bg-[var(--bg-body)] text-[var(--text-primary)] font-mono selection:bg-[var(--accent-info)] selection:text-white">
             <Navbar onTerminalToggle={toggleTerminal} terminalOpen={terminalOpen} />
 
             <main className="flex flex-col pb-8">
@@ -44,7 +44,7 @@ function App() {
 
             {/* Terminal Overlay */}
             <div className={`fixed bottom-0 left-0 right-0 z-50 transition-transform duration-300 ease-in-out ${terminalOpen ? 'translate-y-0' : 'translate-y-full'}`}>
-                <div className="h-[50vh] border-t border-[var(--border-light)] shadow-2xl relative bg-[#0D1117]">
+                <div className="h-[50vh] border-t border-[var(--border-light)] shadow-2xl relative bg-[var(--bg-terminal)]">
                     <Terminal isOpen={terminalOpen} onToggle={toggleTerminal} />
                 </div>
             </div>

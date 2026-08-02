@@ -9,11 +9,11 @@ import useGitHubStats from '../hooks/useGitHubStats';
 
 // Color levels: 0 = no activity, 4+ = max
 const COLORS = [
-    'rgba(42, 45, 51, 0.8)',     // 0 — bg-panel-ish
-    'rgba(67, 217, 173, 0.2)',   // 1
-    'rgba(67, 217, 173, 0.45)',  // 2
-    'rgba(67, 217, 173, 0.7)',   // 3
-    'rgba(67, 217, 173, 1.0)',   // 4+
+    'color-mix(in srgb, var(--bg-panel-hover) 82%, transparent)',
+    'color-mix(in srgb, var(--accent-success) 20%, transparent)',
+    'color-mix(in srgb, var(--accent-success) 45%, transparent)',
+    'color-mix(in srgb, var(--accent-success) 70%, transparent)',
+    'var(--accent-success)',
 ];
 
 const CELL = 11;   // cell size px
@@ -94,7 +94,7 @@ const ContributionHeatmap = () => {
     return (
         <div className="mt-8 mb-2">
             <p className="text-[0.7rem] uppercase tracking-[0.15em] mb-3"
-                style={{ color: 'var(--accent-blue)' }}>
+                style={{ color: 'var(--accent-info)' }}>
                 // contribution_activity
             </p>
 

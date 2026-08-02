@@ -9,9 +9,9 @@ const SECTION_FILES = {
 };
 const FLAGS = ['-O2 -std=c++20', '-O3 -std=c++20', '-Wall -Wextra', '-O2 -std=c++17'];
 const BUILD_STATUSES = [
-    { label: '✓ compiled', color: '#43D9AD' },
-    { label: '● linking', color: '#FEA55F' },
-    { label: '✓ compiled', color: '#43D9AD' },
+    { label: '✓ compiled', color: 'var(--accent-success)' },
+    { label: '● linking', color: 'var(--accent-warning)' },
+    { label: '✓ compiled', color: 'var(--accent-success)' },
 ];
 
 function useNow() {
@@ -82,8 +82,8 @@ const CppStatusBar = () => {
         <div
             className="fixed bottom-0 left-0 right-0 z-40 font-mono select-none"
             style={{
-                background: 'rgba(30, 34, 40, 0.97)',
-                borderTop: '1px solid #2A2D33',
+                background: 'color-mix(in srgb, var(--bg-panel) 97%, transparent)',
+                borderTop: '1px solid var(--border-light)',
                 backdropFilter: 'blur(8px)',
             }}
         >
@@ -95,7 +95,7 @@ const CppStatusBar = () => {
                         onClick={cycleCompiler}
                         title="Click to cycle compiler"
                         className="transition-opacity hover:opacity-75"
-                        style={{ color: '#61AFEF' }}
+                        style={{ color: 'var(--accent-info)' }}
                     >
                         [{COMPILERS[compilerIdx]}]
                     </button>
@@ -103,11 +103,11 @@ const CppStatusBar = () => {
                         onClick={scrollToTop}
                         title="Scroll to top"
                         className="transition-opacity hover:opacity-75"
-                        style={{ color: '#E5E9F0' }}
+                        style={{ color: 'var(--text-primary)' }}
                     >
                         {filename}
                     </button>
-                    <span style={{ color: '#ABB2BF' }}>{FLAGS[flagIdx]}</span>
+                    <span style={{ color: 'var(--text-secondary)' }}>{FLAGS[flagIdx]}</span>
                 </div>
 
                 {/* Center */}
@@ -119,33 +119,33 @@ const CppStatusBar = () => {
                     >
                         {currentStatus.label}
                     </span>
-                    <span style={{ color: '#ABB2BF' }}>
+                    <span style={{ color: 'var(--text-secondary)' }}>
                         {buildMs}ms
                     </span>
                 </div>
 
                 {/* Right */}
                 <div className="flex items-center gap-4 shrink-0">
-                    <span style={{ color: '#FEA55F' }}>
+                    <span style={{ color: 'var(--accent-warning)' }}>
                         LN:{String(lineNum).padStart(3, '0')} COL:1
                     </span>
                     <span style={{ color: '#89DDFF' }}>
                         [{gitBranch} +0~2]
                     </span>
-                    <span style={{ color: '#ABB2BF' }}>{now}</span>
+                    <span style={{ color: 'var(--text-secondary)' }}>{now}</span>
                 </div>
             </div>
 
             {/* Mobile — collapsed */}
             <div className="flex sm:hidden px-3 py-1.5 items-center justify-between text-xs gap-2">
-                <button onClick={cycleCompiler} style={{ color: '#61AFEF' }}>
+                <button onClick={cycleCompiler} style={{ color: 'var(--accent-info)' }}>
                     [{COMPILERS[compilerIdx]}]
                 </button>
-                <button onClick={scrollToTop} style={{ color: '#E5E9F0' }}>
+                <button onClick={scrollToTop} style={{ color: 'var(--text-primary)' }}>
                     {filename}
                 </button>
                 <span style={{ color: currentStatus.color }}>{currentStatus.label}</span>
-                <span style={{ color: '#FEA55F' }}>{lineNum}:1</span>
+                <span style={{ color: 'var(--accent-warning)' }}>{lineNum}:1</span>
                 <span style={{ color: '#89DDFF' }}>[{gitBranch}]</span>
             </div>
         </div>

@@ -20,7 +20,7 @@ const Navbar = ({ onTerminalToggle, terminalOpen }) => {
                 {/* Brand — always far left */}
                 <a
                     href="#home"
-                    className="text-sm font-bold text-[var(--accent-blue)] shrink-0"
+                    className="text-sm font-bold text-[var(--accent-info)] shrink-0"
                     onClick={handleNavClick}
                 >
                     yusuf.cpp
@@ -40,7 +40,7 @@ const Navbar = ({ onTerminalToggle, terminalOpen }) => {
                     <button
                         onClick={onTerminalToggle}
                         className={`text-xs px-3 py-1 border rounded transition-colors ${terminalOpen
-                                ? 'border-[var(--accent-green)] text-[var(--accent-green)]'
+                                ? 'border-[var(--accent-success)] text-[var(--accent-success)]'
                                 : 'border-[var(--border-light)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--text-secondary)]'
                             }`}
                     >
@@ -84,7 +84,7 @@ const Navbar = ({ onTerminalToggle, terminalOpen }) => {
                         ))}
                         <button
                             onClick={() => { onTerminalToggle(); setMobileOpen(false); }}
-                            className={`text-sm text-left transition-colors ${terminalOpen ? 'text-[var(--accent-green)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+                            className={`text-sm text-left transition-colors ${terminalOpen ? 'text-[var(--accent-success)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                                 }`}
                         >
                             &gt;_ terminal

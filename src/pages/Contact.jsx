@@ -22,7 +22,7 @@ const Contact = () => {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.4 }}
-                    className="text-[0.7rem] uppercase tracking-[0.18em] text-[var(--accent-blue)] mb-8 flex items-center justify-center gap-2"
+                    className="text-[0.7rem] uppercase tracking-[0.18em] text-[var(--accent-info)] mb-8 flex items-center justify-center gap-2"
                 >
                     <span className="text-[var(--text-secondary)]">&gt;</span> ./init_connection.sh
                 </motion.h3>
@@ -37,7 +37,7 @@ const Contact = () => {
                     style={{ fontFamily: 'var(--font-display)', color: 'var(--text-primary)' }}
                 >
                     Ping me.<br />
-                    <span style={{ color: 'var(--accent-green)' }}>I compile fast.</span>
+                    <span style={{ color: 'var(--accent-success)' }}>I compile fast.</span>
                 </motion.h4>
 
                 <motion.p
@@ -63,15 +63,15 @@ const Contact = () => {
                 >
                     <button
                         onClick={triggerTerminal}
-                        className="group w-full sm:w-auto border border-[var(--accent-green)] px-8 py-5 text-left font-mono transition-all duration-200 hover:bg-[rgba(67,217,173,0.05)] hover:shadow-[0_0_24px_rgba(67,217,173,0.15)]"
+                        className="group w-full sm:w-auto border border-[var(--accent-success)] px-8 py-5 text-left font-mono transition-all duration-200 hover:bg-[rgba(67,217,173,0.05)] hover:shadow-[0_0_24px_rgba(67,217,173,0.15)]"
                     >
-                        <div className="text-[0.65rem] uppercase tracking-[0.18em] text-[var(--accent-green)] opacity-60 mb-1">
+                        <div className="text-[0.65rem] uppercase tracking-[0.18em] text-[var(--accent-success)] opacity-60 mb-1">
                             // primary interface
                         </div>
                         <div className="text-[var(--text-primary)] flex items-center gap-2">
-                            <span className="text-[var(--accent-green)]">$</span>
+                            <span className="text-[var(--accent-success)]">$</span>
                             <span>open terminal</span>
-                            <span className="animate-[blink_1s_step-end_infinite] text-[var(--accent-green)]">_</span>
+                            <span className="animate-[blink_1s_step-end_infinite] text-[var(--accent-success)]">_</span>
                         </div>
                         <div className="text-[0.65rem] text-[var(--text-secondary)] mt-2 opacity-50">
                             Press <kbd className="px-1 bg-[var(--bg-panel)] border border-[var(--border-light)]">Ctrl</kbd> + <kbd className="px-1 bg-[var(--bg-panel)] border border-[var(--border-light)]">`</kbd>
@@ -92,7 +92,7 @@ const Contact = () => {
                         href="mailto:yusufmuhyusuh@gmail.com"
                         className="terminal-btn terminal-btn-primary w-full sm:w-auto justify-center"
                     >
-                        <span className="text-[var(--accent-green)]">→</span> send_email()
+                        <span className="text-[var(--accent-success)]">→</span> send_email()
                     </a>
                     <a
                         href="https://linkedin.com/in/yusufxxxx"
@@ -100,7 +100,7 @@ const Contact = () => {
                         rel="noopener noreferrer"
                         className="terminal-btn terminal-btn-secondary w-full sm:w-auto justify-center"
                     >
-                        <span style={{ color: 'var(--accent-blue)' }}>→</span> connect --platform=linkedin
+                        <span style={{ color: 'var(--accent-info)' }}>→</span> connect --platform=linkedin
                     </a>
                 </motion.div>
 
