@@ -1,11 +1,24 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import MotionText from '../components/MotionText';
 import ContributionHeatmap from '../components/ContributionHeatmap';
 
 const fadeUp = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 }
 };
+
+const SyntaxTerm = ({ tone = 'info', children }) => (
+    <motion.span
+        initial={{ opacity: 0.72 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, amount: 0.7 }}
+        transition={{ duration: 0.35 }}
+        className={tone === 'warning' ? 'text-[var(--accent-warning)]' : 'text-[var(--accent-info)]'}
+    >
+        {children}
+    </motion.span>
+);
 
 const About = () => {
     const principles = [
@@ -39,16 +52,14 @@ const About = () => {
                     >
                         Working principles
                     </motion.p>
-                    <motion.h3
-                        variants={fadeUp}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true, amount: 0.3 }}
-                        transition={{ duration: 0.4, delay: 0.05 }}
+                    <MotionText
+                        as="h3"
+                        segments={['I care about the layer where', 'abstractions become cost']}
+                        delay={0.05}
+                        stagger={0.08}
                         className="font-display text-4xl font-black leading-tight tracking-tight text-[var(--text-primary)] md:text-6xl"
-                    >
-                        I care about the layer where abstractions become cost
-                    </motion.h3>
+                        itemClassName="block"
+                    />
                     <motion.p
                         variants={fadeUp}
                         initial="hidden"
@@ -57,7 +68,7 @@ const About = () => {
                         transition={{ duration: 0.4, delay: 0.1 }}
                         className="mt-6 max-w-3xl font-sans text-base leading-8 text-[var(--text-secondary)]"
                     >
-                        My work sits between low-level C++ systems, Linux-first workflows, and computational research; the common thread is simple: understand the machinery deeply enough to build with intent
+                        My work sits between low-level C++ <SyntaxTerm tone="info">systems</SyntaxTerm>, Linux-first workflows, and computational <SyntaxTerm tone="warning">research</SyntaxTerm>; the common thread is simple: understand the machinery deeply enough to build with <SyntaxTerm tone="warning">intent</SyntaxTerm>
                     </motion.p>
                 </div>
 
