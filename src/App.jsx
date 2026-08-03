@@ -36,17 +36,17 @@ function App() {
                 <div id="home"><Home /></div>
                 <SectionDivider
                     kicker="systems notes"
-                    title="Systems, written close to the metal."
+                    title="Systems, written close to the metal"
                 />
                 <div id="about"><About /></div>
                 <SectionDivider
                     kicker="build artifacts"
-                    title="Repositories shaped like engineering notebooks."
+                    title="Repositories shaped like engineering notebooks"
                 />
                 <div id="projects"><Projects /></div>
                 <SectionDivider
                     kicker="interface"
-                    title="Start a conversation through the terminal."
+                    title="Start a conversation through the terminal"
                 />
                 <div id="contact"><Contact /></div>
             </main>

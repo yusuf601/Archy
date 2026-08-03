@@ -11,7 +11,7 @@ const Projects = () => {
         {
             name: 'SVector',
             kind: 'container rebuild',
-            statement: 'A source-level rebuild of std::vector with allocator control, capacity rules, iterator behavior, and API-compatible muscle memory.',
+            statement: 'A source-level rebuild of std::vector with allocator control, capacity rules, iterator behavior, and API-compatible muscle memory',
             github: 'https://github.com/Build-X-From-Scratch/SVector',
             tech: ['C++20', 'Allocator', 'STL'],
             className: 'md:col-span-3 md:row-span-2',
@@ -20,7 +20,7 @@ const Projects = () => {
         {
             name: 'forward_list_scratch',
             kind: 'linked primitive',
-            statement: 'A forward-list implementation focused on splice, merge, sort, node ownership, and the real cost of pointer-shaped abstractions.',
+            statement: 'A forward-list implementation focused on splice, merge, sort, node ownership, and the real cost of pointer-shaped abstractions',
             github: 'https://github.com/Build-X-From-Scratch/forward_list_sratch',
             tech: ['C++20', 'Nodes', 'Algorithms'],
             className: 'md:col-span-3 md:row-span-2',
@@ -29,7 +29,7 @@ const Projects = () => {
         {
             name: 'Stack / Queue',
             kind: 'linear adapters',
-            statement: 'Small primitives rebuilt to expose the tradeoffs behind interface simplicity.',
+            statement: 'Small primitives rebuilt to expose the tradeoffs behind interface simplicity',
             github: 'https://github.com/Build-X-From-Scratch/Stack_Scratch',
             tech: ['Adapters', 'Buffer'],
             className: 'md:col-span-2',
@@ -38,7 +38,7 @@ const Projects = () => {
         {
             name: 'Trees / Algorithms',
             kind: 'algorithmic internals',
-            statement: 'Traversal, insertion, sorting, search, and the pieces hidden behind standard headers.',
+            statement: 'Traversal, insertion, sorting, search, and the pieces hidden behind standard headers',
             github: '#',
             tech: ['Trees', 'Sort', 'Search'],
             className: 'md:col-span-2',
@@ -47,7 +47,7 @@ const Projects = () => {
         {
             name: 'Research Notes',
             kind: 'systems to ML',
-            statement: 'Academic and experimental notes connecting implementation details to computational models.',
+            statement: 'Academic and experimental notes connecting implementation details to computational models',
             github: 'https://github.com/yusuf601/my-paper',
             tech: ['Research', 'ML'],
             className: 'md:col-span-2',
@@ -77,7 +77,7 @@ const Projects = () => {
                         transition={{ duration: 0.4, delay: 0.05 }}
                         className="font-display text-4xl font-black leading-tight tracking-tight text-[var(--text-primary)] md:text-6xl"
                     >
-                        Rebuilding the standard library as a learning system.
+                        Rebuilding the standard library as a learning system
                     </motion.h3>
                 </div>
 

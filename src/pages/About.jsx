@@ -11,15 +11,15 @@ const About = () => {
     const principles = [
         {
             title: 'Rebuild the abstraction',
-            body: 'I learn systems by recreating the pieces most people only import: containers, algorithms, memory behavior, and the tradeoffs behind clean APIs.',
+            body: 'I learn systems by recreating the pieces most people only import: containers, algorithms, memory behavior, and the tradeoffs behind clean APIs',
         },
         {
             title: 'Measure before decorating',
-            body: 'The work starts with constraints: runtime, memory, data layout, build behavior, and the shape of the problem before the interface gets polished.',
+            body: 'The work starts with constraints: runtime, memory, data layout, build behavior, and the shape of the problem before the interface gets polished',
         },
         {
             title: 'Keep research close to implementation',
-            body: 'Machine learning and computational ideas stay grounded when they meet real code, real data structures, and real failure modes.',
+            body: 'Machine learning and computational ideas stay grounded when they meet real code, real data structures, and real failure modes',
         },
     ];
 
@@ -47,7 +47,7 @@ const About = () => {
                         transition={{ duration: 0.4, delay: 0.05 }}
                         className="font-display text-4xl font-black leading-tight tracking-tight text-[var(--text-primary)] md:text-6xl"
                     >
-                        I care about the layer where abstractions become cost.
+                        I care about the layer where abstractions become cost
                     </motion.h3>
                     <motion.p
                         variants={fadeUp}
@@ -57,7 +57,7 @@ const About = () => {
                         transition={{ duration: 0.4, delay: 0.1 }}
                         className="mt-6 max-w-3xl font-sans text-base leading-8 text-[var(--text-secondary)]"
                     >
-                        My work sits between low-level C++ systems, Linux-first workflows, and computational research. The common thread is simple: understand the machinery deeply enough to build with intent.
+                        My work sits between low-level C++ systems, Linux-first workflows, and computational research; the common thread is simple: understand the machinery deeply enough to build with intent
                     </motion.p>
                 </div>
 

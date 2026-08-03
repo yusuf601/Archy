@@ -35,7 +35,7 @@ const Contact = () => {
                     transition={{ duration: 0.4, delay: 0.1 }}
                     className="font-display mx-auto max-w-3xl text-4xl font-black leading-tight tracking-tight text-[var(--text-primary)] md:text-6xl"
                 >
-                    Ship low-level work with me.
+                    Ship low-level work with me
                 </motion.h4>
 
                 <motion.p
@@ -46,7 +46,7 @@ const Contact = () => {
                     transition={{ duration: 0.4, delay: 0.2 }}
                     className="mx-auto mb-10 max-w-2xl font-sans text-base leading-8 text-[var(--text-secondary)]"
                 >
-                    Systems architecture questions, C++ collaboration, algorithm deep-dives, or research-heavy implementation work. Send the hard problem, not the polished brief.
+                    Systems architecture questions, C++ collaboration, algorithm deep-dives, or research-heavy implementation work, send the hard problem, not the polished brief
                 </motion.p>
 
                 {/* Terminal trigger — primary CTA */}

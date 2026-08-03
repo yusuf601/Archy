@@ -101,7 +101,7 @@ const Home = () => {
                         transition={{ duration: 0.55, delay: 0.08 }}
                         className="font-display max-w-6xl text-[clamp(3rem,6vw,5.8rem)] font-black leading-[0.92] tracking-tight text-[var(--text-primary)]"
                     >
-                        Building systems from scratch, close to the metal.
+                        Building systems from scratch, close to the metal
                     </motion.h1>
 
                     <motion.p
@@ -110,7 +110,7 @@ const Home = () => {
                         transition={{ duration: 0.45, delay: 0.18 }}
                         className="mt-7 max-w-2xl font-sans text-base leading-8 text-[var(--text-secondary)] md:text-lg"
                     >
-                        I rebuild core abstractions in C++, study computational systems, and turn low-level details into working artifacts.
+                        I rebuild core abstractions in C++, study computational systems, and turn low-level details into working artifacts
                     </motion.p>
 
                     <motion.div
