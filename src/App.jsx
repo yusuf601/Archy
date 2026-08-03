@@ -34,11 +34,20 @@ function App() {
 
             <main className="flex flex-col pb-8">
                 <div id="home"><Home /></div>
-                <SectionDivider label="about" />
+                <SectionDivider
+                    kicker="systems notes"
+                    title="Systems, written close to the metal."
+                />
                 <div id="about"><About /></div>
-                <SectionDivider label="projects" />
+                <SectionDivider
+                    kicker="build artifacts"
+                    title="Repositories shaped like engineering notebooks."
+                />
                 <div id="projects"><Projects /></div>
-                <SectionDivider label="contact" />
+                <SectionDivider
+                    kicker="interface"
+                    title="Start a conversation through the terminal."
+                />
                 <div id="contact"><Contact /></div>
             </main>
 

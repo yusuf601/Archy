@@ -1,14 +1,20 @@
 import React from 'react';
 
-/**
- * SectionDivider — visual chapter break between page sections.
- * Renders a full-width line with a centered label: `// ──── [label] ────`
- */
-const SectionDivider = ({ label }) => (
-    <div className="section-divider px-6">
-        <span className="shrink-0 text-[var(--text-secondary)] opacity-40 font-mono">
-            // ——&nbsp;[{label}]&nbsp;——
-        </span>
+const SectionDivider = ({ title, kicker }) => (
+    <div className="px-6 py-20 md:py-28">
+        <div className="mx-auto max-w-6xl border-t border-[var(--border-light)] pt-8 md:pt-10">
+            {kicker && (
+                <p className="mb-3 text-[0.65rem] uppercase tracking-[0.22em] text-[var(--accent-info)]">
+                    {kicker}
+                </p>
+            )}
+            <h2
+                className="max-w-4xl text-3xl font-black leading-tight tracking-tight text-[var(--text-primary)] md:text-5xl"
+                style={{ fontFamily: 'var(--font-display)' }}
+            >
+                {title}
+            </h2>
+        </div>
     </div>
 );
 
