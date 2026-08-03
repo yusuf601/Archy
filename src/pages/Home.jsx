@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import GitHubStatsStrip from '../components/GitHubStatsStrip';
+import MotionText, { compilerContainer, metadataItem } from '../components/MotionText';
 
 const Home = () => {
     const messages = [
@@ -95,14 +96,14 @@ const Home = () => {
                         C++ systems programmer / research-minded builder
                     </motion.p>
 
-                    <motion.h1
-                        initial={{ opacity: 0, y: 24 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.55, delay: 0.08 }}
+                    <MotionText
+                        as="h1"
+                        segments={['Building systems from scratch,', 'close to the metal']}
+                        delay={0.08}
+                        stagger={0.08}
                         className="font-display max-w-6xl text-[clamp(3rem,6vw,5.8rem)] font-black leading-[0.92] tracking-tight text-[var(--text-primary)]"
-                    >
-                        Building systems from scratch, close to the metal
-                    </motion.h1>
+                        itemClassName="block"
+                    />
 
                     <motion.p
                         initial={{ opacity: 0, y: 14 }}
@@ -162,11 +163,20 @@ const Home = () => {
                     </div>
 
                     <div className="space-y-5 p-5">
-                        <div className="grid grid-cols-3 gap-3 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-[var(--text-muted)]">
-                            <span>target: stl</span>
-                            <span>mode: scratch</span>
-                            <span>lang: c++20</span>
-                        </div>
+                        <motion.div
+                            variants={compilerContainer}
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, amount: 0.4 }}
+                            custom={{ delay: 0.04, stagger: 0.08 }}
+                            className="grid grid-cols-3 gap-3 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-[var(--text-muted)]"
+                        >
+                            {['target: stl', 'mode: scratch', 'lang: c++20'].map((item) => (
+                                <motion.span key={item} variants={metadataItem}>
+                                    {item}
+                                </motion.span>
+                            ))}
+                        </motion.div>
 
                         <div className="min-h-[7rem] border border-[var(--border-light)] bg-[rgba(0,0,0,0.22)] p-4 font-mono text-sm">
                             <div className={`transition-opacity duration-500 ${phase === 'fading_out' ? 'opacity-0' : 'opacity-100'}`}>
