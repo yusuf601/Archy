@@ -7,183 +7,126 @@ const fadeUp = {
 };
 
 const Projects = () => {
-    const projects = [
+    const artifacts = [
         {
-            name: "SVector",
-            desc: "C++ STL std::vector rebuilt from scratch — custom allocator, capacity management, iterators, and full API compatibility.",
-            github: "https://github.com/Build-X-From-Scratch/SVector",
-            tech: ["C++", "STL", "Data Structures"],
-            private: false,
-            featured: true,
+            name: 'SVector',
+            kind: 'container rebuild',
+            statement: 'A source-level rebuild of std::vector with allocator control, capacity rules, iterator behavior, and API-compatible muscle memory.',
+            github: 'https://github.com/Build-X-From-Scratch/SVector',
+            tech: ['C++20', 'Allocator', 'STL'],
+            className: 'md:col-span-3 md:row-span-2',
+            public: true,
         },
         {
-            name: "forward_list_scratch",
-            desc: "Singly linked forward list implementation replicating std::forward_list with push, pop, merge, sort, and splice.",
-            github: "https://github.com/Build-X-From-Scratch/forward_list_sratch",
-            tech: ["C++", "Linked List", "STL"],
-            private: false,
-            featured: true,
+            name: 'forward_list_scratch',
+            kind: 'linked primitive',
+            statement: 'A forward-list implementation focused on splice, merge, sort, node ownership, and the real cost of pointer-shaped abstractions.',
+            github: 'https://github.com/Build-X-From-Scratch/forward_list_sratch',
+            tech: ['C++20', 'Nodes', 'Algorithms'],
+            className: 'md:col-span-3 md:row-span-2',
+            public: true,
         },
         {
-            name: "Stack_Scratch",
-            desc: "Stack data structure implemented from scratch over a custom dynamic array, matching std::stack interface.",
-            github: "https://github.com/Build-X-From-Scratch/Stack_Scratch",
-            tech: ["C++", "Stack", "STL"],
-            private: false,
-            featured: false,
+            name: 'Stack / Queue',
+            kind: 'linear adapters',
+            statement: 'Small primitives rebuilt to expose the tradeoffs behind interface simplicity.',
+            github: 'https://github.com/Build-X-From-Scratch/Stack_Scratch',
+            tech: ['Adapters', 'Buffer'],
+            className: 'md:col-span-2',
+            public: true,
         },
         {
-            name: "Queue_Scratch",
-            desc: "FIFO queue built from scratch — circular buffer internals, iterator support, STL-compatible interface.",
-            github: "https://github.com/Build-X-From-Scratch/Queue-Sratch",
-            tech: ["C++", "Queue", "STL"],
-            private: false,
-            featured: false,
+            name: 'Trees / Algorithms',
+            kind: 'algorithmic internals',
+            statement: 'Traversal, insertion, sorting, search, and the pieces hidden behind standard headers.',
+            github: '#',
+            tech: ['Trees', 'Sort', 'Search'],
+            className: 'md:col-span-2',
+            public: false,
         },
         {
-            name: "supreme-chainsaw",
-            desc: "Binary tree library with traversal algorithms, node insertion/deletion, and tree property queries.",
-            github: "#",
-            tech: ["C++", "Trees", "Algorithms"],
-            private: true,
-            featured: false,
+            name: 'Research Notes',
+            kind: 'systems to ML',
+            statement: 'Academic and experimental notes connecting implementation details to computational models.',
+            github: 'https://github.com/yusuf601/my-paper',
+            tech: ['Research', 'ML'],
+            className: 'md:col-span-2',
+            public: true,
         },
-        {
-            name: "algo-stl",
-            desc: "Algorithms library built from scratch — reimplementing std::algorithm with sort, binary_search, transform, reduce, and more.",
-            github: "#",
-            tech: ["C++", "Algorithms", "STL"],
-            private: true,
-            featured: false,
-        },
-        {
-            name: "my-paper",
-            desc: "Research papers and academic work — explorations in systems programming, ML theory, and computational methods.",
-            github: "https://github.com/yusuf601/my-paper",
-            tech: ["Research", "ML", "Systems"],
-            private: false,
-            featured: false,
-        }
     ];
-
-    const featured = projects.filter(p => p.featured);
-    const secondary = projects.filter(p => !p.featured);
 
     return (
         <section className="min-h-screen flex items-center justify-center py-20 px-6">
             <div className="max-w-4xl w-full">
-                <motion.h3
-                    variants={fadeUp}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.4 }}
-                    className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--text-primary)] mb-2 flex items-center gap-3"
-                >
-                    <span
-                        className="w-[3px] self-stretch rounded"
-                        style={{ background: 'var(--accent-info)', opacity: 0.7 }}
-                    />
-                    ./projects
-                </motion.h3>
-
-                <motion.p
-                    variants={fadeUp}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.4, delay: 0.05 }}
-                    className="text-[0.7rem] uppercase tracking-[0.15em] text-[var(--accent-info)] mb-10 ml-5"
-                >
-                    // Build-X-From-Scratch — hand-crafted in C++
-                </motion.p>
-
-                {/* Featured tier */}
-                <div className="flex flex-col gap-4 mb-6">
-                    {featured.map((project, idx) => (
-                        <motion.div
-                            key={idx}
-                            variants={fadeUp}
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true, amount: 0.15 }}
-                            transition={{ duration: 0.4, delay: idx * 0.08 }}
-                            className="p-5 border border-[var(--border-strong)] border-l-2 border-l-accent-success/60 bg-[var(--bg-panel)] hover:bg-[var(--bg-panel-hover)] transition-all duration-200 hover:-translate-y-[3px] hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)] flex flex-col sm:flex-row sm:gap-8"
-                        >
-                            <div className="flex-1">
-                                <div className="flex items-center gap-2 mb-2">
-                                    <span className="text-[0.6rem] uppercase tracking-[0.15em] text-[var(--accent-success)] opacity-70">
-                                        ≥ featured
-                                    </span>
-                                </div>
-                                <h4 className="text-[var(--text-primary)] font-bold text-lg mb-2">{project.name}</h4>
-                                <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{project.desc}</p>
-                            </div>
-                            <div className="flex flex-col justify-between items-start sm:items-end mt-4 sm:mt-0 sm:w-36 shrink-0">
-                                <div className="flex flex-wrap gap-1.5 sm:flex-col sm:items-end">
-                                    {project.tech.map(t => (
-                                        <span key={t} className="text-[0.7rem] text-[var(--accent-info)] font-mono">#{t}</span>
-                                    ))}
-                                </div>
-                                <a
-                                    href={project.github}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="mt-3 text-xs text-[var(--accent-success)] hover:underline font-mono flex items-center gap-1"
-                                >
-                                    github ↗
-                                </a>
-                            </div>
-                        </motion.div>
-                    ))}
+                <div className="mb-10 max-w-3xl">
+                    <motion.p
+                        variants={fadeUp}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{ duration: 0.4 }}
+                        className="mb-3 text-[0.68rem] uppercase tracking-[0.22em] text-[var(--accent-info)]"
+                    >
+                        Build-X-From-Scratch
+                    </motion.p>
+                    <motion.h3
+                        variants={fadeUp}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{ duration: 0.4, delay: 0.05 }}
+                        className="text-4xl font-black leading-tight tracking-tight text-[var(--text-primary)] md:text-6xl"
+                        style={{ fontFamily: 'var(--font-display)' }}
+                    >
+                        Rebuilding the standard library as a learning system.
+                    </motion.h3>
                 </div>
 
-                {/* Secondary tier */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {secondary.map((project, idx) => (
-                        <motion.div
-                            key={idx}
+                <div className="grid auto-rows-[minmax(13rem,auto)] grid-cols-1 gap-3 md:grid-cols-6 md:grid-flow-dense">
+                    {artifacts.map((artifact, idx) => (
+                        <motion.article
+                            key={artifact.name}
                             variants={fadeUp}
                             initial="hidden"
                             whileInView="visible"
-                            viewport={{ once: true, amount: 0.15 }}
-                            transition={{ duration: 0.4, delay: 0.2 + idx * 0.06 }}
-                            className="p-4 border border-[var(--border-light)] bg-[var(--bg-panel)] hover:bg-[var(--bg-panel-hover)] transition-all duration-200 hover:-translate-y-[3px] hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)] flex flex-col group relative overflow-hidden"
+                            viewport={{ once: true, amount: 0.2 }}
+                            transition={{ duration: 0.4, delay: idx * 0.05 }}
+                            className={`${artifact.className} group flex min-h-[13rem] flex-col justify-between overflow-hidden border border-[var(--border-light)] bg-[var(--bg-panel)] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--accent-info)] hover:bg-[var(--bg-panel-hover)]`}
                         >
-                            <div className="flex justify-between items-start mb-2">
-                                <div className="flex items-center gap-2">
-                                    <h4 className="text-[var(--text-primary)] font-bold text-sm">{project.name}</h4>
-                                    {project.private && (
-                                        <span
-                                            className="text-[0.6rem] px-1.5 py-0.5 border font-mono"
-                                            style={{
-                                                borderColor: 'var(--accent-danger)',
-                                                color: 'var(--accent-danger)',
-                                                opacity: 0.8,
-                                            }}
-                                        >
-                                            [locked]
-                                        </span>
-                                    )}
+                            <div>
+                                <div className="mb-5 flex items-start justify-between gap-4">
+                                    <p className="text-[0.62rem] uppercase tracking-[0.18em] text-[var(--accent-warning)]">
+                                        {artifact.kind}
+                                    </p>
+                                    <span className={`text-[0.6rem] uppercase tracking-[0.16em] ${artifact.public ? 'text-[var(--accent-info)]' : 'text-[var(--accent-danger)]'}`}>
+                                        {artifact.public ? 'public' : 'locked'}
+                                    </span>
                                 </div>
-                                {!project.private && (
+                                <h4 className="mb-4 text-2xl font-black tracking-tight text-[var(--text-primary)]">
+                                    {artifact.name}
+                                </h4>
+                                <p className="max-w-xl text-sm leading-7 text-[var(--text-secondary)]">
+                                    {artifact.statement}
+                                </p>
+                            </div>
+                            <div className="mt-8 flex flex-wrap items-center gap-2">
+                                {artifact.tech.map((tech) => (
+                                    <span key={tech} className="border border-[var(--border-light)] px-2 py-1 text-[0.64rem] uppercase tracking-[0.12em] text-[var(--text-muted)]">
+                                        {tech}
+                                    </span>
+                                ))}
+                                {artifact.public && (
                                     <a
-                                        href={project.github}
+                                        href={artifact.github}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="text-[var(--accent-success)] hover:underline text-xs shrink-0 flex items-center gap-1 translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-200"
+                                        className="ml-auto text-xs font-bold uppercase tracking-[0.14em] text-[var(--accent-info)]"
                                     >
-                                        → github
+                                        GitHub
                                     </a>
                                 )}
                             </div>
-                            <p className="text-xs text-[var(--text-secondary)] mb-4 flex-grow leading-relaxed">{project.desc}</p>
-                            <div className="flex flex-wrap gap-2 mt-auto">
-                                {project.tech.map(t => (
-                                    <span key={t} className="text-[0.65rem] text-[var(--accent-info)] font-mono">#{t}</span>
-                                ))}
-                            </div>
-                        </motion.div>
+                        </motion.article>
                     ))}
                 </div>
             </div>
