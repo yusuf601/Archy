@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import MotionText, { compilerContainer, metadataItem } from '../components/MotionText';
 
 const fadeUp = {
     hidden: { opacity: 0, y: 20 },
@@ -69,16 +70,14 @@ const Projects = () => {
                     >
                         Build-X-From-Scratch
                     </motion.p>
-                    <motion.h3
-                        variants={fadeUp}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true, amount: 0.3 }}
-                        transition={{ duration: 0.4, delay: 0.05 }}
+                    <MotionText
+                        as="h3"
+                        segments={['Rebuilding the standard library', 'as a learning system']}
+                        delay={0.05}
+                        stagger={0.08}
                         className="font-display text-4xl font-black leading-tight tracking-tight text-[var(--text-primary)] md:text-6xl"
-                    >
-                        Rebuilding the standard library as a learning system
-                    </motion.h3>
+                        itemClassName="block"
+                    />
                 </div>
 
                 <div className="grid auto-rows-[minmax(13rem,auto)] grid-cols-1 gap-3 md:grid-cols-6 md:grid-flow-dense">
@@ -93,35 +92,52 @@ const Projects = () => {
                             className={`${artifact.className} group flex min-h-[13rem] flex-col justify-between overflow-hidden border border-[var(--border-light)] bg-[var(--bg-panel)] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--accent-info)] hover:bg-[var(--bg-panel-hover)]`}
                         >
                             <div>
-                                <div className="mb-5 flex items-start justify-between gap-4">
-                                    <p className="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-[var(--accent-warning)]">
+                                <motion.div
+                                    variants={compilerContainer}
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    viewport={{ once: true, amount: 0.4 }}
+                                    custom={{ delay: 0.03, stagger: 0.07 }}
+                                    className="mb-5 flex items-start justify-between gap-4"
+                                >
+                                    <motion.p variants={metadataItem} className="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-[var(--accent-warning)]">
                                         {artifact.kind}
-                                    </p>
-                                    <span className={`font-mono text-[0.6rem] uppercase tracking-[0.16em] ${artifact.public ? 'text-[var(--accent-info)]' : 'text-[var(--accent-danger)]'}`}>
+                                    </motion.p>
+                                    <motion.span variants={metadataItem} className={`font-mono text-[0.6rem] uppercase tracking-[0.16em] ${artifact.public ? 'text-[var(--accent-info)]' : 'text-[var(--accent-danger)]'}`}>
                                         {artifact.public ? 'public' : 'locked'}
-                                    </span>
-                                </div>
-                                <h4 className="mb-4 font-display text-2xl font-black tracking-tight text-[var(--text-primary)]">
+                                    </motion.span>
+                                </motion.div>
+                                <motion.h4
+                                    whileHover={{ x: 2 }}
+                                    transition={{ duration: 0.18 }}
+                                    className="mb-4 font-display text-2xl font-black tracking-tight text-[var(--text-primary)]"
+                                >
                                     {artifact.name}
-                                </h4>
+                                </motion.h4>
                                 <p className="max-w-xl font-sans text-sm leading-7 text-[var(--text-secondary)]">
                                     {artifact.statement}
                                 </p>
                             </div>
                             <div className="mt-8 flex flex-wrap items-center gap-2">
                                 {artifact.tech.map((tech) => (
-                                    <span key={tech} className="border border-[var(--border-light)] px-2 py-1 font-mono text-[0.64rem] uppercase tracking-[0.12em] text-[var(--text-muted)]">
+                                    <motion.span
+                                        key={tech}
+                                        variants={metadataItem}
+                                        className="border border-[var(--border-light)] px-2 py-1 font-mono text-[0.64rem] uppercase tracking-[0.12em] text-[var(--text-muted)] transition-opacity duration-200 group-hover:opacity-90"
+                                    >
                                         {tech}
-                                    </span>
+                                    </motion.span>
                                 ))}
                                 {artifact.public && (
                                     <a
                                         href={artifact.github}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="ml-auto font-mono text-xs font-bold uppercase tracking-[0.14em] text-[var(--accent-info)]"
+                                        className="ml-auto font-mono text-xs font-bold uppercase tracking-[0.14em] text-[var(--accent-info)] transition-opacity duration-200 group-hover:opacity-100"
                                     >
-                                        GitHub
+                                        <motion.span whileHover={{ x: 4 }} transition={{ duration: 0.18 }} className="inline-block">
+                                            GitHub
+                                        </motion.span>
                                     </a>
                                 )}
                             </div>
