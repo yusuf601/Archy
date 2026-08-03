@@ -7,6 +7,18 @@ const fadeUp = {
     visible: { opacity: 1, y: 0 }
 };
 
+const metadataHoverItem = {
+    ...metadataItem,
+    visible: {
+        ...metadataItem.visible,
+        opacity: 0.72,
+    },
+    hover: {
+        opacity: 1,
+        transition: { duration: 0.2 },
+    },
+};
+
 const Projects = () => {
     const artifacts = [
         {
@@ -87,6 +99,7 @@ const Projects = () => {
                             variants={fadeUp}
                             initial="hidden"
                             whileInView="visible"
+                            whileHover="hover"
                             viewport={{ once: true, amount: 0.2 }}
                             transition={{ duration: 0.4, delay: idx * 0.05 }}
                             className={`${artifact.className} group flex min-h-[13rem] flex-col justify-between overflow-hidden border border-[var(--border-light)] bg-[var(--bg-panel)] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--accent-info)] hover:bg-[var(--bg-panel-hover)]`}
@@ -100,10 +113,10 @@ const Projects = () => {
                                     custom={{ delay: 0.03, stagger: 0.07 }}
                                     className="mb-5 flex items-start justify-between gap-4"
                                 >
-                                    <motion.p variants={metadataItem} className="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-[var(--accent-warning)]">
+                                    <motion.p variants={metadataHoverItem} className="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-[var(--accent-warning)]">
                                         {artifact.kind}
                                     </motion.p>
-                                    <motion.span variants={metadataItem} className={`font-mono text-[0.6rem] uppercase tracking-[0.16em] ${artifact.public ? 'text-[var(--accent-info)]' : 'text-[var(--accent-danger)]'}`}>
+                                    <motion.span variants={metadataHoverItem} className={`font-mono text-[0.6rem] uppercase tracking-[0.16em] ${artifact.public ? 'text-[var(--accent-info)]' : 'text-[var(--accent-danger)]'}`}>
                                         {artifact.public ? 'public' : 'locked'}
                                     </motion.span>
                                 </motion.div>
@@ -122,8 +135,8 @@ const Projects = () => {
                                 {artifact.tech.map((tech) => (
                                     <motion.span
                                         key={tech}
-                                        variants={metadataItem}
-                                        className="border border-[var(--border-light)] px-2 py-1 font-mono text-[0.64rem] uppercase tracking-[0.12em] text-[var(--text-muted)] transition-opacity duration-200 group-hover:opacity-90"
+                                        variants={metadataHoverItem}
+                                        className="border border-[var(--border-light)] px-2 py-1 font-mono text-[0.64rem] uppercase tracking-[0.12em] text-[var(--text-muted)]"
                                     >
                                         {tech}
                                     </motion.span>
