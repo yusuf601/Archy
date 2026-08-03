@@ -11,10 +11,10 @@ import SectionDivider from './components/SectionDivider';
 function App() {
     const [terminalOpen, setTerminalOpen] = useState(false);
 
-    // Global toggle for terminal via Ctrl+`
+    // Global toggle for terminal via Ctrl+J
     useEffect(() => {
         const handleKeyDown = (e) => {
-            if ((e.ctrlKey || e.metaKey) && e.key === '`') {
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'j') {
                 e.preventDefault();
                 setTerminalOpen(prev => !prev);
             }

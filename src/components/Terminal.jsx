@@ -165,6 +165,7 @@ Share your achievement: "I found all 30 Easter eggs in @yusuf601's portfolio!"`
   cat [file]    - Display file contents
   neofetch      - Display system information
   clear         - Clear terminal history
+  exit          - Close terminal session
   hint          - Get a clue about hidden Easter eggs
   achievements  - View your Easter egg progress
   
@@ -939,7 +940,13 @@ ${timestamp} (21.5 MB/s) - '${filename}' saved [2278683/2278683]
             };
         },
 
-        clear: () => null
+        clear: () => null,
+
+        exit: () => ({
+            type: 'action',
+            text: 'logout\nConnection to yusuf.cpp closed.',
+            run: () => onToggle?.()
+        })
     };
 
     const handleSubmit = (e) => {
@@ -976,7 +983,11 @@ ${timestamp} (21.5 MB/s) - '${filename}' saved [2278683/2278683]
         } else if (commands[cmd]) {
             const result = commands[cmd](args);
             if (result) {
-                newHistory.push(result);
+                const { run, ...entry } = result;
+                newHistory.push(entry);
+                if (run) {
+                    setTimeout(run, 120);
+                }
             }
             setHistory(newHistory);
         } else {
@@ -1066,7 +1077,7 @@ ${timestamp} (21.5 MB/s) - '${filename}' saved [2278683/2278683]
                             <button
                                 className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-opacity-80 transition-colors"
                                 onClick={onToggle}
-                                title="Close (Ctrl+`)"
+                                title="Close (Ctrl+J)"
                             />
                             <button
                                 className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-opacity-80 transition-colors"

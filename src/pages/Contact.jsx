@@ -8,7 +8,7 @@ const fadeUp = {
 
 const Contact = () => {
     const triggerTerminal = () => {
-        const event = new KeyboardEvent('keydown', { key: '`', ctrlKey: true });
+        const event = new KeyboardEvent('keydown', { key: 'j', ctrlKey: true });
         window.dispatchEvent(event);
     };
 
@@ -72,7 +72,7 @@ const Contact = () => {
                             <span className="animate-[blink_1s_step-end_infinite] text-[var(--accent-info)]">_</span>
                         </div>
                         <div className="text-[0.65rem] text-[var(--text-secondary)] mt-2 opacity-50">
-                            Press <kbd className="px-1 bg-[var(--bg-panel)] border border-[var(--border-light)]">Ctrl</kbd> + <kbd className="px-1 bg-[var(--bg-panel)] border border-[var(--border-light)]">`</kbd>
+                            Press <kbd className="px-1 bg-[var(--bg-panel)] border border-[var(--border-light)]">Ctrl</kbd> + <kbd className="px-1 bg-[var(--bg-panel)] border border-[var(--border-light)]">J</kbd>
                         </div>
                     </button>
                 </motion.div>

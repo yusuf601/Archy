@@ -128,7 +128,7 @@ const Home = () => {
                         </a>
                         <button
                             type="button"
-                            onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: '`', ctrlKey: true }))}
+                            onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'j', ctrlKey: true }))}
                             className="inline-flex items-center justify-center border border-[var(--border-strong)] px-6 py-3 text-sm font-bold uppercase tracking-[0.14em] text-[var(--text-primary)] transition-colors duration-200 hover:border-[var(--accent-warning)] hover:text-[var(--accent-warning)]"
                         >
                             Open terminal
