@@ -42,7 +42,9 @@ export default {
                 'everblush-magenta': compilerColor('--accent-danger'),
             },
             fontFamily: {
-                mono: ['"JetBrains Mono"', 'monospace'],
+                sans: ['var(--font-sans)'],
+                display: ['var(--font-display)'],
+                mono: ['var(--font-mono)'],
             },
             fontSize: {
                 'xs': '0.75rem',
