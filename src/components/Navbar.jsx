@@ -20,27 +20,32 @@ const Navbar = ({ onTerminalToggle, terminalOpen }) => {
                 {/* Brand — always far left */}
                 <a
                     href="#home"
-                    className="text-sm font-bold text-[var(--accent-info)] shrink-0"
+                    className="shrink-0 flex flex-col justify-center"
                     onClick={handleNavClick}
                 >
-                    yusuf.cpp
+                    <span className="block text-[0.72rem] font-black tracking-[0.2em] text-[var(--text-primary)] leading-none">
+                        YUSUF
+                    </span>
+                    <span className="hidden sm:block mt-1 text-[0.55rem] tracking-[0.22em] text-[var(--accent-info)] leading-none">
+                        BUILD-X-FROM-SCRATCH
+                    </span>
                 </a>
 
                 {/* Desktop nav — pushed to far right via ml-auto */}
-                <div className="hidden md:flex items-center gap-6 ml-auto">
+                <div className="hidden md:flex items-center gap-7 ml-auto">
                     {navLinks.map((link) => (
                         <a
                             key={link.name}
                             href={link.href}
-                            className="text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+                            className="text-[0.68rem] uppercase tracking-[0.16em] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
                         >
                             {link.name}
                         </a>
                     ))}
                     <button
                         onClick={onTerminalToggle}
-                        className={`text-xs px-3 py-1 border rounded transition-colors ${terminalOpen
-                                ? 'border-[var(--accent-success)] text-[var(--accent-success)]'
+                        className={`text-[0.68rem] uppercase tracking-[0.14em] px-3 py-1.5 border transition-colors ${terminalOpen
+                                ? 'border-[var(--accent-info)] text-[var(--accent-info)] bg-[color-mix(in_srgb,var(--accent-info)_8%,transparent)]'
                                 : 'border-[var(--border-light)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--text-secondary)]'
                             }`}
                     >
