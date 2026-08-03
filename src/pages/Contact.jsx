@@ -7,6 +7,11 @@ const fadeUp = {
     visible: { opacity: 1, y: 0 }
 };
 
+const fade = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 }
+};
+
 const Contact = () => {
     const triggerTerminal = () => {
         const event = new KeyboardEvent('keydown', { key: 'j', ctrlKey: true });
@@ -38,7 +43,7 @@ const Contact = () => {
                 />
 
                 <motion.p
-                    variants={fadeUp}
+                    variants={fade}
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
