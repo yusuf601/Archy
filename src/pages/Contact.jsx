@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import MotionText from '../components/MotionText';
 
 const fadeUp = {
     hidden: { opacity: 0, y: 20 },
@@ -27,16 +28,14 @@ const Contact = () => {
                     <span className="text-[var(--text-secondary)]">&gt;</span> ./contact.sh
                 </motion.h3>
 
-                <motion.h4
-                    variants={fadeUp}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.4, delay: 0.1 }}
+                <MotionText
+                    as="h4"
+                    segments={['Ship low-level work', 'with me']}
+                    delay={0.08}
+                    stagger={0.08}
                     className="font-display mx-auto max-w-3xl text-4xl font-black leading-tight tracking-tight text-[var(--text-primary)] md:text-6xl"
-                >
-                    Ship low-level work with me
-                </motion.h4>
+                    itemClassName="block"
+                />
 
                 <motion.p
                     variants={fadeUp}
