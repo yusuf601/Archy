@@ -65,7 +65,7 @@ const Projects = () => {
                         whileInView="visible"
                         viewport={{ once: true, amount: 0.3 }}
                         transition={{ duration: 0.4 }}
-                        className="mb-3 text-[0.68rem] uppercase tracking-[0.22em] text-[var(--accent-info)]"
+                        className="mb-3 font-mono text-[0.68rem] uppercase tracking-[0.22em] text-[var(--accent-info)]"
                     >
                         Build-X-From-Scratch
                     </motion.p>
@@ -75,8 +75,7 @@ const Projects = () => {
                         whileInView="visible"
                         viewport={{ once: true, amount: 0.3 }}
                         transition={{ duration: 0.4, delay: 0.05 }}
-                        className="text-4xl font-black leading-tight tracking-tight text-[var(--text-primary)] md:text-6xl"
-                        style={{ fontFamily: 'var(--font-display)' }}
+                        className="font-display text-4xl font-black leading-tight tracking-tight text-[var(--text-primary)] md:text-6xl"
                     >
                         Rebuilding the standard library as a learning system.
                     </motion.h3>
@@ -95,23 +94,23 @@ const Projects = () => {
                         >
                             <div>
                                 <div className="mb-5 flex items-start justify-between gap-4">
-                                    <p className="text-[0.62rem] uppercase tracking-[0.18em] text-[var(--accent-warning)]">
+                                    <p className="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-[var(--accent-warning)]">
                                         {artifact.kind}
                                     </p>
-                                    <span className={`text-[0.6rem] uppercase tracking-[0.16em] ${artifact.public ? 'text-[var(--accent-info)]' : 'text-[var(--accent-danger)]'}`}>
+                                    <span className={`font-mono text-[0.6rem] uppercase tracking-[0.16em] ${artifact.public ? 'text-[var(--accent-info)]' : 'text-[var(--accent-danger)]'}`}>
                                         {artifact.public ? 'public' : 'locked'}
                                     </span>
                                 </div>
-                                <h4 className="mb-4 text-2xl font-black tracking-tight text-[var(--text-primary)]">
+                                <h4 className="mb-4 font-display text-2xl font-black tracking-tight text-[var(--text-primary)]">
                                     {artifact.name}
                                 </h4>
-                                <p className="max-w-xl text-sm leading-7 text-[var(--text-secondary)]">
+                                <p className="max-w-xl font-sans text-sm leading-7 text-[var(--text-secondary)]">
                                     {artifact.statement}
                                 </p>
                             </div>
                             <div className="mt-8 flex flex-wrap items-center gap-2">
                                 {artifact.tech.map((tech) => (
-                                    <span key={tech} className="border border-[var(--border-light)] px-2 py-1 text-[0.64rem] uppercase tracking-[0.12em] text-[var(--text-muted)]">
+                                    <span key={tech} className="border border-[var(--border-light)] px-2 py-1 font-mono text-[0.64rem] uppercase tracking-[0.12em] text-[var(--text-muted)]">
                                         {tech}
                                     </span>
                                 ))}
@@ -120,7 +119,7 @@ const Projects = () => {
                                         href={artifact.github}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="ml-auto text-xs font-bold uppercase tracking-[0.14em] text-[var(--accent-info)]"
+                                        className="ml-auto font-mono text-xs font-bold uppercase tracking-[0.14em] text-[var(--accent-info)]"
                                     >
                                         GitHub
                                     </a>

@@ -35,7 +35,7 @@ const About = () => {
                         whileInView="visible"
                         viewport={{ once: true, amount: 0.3 }}
                         transition={{ duration: 0.4 }}
-                        className="mb-3 text-[0.68rem] uppercase tracking-[0.22em] text-[var(--accent-info)]"
+                        className="mb-3 font-mono text-[0.68rem] uppercase tracking-[0.22em] text-[var(--accent-info)]"
                     >
                         Working principles
                     </motion.p>
@@ -45,8 +45,7 @@ const About = () => {
                         whileInView="visible"
                         viewport={{ once: true, amount: 0.3 }}
                         transition={{ duration: 0.4, delay: 0.05 }}
-                        className="text-4xl font-black leading-tight tracking-tight text-[var(--text-primary)] md:text-6xl"
-                        style={{ fontFamily: 'var(--font-display)' }}
+                        className="font-display text-4xl font-black leading-tight tracking-tight text-[var(--text-primary)] md:text-6xl"
                     >
                         I care about the layer where abstractions become cost.
                     </motion.h3>
@@ -56,7 +55,7 @@ const About = () => {
                         whileInView="visible"
                         viewport={{ once: true, amount: 0.3 }}
                         transition={{ duration: 0.4, delay: 0.1 }}
-                        className="mt-6 max-w-3xl text-base leading-8 text-[var(--text-secondary)]"
+                        className="mt-6 max-w-3xl font-sans text-base leading-8 text-[var(--text-secondary)]"
                     >
                         My work sits between low-level C++ systems, Linux-first workflows, and computational research. The common thread is simple: understand the machinery deeply enough to build with intent.
                     </motion.p>
@@ -75,13 +74,13 @@ const About = () => {
                             key={principle.title}
                             className="border border-[var(--border-light)] bg-[var(--bg-panel)] p-5"
                         >
-                            <p className="mb-5 text-[0.62rem] uppercase tracking-[0.18em] text-[var(--accent-warning)]">
+                            <p className="mb-5 font-mono text-[0.62rem] uppercase tracking-[0.18em] text-[var(--accent-warning)]">
                                 0{index + 1}
                             </p>
-                            <h4 className="mb-3 text-xl font-black tracking-tight text-[var(--text-primary)]">
+                            <h4 className="mb-3 font-display text-xl font-black tracking-tight text-[var(--text-primary)]">
                                 {principle.title}
                             </h4>
-                            <p className="text-sm leading-7 text-[var(--text-secondary)]">
+                            <p className="font-sans text-sm leading-7 text-[var(--text-secondary)]">
                                 {principle.body}
                             </p>
                         </article>

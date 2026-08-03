@@ -22,7 +22,7 @@ const Contact = () => {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.4 }}
-                    className="text-[0.7rem] uppercase tracking-[0.18em] text-[var(--accent-info)] mb-8 flex items-center justify-center gap-2"
+                    className="mb-8 flex items-center justify-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.18em] text-[var(--accent-info)]"
                 >
                     <span className="text-[var(--text-secondary)]">&gt;</span> ./contact.sh
                 </motion.h3>
@@ -33,8 +33,7 @@ const Contact = () => {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.4, delay: 0.1 }}
-                    className="mx-auto max-w-3xl text-4xl font-black leading-tight tracking-tight md:text-6xl"
-                    style={{ fontFamily: 'var(--font-display)', color: 'var(--text-primary)' }}
+                    className="font-display mx-auto max-w-3xl text-4xl font-black leading-tight tracking-tight text-[var(--text-primary)] md:text-6xl"
                 >
                     Ship low-level work with me.
                 </motion.h4>
@@ -45,7 +44,7 @@ const Contact = () => {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.4, delay: 0.2 }}
-                    className="mx-auto mb-10 max-w-2xl text-base leading-8 text-[var(--text-secondary)]"
+                    className="mx-auto mb-10 max-w-2xl font-sans text-base leading-8 text-[var(--text-secondary)]"
                 >
                     Systems architecture questions, C++ collaboration, algorithm deep-dives, or research-heavy implementation work. Send the hard problem, not the polished brief.
                 </motion.p>
