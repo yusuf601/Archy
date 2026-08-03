@@ -24,7 +24,7 @@ const Contact = () => {
                     transition={{ duration: 0.4 }}
                     className="text-[0.7rem] uppercase tracking-[0.18em] text-[var(--accent-info)] mb-8 flex items-center justify-center gap-2"
                 >
-                    <span className="text-[var(--text-secondary)]">&gt;</span> ./init_connection.sh
+                    <span className="text-[var(--text-secondary)]">&gt;</span> ./contact.sh
                 </motion.h3>
 
                 <motion.h4
@@ -33,11 +33,10 @@ const Contact = () => {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.4, delay: 0.1 }}
-                    className="text-3xl md:text-5xl font-black tracking-tight mb-6"
+                    className="mx-auto max-w-3xl text-4xl font-black leading-tight tracking-tight md:text-6xl"
                     style={{ fontFamily: 'var(--font-display)', color: 'var(--text-primary)' }}
                 >
-                    Ping me.<br />
-                    <span style={{ color: 'var(--accent-success)' }}>I compile fast.</span>
+                    Ship low-level work with me.
                 </motion.h4>
 
                 <motion.p
@@ -46,10 +45,9 @@ const Contact = () => {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.4, delay: 0.2 }}
-                    className="text-[var(--text-secondary)] mb-10 max-w-md mx-auto text-sm leading-relaxed"
+                    className="mx-auto mb-10 max-w-2xl text-base leading-8 text-[var(--text-secondary)]"
                 >
-                    Systems architecture questions, C++ collaboration, algorithm deep-dives —
-                    all packets accepted.
+                    Systems architecture questions, C++ collaboration, algorithm deep-dives, or research-heavy implementation work. Send the hard problem, not the polished brief.
                 </motion.p>
 
                 {/* Terminal trigger — primary CTA */}
@@ -63,15 +61,15 @@ const Contact = () => {
                 >
                     <button
                         onClick={triggerTerminal}
-                        className="group w-full sm:w-auto border border-[var(--accent-success)] px-8 py-5 text-left font-mono transition-all duration-200 hover:bg-[color-mix(in_srgb,var(--accent-success)_5%,transparent)] hover:shadow-[0_0_24px_color-mix(in_srgb,var(--accent-success)_15%,transparent)]"
+                        className="group w-full border border-[var(--accent-info)] px-8 py-5 text-left font-mono transition-all duration-200 hover:bg-[color-mix(in_srgb,var(--accent-info)_6%,transparent)] sm:w-auto"
                     >
-                        <div className="text-[0.65rem] uppercase tracking-[0.18em] text-[var(--accent-success)] opacity-60 mb-1">
-                            // primary interface
+                        <div className="text-[0.65rem] uppercase tracking-[0.18em] text-[var(--accent-info)] opacity-60 mb-1">
+                            primary interface
                         </div>
                         <div className="text-[var(--text-primary)] flex items-center gap-2">
-                            <span className="text-[var(--accent-success)]">$</span>
-                            <span>open terminal</span>
-                            <span className="animate-[blink_1s_step-end_infinite] text-[var(--accent-success)]">_</span>
+                            <span className="text-[var(--accent-info)]">$</span>
+                            <span>open terminal session</span>
+                            <span className="animate-[blink_1s_step-end_infinite] text-[var(--accent-info)]">_</span>
                         </div>
                         <div className="text-[0.65rem] text-[var(--text-secondary)] mt-2 opacity-50">
                             Press <kbd className="px-1 bg-[var(--bg-panel)] border border-[var(--border-light)]">Ctrl</kbd> + <kbd className="px-1 bg-[var(--bg-panel)] border border-[var(--border-light)]">`</kbd>
@@ -101,6 +99,14 @@ const Contact = () => {
                         className="terminal-btn terminal-btn-secondary w-full sm:w-auto justify-center"
                     >
                         <span style={{ color: 'var(--accent-info)' }}>→</span> connect --platform=linkedin
+                    </a>
+                    <a
+                        href="https://github.com/yusuf601"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="terminal-btn terminal-btn-secondary w-full justify-center sm:w-auto"
+                    >
+                        <span style={{ color: 'var(--accent-info)' }}>→</span> inspect --github
                     </a>
                 </motion.div>
 
