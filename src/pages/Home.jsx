@@ -84,7 +84,7 @@ const Home = () => {
 
     return (
         <section className="relative min-h-screen overflow-hidden px-6 pt-28 pb-20 md:pt-36 md:pb-28">
-            <div className="mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[1.08fr_0.92fr]">
+            <div className="mx-auto w-full max-w-6xl">
                 <div className="relative z-10">
                     <motion.p
                         initial={{ opacity: 0, y: 10 }}
@@ -99,7 +99,7 @@ const Home = () => {
                         initial={{ opacity: 0, y: 24 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.55, delay: 0.08 }}
-                        className="max-w-5xl text-[clamp(3.2rem,7vw,6.8rem)] font-black leading-[0.92] tracking-tight text-[var(--text-primary)]"
+                        className="max-w-6xl text-[clamp(3rem,6vw,5.8rem)] font-black leading-[0.92] tracking-tight text-[var(--text-primary)]"
                         style={{ fontFamily: 'var(--font-display)' }}
                     >
                         Building systems from scratch, close to the metal.
@@ -149,7 +149,7 @@ const Home = () => {
                     initial={{ opacity: 0, y: 24, scale: 0.98 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ duration: 0.55, delay: 0.18 }}
-                    className="group relative z-10 border border-[var(--border-strong)] bg-[var(--bg-terminal)] shadow-[0_24px_80px_rgba(0,0,0,0.42)]"
+                    className="group relative z-10 mt-14 max-w-2xl border border-[var(--border-strong)] bg-[var(--bg-terminal)] shadow-[0_24px_80px_rgba(0,0,0,0.42)] lg:ml-auto"
                     onClick={handleCopy}
                     title="Click to copy"
                 >
