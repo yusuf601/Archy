@@ -29,7 +29,7 @@ function App() {
     const toggleTerminal = () => setTerminalOpen(!terminalOpen);
 
     return (
-        <div className="min-h-screen bg-[var(--bg-body)] text-[var(--text-primary)] font-mono selection:bg-[var(--accent-info)] selection:text-white">
+        <div className="min-h-screen bg-[var(--bg-body)] text-[var(--text-primary)] selection:bg-[var(--accent-info)] selection:text-white">
             <Navbar onTerminalToggle={toggleTerminal} terminalOpen={terminalOpen} />
 
             <main className="flex flex-col pb-8">

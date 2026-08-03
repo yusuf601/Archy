@@ -23,10 +23,10 @@ const Navbar = ({ onTerminalToggle, terminalOpen }) => {
                     className="shrink-0 flex flex-col justify-center"
                     onClick={handleNavClick}
                 >
-                    <span className="block text-[0.72rem] font-black tracking-[0.2em] text-[var(--text-primary)] leading-none">
+                    <span className="block font-display text-[0.72rem] font-black tracking-[0.2em] text-[var(--text-primary)] leading-none">
                         YUSUF
                     </span>
-                    <span className="hidden sm:block mt-1 text-[0.55rem] tracking-[0.22em] text-[var(--accent-info)] leading-none">
+                    <span className="hidden sm:block mt-1 font-mono text-[0.55rem] tracking-[0.22em] text-[var(--accent-info)] leading-none">
                         BUILD-X-FROM-SCRATCH
                     </span>
                 </a>
@@ -37,14 +37,14 @@ const Navbar = ({ onTerminalToggle, terminalOpen }) => {
                         <a
                             key={link.name}
                             href={link.href}
-                            className="text-[0.68rem] uppercase tracking-[0.16em] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+                            className="font-sans text-[0.68rem] uppercase tracking-[0.16em] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
                         >
                             {link.name}
                         </a>
                     ))}
                     <button
                         onClick={onTerminalToggle}
-                        className={`text-[0.68rem] uppercase tracking-[0.14em] px-3 py-1.5 border transition-colors ${terminalOpen
+                        className={`font-mono text-[0.68rem] uppercase tracking-[0.14em] px-3 py-1.5 border transition-colors ${terminalOpen
                                 ? 'border-[var(--accent-info)] text-[var(--accent-info)] bg-[color-mix(in_srgb,var(--accent-info)_8%,transparent)]'
                                 : 'border-[var(--border-light)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--text-secondary)]'
                             }`}

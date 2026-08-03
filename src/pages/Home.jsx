@@ -90,7 +90,7 @@ const Home = () => {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4 }}
-                        className="mb-5 text-[0.68rem] uppercase tracking-[0.22em] text-[var(--accent-info)]"
+                        className="mb-5 font-mono text-[0.68rem] uppercase tracking-[0.22em] text-[var(--accent-info)]"
                     >
                         C++ systems programmer / research-minded builder
                     </motion.p>
@@ -99,8 +99,7 @@ const Home = () => {
                         initial={{ opacity: 0, y: 24 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.55, delay: 0.08 }}
-                        className="max-w-6xl text-[clamp(3rem,6vw,5.8rem)] font-black leading-[0.92] tracking-tight text-[var(--text-primary)]"
-                        style={{ fontFamily: 'var(--font-display)' }}
+                        className="font-display max-w-6xl text-[clamp(3rem,6vw,5.8rem)] font-black leading-[0.92] tracking-tight text-[var(--text-primary)]"
                     >
                         Building systems from scratch, close to the metal.
                     </motion.h1>
@@ -109,7 +108,7 @@ const Home = () => {
                         initial={{ opacity: 0, y: 14 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.45, delay: 0.18 }}
-                        className="mt-7 max-w-2xl text-base leading-8 text-[var(--text-secondary)] md:text-lg"
+                        className="mt-7 max-w-2xl font-sans text-base leading-8 text-[var(--text-secondary)] md:text-lg"
                     >
                         I rebuild core abstractions in C++, study computational systems, and turn low-level details into working artifacts.
                     </motion.p>
@@ -122,14 +121,14 @@ const Home = () => {
                     >
                         <a
                             href="#projects"
-                            className="inline-flex items-center justify-center border border-[var(--accent-info)] bg-[var(--accent-info)] px-6 py-3 text-sm font-bold uppercase tracking-[0.14em] text-[var(--bg-terminal)] transition-transform duration-200 hover:-translate-y-0.5"
+                            className="inline-flex items-center justify-center border border-[var(--accent-info)] bg-[var(--accent-info)] px-6 py-3 font-mono text-sm font-bold uppercase tracking-[0.14em] text-[var(--bg-terminal)] transition-transform duration-200 hover:-translate-y-0.5"
                         >
                             View build artifacts
                         </a>
                         <button
                             type="button"
                             onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'j', ctrlKey: true }))}
-                            className="inline-flex items-center justify-center border border-[var(--border-strong)] px-6 py-3 text-sm font-bold uppercase tracking-[0.14em] text-[var(--text-primary)] transition-colors duration-200 hover:border-[var(--accent-warning)] hover:text-[var(--accent-warning)]"
+                            className="inline-flex items-center justify-center border border-[var(--border-strong)] px-6 py-3 font-mono text-sm font-bold uppercase tracking-[0.14em] text-[var(--text-primary)] transition-colors duration-200 hover:border-[var(--accent-warning)] hover:text-[var(--accent-warning)]"
                         >
                             Open terminal
                         </button>
@@ -154,16 +153,16 @@ const Home = () => {
                     title="Click to copy"
                 >
                     <div className="flex items-center border-b border-[var(--border-light)] px-4 py-3">
-                        <span className="text-[0.64rem] uppercase tracking-[0.18em] text-[var(--accent-warning)]">
+                        <span className="font-mono text-[0.64rem] uppercase tracking-[0.18em] text-[var(--accent-warning)]">
                             build artifact
                         </span>
-                        <span className="ml-auto text-[0.62rem] text-[var(--text-muted)]">
+                        <span className="ml-auto font-mono text-[0.62rem] text-[var(--text-muted)]">
                             {copied ? 'copied' : 'click to copy'}
                         </span>
                     </div>
 
                     <div className="space-y-5 p-5">
-                        <div className="grid grid-cols-3 gap-3 text-[0.62rem] uppercase tracking-[0.14em] text-[var(--text-muted)]">
+                        <div className="grid grid-cols-3 gap-3 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-[var(--text-muted)]">
                             <span>target: stl</span>
                             <span>mode: scratch</span>
                             <span>lang: c++20</span>
@@ -175,7 +174,7 @@ const Home = () => {
                             </div>
                         </div>
 
-                        <div className="grid gap-2 text-xs text-[var(--text-secondary)]">
+                        <div className="grid gap-2 font-mono text-xs text-[var(--text-secondary)]">
                             <div className="flex justify-between border-t border-[var(--border-light)] pt-3">
                                 <span>allocator discipline</span>
                                 <span className="text-[var(--accent-info)]">manual</span>
