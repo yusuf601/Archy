@@ -83,130 +83,111 @@ const Home = () => {
     };
 
     return (
-        <section className="min-h-screen flex items-center justify-center -mt-14 pt-20 px-6 relative">
-            <div className="max-w-5xl w-full flex flex-col md:flex-row md:items-center md:gap-16">
-
-                {/* ── Left: Identity ── */}
-                <div className="flex-none md:w-[52%] flex flex-col items-start mb-10 md:mb-0">
-                    {/* $ whoami breadcrumb */}
+        <section className="relative min-h-screen overflow-hidden px-6 pt-28 pb-20 md:pt-36 md:pb-28">
+            <div className="mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[1.08fr_0.92fr]">
+                <div className="relative z-10">
                     <motion.p
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4 }}
-                        className="text-[0.7rem] uppercase tracking-[0.18em] text-[var(--text-secondary)] mb-6 flex items-center gap-2"
+                        className="mb-5 text-[0.68rem] uppercase tracking-[0.22em] text-[var(--accent-info)]"
                     >
-                        <span style={{ color: 'var(--accent-success)' }}>$</span> whoami
-                        <span className="text-[var(--border-light)]">|</span>
-                        <span>Systems Programmer</span>
-                        <span className="text-[var(--border-light)]">|</span>
-                        <span>Kendari</span>
+                        C++ systems programmer / research-minded builder
                     </motion.p>
 
-                    {/* Name — display font, wipe-reveal */}
-                    <div className="overflow-hidden mb-3">
-                        <motion.h1
-                            initial={{ y: '102%' }}
-                            animate={{ y: 0 }}
-                            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                            className="text-6xl sm:text-7xl md:text-8xl font-black tracking-tighter text-[var(--text-primary)]"
-                            style={{ fontFamily: 'var(--font-display)' }}
-                        >
-                            YUSUF
-                        </motion.h1>
-                    </div>
+                    <motion.h1
+                        initial={{ opacity: 0, y: 24 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.55, delay: 0.08 }}
+                        className="max-w-5xl text-[clamp(3.2rem,7vw,6.8rem)] font-black leading-[0.92] tracking-tight text-[var(--text-primary)]"
+                        style={{ fontFamily: 'var(--font-display)' }}
+                    >
+                        Building systems from scratch, close to the metal.
+                    </motion.h1>
 
-                    <motion.h2
+                    <motion.p
+                        initial={{ opacity: 0, y: 14 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.45, delay: 0.18 }}
+                        className="mt-7 max-w-2xl text-base leading-8 text-[var(--text-secondary)] md:text-lg"
+                    >
+                        I rebuild core abstractions in C++, study computational systems, and turn low-level details into working artifacts.
+                    </motion.p>
+
+                    <motion.div
                         initial={{ opacity: 0, y: 12 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.35 }}
-                        className="text-sm font-medium mb-4 tracking-widest uppercase"
-                        style={{ color: 'var(--accent-info)' }}
+                        transition={{ duration: 0.45, delay: 0.26 }}
+                        className="mt-9 flex flex-col gap-3 sm:flex-row"
                     >
-                        C++ · Systems · ML Researcher
-                    </motion.h2>
+                        <a
+                            href="#projects"
+                            className="inline-flex items-center justify-center border border-[var(--accent-info)] bg-[var(--accent-info)] px-6 py-3 text-sm font-bold uppercase tracking-[0.14em] text-[var(--bg-terminal)] transition-transform duration-200 hover:-translate-y-0.5"
+                        >
+                            View build artifacts
+                        </a>
+                        <button
+                            type="button"
+                            onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: '`', ctrlKey: true }))}
+                            className="inline-flex items-center justify-center border border-[var(--border-strong)] px-6 py-3 text-sm font-bold uppercase tracking-[0.14em] text-[var(--text-primary)] transition-colors duration-200 hover:border-[var(--accent-warning)] hover:text-[var(--accent-warning)]"
+                        >
+                            Open terminal
+                        </button>
+                    </motion.div>
 
-                    {/* Live GitHub stats strip */}
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        transition={{ duration: 0.5, delay: 0.45 }}
-                        className="mb-6"
+                        transition={{ duration: 0.45, delay: 0.34 }}
+                        className="mt-8"
                     >
                         <GitHubStatsStrip />
                     </motion.div>
-
-                    {/* Social links */}
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.5, delay: 0.55 }}
-                        className="flex flex-col gap-1.5"
-                    >
-                        {[
-                            { label: 'github.com/yusuf601', href: 'https://github.com/yusuf601' },
-                            { label: 'Build-X-From-Scratch', href: 'https://github.com/Build-X-From-Scratch' },
-                            { label: 'yusufmuhyusuh@gmail.com', href: 'mailto:yusufmuhyusuh@gmail.com' },
-                        ].map(link => (
-                            <a
-                                key={link.href}
-                                href={link.href}
-                                target={link.href.startsWith('http') ? '_blank' : undefined}
-                                rel="noopener noreferrer"
-                                className="text-xs text-[var(--text-secondary)] hover:text-[var(--accent-success)] transition-colors flex items-center gap-1.5 group"
-                            >
-                                <span className="text-[var(--accent-dim)] group-hover:text-[var(--accent-success)] transition-colors">→</span>
-                                {link.label}
-                            </a>
-                        ))}
-                    </motion.div>
                 </div>
 
-                {/* ── Right: Terminal Code Snippet ── */}
                 <motion.div
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.45 }}
-                    className="flex-1 terminal-chrome cursor-pointer group relative"
+                    initial={{ opacity: 0, y: 24, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.55, delay: 0.18 }}
+                    className="group relative z-10 border border-[var(--border-strong)] bg-[var(--bg-terminal)] shadow-[0_24px_80px_rgba(0,0,0,0.42)]"
                     onClick={handleCopy}
                     title="Click to copy"
                 >
-                    {/* Chrome header */}
-                    <div className="terminal-chrome-header">
-                        <span className="terminal-dot" style={{ background: 'var(--accent-danger)' }} />
-                        <span className="terminal-dot" style={{ background: 'var(--accent-warning)' }} />
-                        <span className="terminal-dot" style={{ background: 'var(--accent-success)' }} />
-                        <span className="text-[0.65rem] text-[var(--text-secondary)] ml-2 tracking-wide opacity-60">
-                            main.cpp
+                    <div className="flex items-center border-b border-[var(--border-light)] px-4 py-3">
+                        <span className="text-[0.64rem] uppercase tracking-[0.18em] text-[var(--accent-warning)]">
+                            build artifact
                         </span>
-                        <span className="ml-auto text-[0.6rem] text-[var(--text-secondary)] opacity-40 group-hover:opacity-80 transition-opacity">
-                            {copied ? '✓ copied' : 'click to copy'}
+                        <span className="ml-auto text-[0.62rem] text-[var(--text-muted)]">
+                            {copied ? 'copied' : 'click to copy'}
                         </span>
                     </div>
 
-                    {/* Code body */}
-                    <div className="p-4 font-mono text-sm sm:text-[0.9rem] min-h-[6rem] flex flex-col justify-center">
-                        <div className={`w-full transition-opacity duration-500 ${phase === 'fading_out' ? 'opacity-0' : 'opacity-100'}`}>
-                            {renderCode()}
+                    <div className="space-y-5 p-5">
+                        <div className="grid grid-cols-3 gap-3 text-[0.62rem] uppercase tracking-[0.14em] text-[var(--text-muted)]">
+                            <span>target: stl</span>
+                            <span>mode: scratch</span>
+                            <span>lang: c++20</span>
+                        </div>
+
+                        <div className="min-h-[7rem] border border-[var(--border-light)] bg-[rgba(0,0,0,0.22)] p-4 font-mono text-sm">
+                            <div className={`transition-opacity duration-500 ${phase === 'fading_out' ? 'opacity-0' : 'opacity-100'}`}>
+                                {renderCode()}
+                            </div>
+                        </div>
+
+                        <div className="grid gap-2 text-xs text-[var(--text-secondary)]">
+                            <div className="flex justify-between border-t border-[var(--border-light)] pt-3">
+                                <span>allocator discipline</span>
+                                <span className="text-[var(--accent-info)]">manual</span>
+                            </div>
+                            <div className="flex justify-between">
+                                <span>abstraction depth</span>
+                                <span className="text-[var(--accent-warning)]">source-level</span>
+                            </div>
                         </div>
                     </div>
                 </motion.div>
             </div>
-
-            {/* Scroll indicator — blinking ▼ */}
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 1.2 }}
-                className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-[var(--text-secondary)]"
-            >
-                <span className="text-[0.6rem] tracking-[0.2em] uppercase opacity-50">scroll</span>
-                <span
-                    className="text-[var(--accent-success)] text-xs animate-[blink_1.4s_step-end_infinite]"
-                    style={{ opacity: 0.7 }}
-                >
-                    ▼
-                </span>
-            </motion.div>
         </section>
     );
 };
