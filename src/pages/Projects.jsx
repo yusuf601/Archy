@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import MotionText, { compilerContainer, metadataItem } from '../components/MotionText';
+import MotionText, { metadataItem } from '../components/MotionText';
 
 const fadeUp = {
     hidden: { opacity: 0, y: 20 },
@@ -27,7 +27,6 @@ const Projects = () => {
             statement: 'A source-level rebuild of std::vector with allocator control, capacity rules, iterator behavior, and API-compatible muscle memory',
             github: 'https://github.com/Build-X-From-Scratch/SVector',
             tech: ['C++20', 'Allocator', 'STL'],
-            className: 'md:col-span-3 md:row-span-2',
             public: true,
         },
         {
@@ -36,7 +35,6 @@ const Projects = () => {
             statement: 'A forward-list implementation focused on splice, merge, sort, node ownership, and the real cost of pointer-shaped abstractions',
             github: 'https://github.com/Build-X-From-Scratch/forward_list_sratch',
             tech: ['C++20', 'Nodes', 'Algorithms'],
-            className: 'md:col-span-3 md:row-span-2',
             public: true,
         },
         {
@@ -45,7 +43,6 @@ const Projects = () => {
             statement: 'Small primitives rebuilt to expose the tradeoffs behind interface simplicity',
             github: 'https://github.com/Build-X-From-Scratch/Stack_Scratch',
             tech: ['Adapters', 'Buffer'],
-            className: 'md:col-span-2',
             public: true,
         },
         {
@@ -54,7 +51,6 @@ const Projects = () => {
             statement: 'Traversal, insertion, sorting, search, and the pieces hidden behind standard headers',
             github: '#',
             tech: ['Trees', 'Sort', 'Search'],
-            className: 'md:col-span-2',
             public: false,
         },
         {
@@ -63,10 +59,12 @@ const Projects = () => {
             statement: 'Academic and experimental notes connecting implementation details to computational models',
             github: 'https://github.com/yusuf601/my-paper',
             tech: ['Research', 'ML'],
-            className: 'md:col-span-2',
             public: true,
         },
     ];
+    const featuredArtifact = artifacts.find((artifact) => artifact.name === 'SVector');
+    const supportingArtifacts = artifacts.filter((artifact) => artifact.name !== 'SVector');
+    const flagshipCues = ['allocator discipline', 'capacity semantics', 'iterator behavior'];
 
     return (
         <section className="min-h-screen flex items-center justify-center py-20 px-6">
@@ -84,7 +82,7 @@ const Projects = () => {
                     </motion.p>
                     <MotionText
                         as="h3"
-                        segments={['Rebuilding the standard library', 'as a learning system']}
+                        segments={['One flagship rebuild,', 'followed by supporting artifacts']}
                         delay={0.05}
                         stagger={0.08}
                         className="font-display text-4xl font-black leading-tight tracking-tight text-[var(--text-primary)] md:text-6xl"
@@ -92,70 +90,123 @@ const Projects = () => {
                     />
                 </div>
 
-                <div className="grid auto-rows-[minmax(13rem,auto)] grid-cols-1 gap-3 md:grid-cols-6 md:grid-flow-dense">
-                    {artifacts.map((artifact, idx) => (
+                <div className="grid gap-4 lg:grid-cols-[minmax(0,1.3fr)_minmax(18rem,0.7fr)] lg:items-start">
+                    {featuredArtifact && (
                         <motion.article
-                            key={artifact.name}
                             variants={fadeUp}
                             initial="hidden"
                             whileInView="visible"
                             whileHover="hover"
                             viewport={{ once: true, amount: 0.2 }}
-                            transition={{ duration: 0.4, delay: idx * 0.05 }}
-                            className={`${artifact.className} group flex min-h-[13rem] flex-col justify-between overflow-hidden border border-[var(--border-light)] bg-[var(--bg-panel)] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--accent-info)] hover:bg-[var(--bg-panel-hover)]`}
+                            transition={{ duration: 0.4 }}
+                            className="group min-h-[24rem] border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 transition-colors duration-300 hover:border-[var(--accent-info)] hover:bg-[var(--bg-panel-hover)] md:p-8"
                         >
-                            <div>
-                                <motion.div
-                                    variants={compilerContainer}
-                                    initial="hidden"
-                                    whileInView="visible"
-                                    viewport={{ once: true, amount: 0.4 }}
-                                    custom={{ delay: 0.03, stagger: 0.07 }}
-                                    className="mb-5 flex items-start justify-between gap-4"
-                                >
-                                    <motion.p variants={metadataHoverItem} className="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-[var(--accent-warning)]">
-                                        {artifact.kind}
-                                    </motion.p>
-                                    <motion.span variants={metadataHoverItem} className={`font-mono text-[0.6rem] uppercase tracking-[0.16em] ${artifact.public ? 'text-[var(--accent-info)]' : 'text-[var(--accent-danger)]'}`}>
-                                        {artifact.public ? 'public' : 'locked'}
-                                    </motion.span>
-                                </motion.div>
-                                <motion.h4
-                                    whileHover={{ x: 2 }}
-                                    transition={{ duration: 0.18 }}
-                                    className="mb-4 font-display text-2xl font-black tracking-tight text-[var(--text-primary)]"
-                                >
-                                    {artifact.name}
-                                </motion.h4>
-                                <p className="max-w-xl font-sans text-sm leading-7 text-[var(--text-secondary)]">
-                                    {artifact.statement}
-                                </p>
+                            <div className="mb-8 flex flex-wrap items-center justify-between gap-3">
+                                <motion.p variants={metadataHoverItem} className="font-sans text-xs uppercase tracking-[0.08em] text-[var(--text-muted)]">
+                                    {featuredArtifact.kind}
+                                </motion.p>
+                                <motion.span variants={metadataHoverItem} className="font-mono text-[0.64rem] uppercase tracking-[0.1em] text-[var(--accent-info)]">
+                                    public
+                                </motion.span>
                             </div>
-                            <div className="mt-8 flex flex-wrap items-center gap-2">
-                                {artifact.tech.map((tech) => (
+
+                            <motion.h4
+                                whileHover={{ x: 2 }}
+                                transition={{ duration: 0.18 }}
+                                className="font-display text-4xl font-black leading-none tracking-tight text-[var(--text-primary)] md:text-6xl"
+                            >
+                                {featuredArtifact.name}
+                            </motion.h4>
+
+                            <p className="mt-6 max-w-2xl font-sans text-base leading-8 text-[var(--text-secondary)]">
+                                {featuredArtifact.statement}
+                            </p>
+
+                            <div className="mt-8 grid gap-2 sm:grid-cols-3">
+                                {flagshipCues.map((cue) => (
+                                    <motion.span
+                                        key={cue}
+                                        variants={metadataHoverItem}
+                                        className="border border-[var(--border-light)] px-3 py-2 font-sans text-xs text-[var(--text-secondary)]"
+                                    >
+                                        {cue}
+                                    </motion.span>
+                                ))}
+                            </div>
+
+                            <div className="mt-10 flex flex-wrap items-center gap-2">
+                                {featuredArtifact.tech.map((tech) => (
                                     <motion.span
                                         key={tech}
                                         variants={metadataHoverItem}
-                                        className="border border-[var(--border-light)] px-2 py-1 font-mono text-[0.64rem] uppercase tracking-[0.12em] text-[var(--text-muted)]"
+                                        className="border border-[var(--border-light)] px-2.5 py-1.5 font-mono text-[0.64rem] tracking-[0.06em] text-[var(--text-muted)]"
                                     >
                                         {tech}
                                     </motion.span>
                                 ))}
-                                {artifact.public && (
-                                    <a
-                                        href={artifact.github}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="ml-auto font-mono text-xs font-bold uppercase tracking-[0.14em] text-[var(--accent-info)] transition-opacity duration-200 group-hover:opacity-100"
-                                    >
-                                        <motion.span whileHover={{ x: 4 }} transition={{ duration: 0.18 }} className="inline-block">
-                                            GitHub
-                                        </motion.span>
-                                    </a>
-                                )}
+                                <a
+                                    href={featuredArtifact.github}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="ml-auto inline-flex min-h-10 items-center border border-[var(--accent-info)] px-4 font-mono text-xs font-bold uppercase tracking-[0.08em] text-[var(--accent-info)] transition-colors duration-200 hover:bg-[color-mix(in_srgb,var(--accent-info)_8%,transparent)]"
+                                >
+                                    inspect source
+                                </a>
                             </div>
                         </motion.article>
-                    ))}
+                    )}
+
+                    <div className="border border-[var(--border-light)] bg-[var(--bg-panel)]">
+                        {supportingArtifacts.map((artifact, idx) => (
+                            <motion.article
+                                key={artifact.name}
+                                variants={fadeUp}
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: true, amount: 0.2 }}
+                                transition={{ duration: 0.35, delay: idx * 0.04 }}
+                                className="group border-b border-[var(--border-light)] p-5 last:border-b-0 hover:bg-[var(--bg-panel-hover)]"
+                            >
+                                <div className="mb-3 flex items-start justify-between gap-4">
+                                    <p className="font-sans text-xs uppercase tracking-[0.08em] text-[var(--text-muted)]">
+                                        {artifact.kind}
+                                    </p>
+                                    <span className={`font-mono text-[0.62rem] uppercase tracking-[0.1em] ${artifact.public ? 'text-[var(--accent-info)]' : 'text-[var(--text-muted)]'}`}>
+                                        {artifact.public ? 'public' : 'locked'}
+                                    </span>
+                                </div>
+
+                                <h4 className="font-display text-xl font-black tracking-tight text-[var(--text-primary)]">
+                                    {artifact.name}
+                                </h4>
+
+                                <p className="mt-3 font-sans text-sm leading-7 text-[var(--text-secondary)]">
+                                    {artifact.statement}
+                                </p>
+
+                                <div className="mt-5 flex flex-wrap items-center gap-2">
+                                    {artifact.tech.map((tech) => (
+                                        <span
+                                            key={tech}
+                                            className="border border-[var(--border-light)] px-2 py-1 font-sans text-[0.68rem] tracking-[0.04em] text-[var(--text-muted)]"
+                                        >
+                                            {tech}
+                                        </span>
+                                    ))}
+                                    {artifact.public && (
+                                        <a
+                                            href={artifact.github}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="ml-auto text-xs font-semibold uppercase tracking-[0.08em] text-[var(--accent-info)]"
+                                        >
+                                            GitHub
+                                        </a>
+                                    )}
+                                </div>
+                            </motion.article>
+                        ))}
+                    </div>
                 </div>
             </div>
         </section>
