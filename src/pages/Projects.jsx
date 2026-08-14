@@ -188,7 +188,7 @@ const Projects = () => {
                                     {artifact.tech.map((tech) => (
                                         <span
                                             key={tech}
-                                            className="border border-[var(--border-light)] px-2 py-1 font-sans text-[0.68rem] tracking-[0.04em] text-[var(--text-muted)]"
+                                            className="border border-[var(--border-light)] px-2 py-1 font-mono text-[0.68rem] tracking-[0.04em] text-[var(--text-muted)]"
                                         >
                                             {tech}
                                         </span>
