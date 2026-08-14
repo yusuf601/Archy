@@ -34,10 +34,6 @@ function App() {
 
             <main className="flex flex-col pb-8">
                 <div id="home"><Home /></div>
-                <SectionDivider
-                    kicker="systems notes"
-                    title="Systems, written close to the metal"
-                />
                 <div id="about"><About /></div>
                 <SectionDivider
                     kicker="build artifacts"
