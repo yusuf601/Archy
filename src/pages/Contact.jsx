@@ -66,7 +66,7 @@ const Contact = () => {
                         onClick={triggerTerminal}
                         className="group w-full border border-[var(--accent-info)] px-8 py-5 text-left font-mono transition-all duration-200 hover:bg-[color-mix(in_srgb,var(--accent-info)_6%,transparent)] sm:w-auto"
                     >
-                        <div className="text-[0.65rem] uppercase tracking-[0.18em] text-[var(--accent-info)] opacity-60 mb-1">
+                        <div className="mb-1 font-sans text-xs uppercase tracking-[0.08em] text-[var(--text-muted)]">
                             primary interface
                         </div>
                         <div className="text-[var(--text-primary)] flex items-center gap-2">

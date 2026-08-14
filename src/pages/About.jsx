@@ -48,7 +48,7 @@ const About = () => {
                         whileInView="visible"
                         viewport={{ once: true, amount: 0.3 }}
                         transition={{ duration: 0.4 }}
-                        className="mb-3 font-mono text-[0.68rem] uppercase tracking-[0.22em] text-[var(--accent-info)]"
+                        className="mb-3 font-sans text-xs uppercase tracking-[0.08em] text-[var(--text-muted)]"
                     >
                         Working principles
                     </motion.p>

@@ -24,7 +24,7 @@ const SectionDivider = ({ title, kicker }) => (
             {kicker && (
                 <motion.p
                     variants={metadataItem}
-                    className="mb-3 font-mono text-[0.65rem] uppercase tracking-[0.22em] text-[var(--accent-info)]"
+                    className="mb-3 font-sans text-xs uppercase tracking-[0.08em] text-[var(--text-muted)]"
                 >
                     {kicker}
                 </motion.p>

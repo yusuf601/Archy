@@ -91,7 +91,7 @@ const Home = () => {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4 }}
-                        className="mb-5 font-mono text-[0.68rem] uppercase tracking-[0.22em] text-[var(--accent-info)]"
+                        className="mb-5 font-sans text-xs uppercase tracking-[0.08em] text-[var(--text-muted)]"
                     >
                         C++ systems programmer / research-minded builder
                     </motion.p>
