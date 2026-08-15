@@ -9,7 +9,7 @@ it('routes document apps and toggles the same Kitty instance', async () => {
     render(<MemoryRouter initialEntries={['/']}><DesktopShell /></MemoryRouter>)
 
     await user.click(screen.getByRole('button', { name: 'Open Files' }))
-    expect(screen.getByRole('heading', { name: 'Projects' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 2, name: 'SVector' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Open Files' })).toHaveAttribute('aria-current', 'page')
 
     await user.click(screen.getByRole('button', { name: 'Open Kitty' }))
