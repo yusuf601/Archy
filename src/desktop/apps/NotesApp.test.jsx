@@ -39,10 +39,11 @@ describe('NotesApp', () => {
             <MemoryRouter initialEntries={['/blog']}>
                 <Routes>
                     <Route path="/blog" element={<NotesApp />} />
+                    <Route path="/blog/:slug" element={<NotesApp />} />
                 </Routes>
             </MemoryRouter>
         );
-        expect(screen.getByText('Test Post 1')).toBeInTheDocument();
+        expect(screen.getAllByText('Test Post 1').length).toBeGreaterThan(0);
         expect(screen.getByText('Test Post 2')).toBeInTheDocument();
     });
 

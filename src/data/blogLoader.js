@@ -28,6 +28,7 @@ export function getAllPosts() {
         posts.push({
             slug,
             ...attributes,
+            date: attributes.date instanceof Date ? attributes.date.toISOString().split('T')[0] : attributes.date,
             readTime: `${readTime} min`,
             content: body,
         })

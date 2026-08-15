@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
@@ -10,6 +11,12 @@ export default function NotesApp() {
     const navigate = useNavigate()
     const posts = getAllPosts()
     const activePost = posts.find(p => p.slug === slug)
+
+    useEffect(() => {
+        if (!slug && posts.length > 0) {
+            navigate(`/blog/${posts[0].slug}`, { replace: true })
+        }
+    }, [slug, posts, navigate])
 
     return (
         <DesktopAppFrame app={DESKTOP_APPS.notes} title={activePost ? activePost.title : 'All Notes'}>
