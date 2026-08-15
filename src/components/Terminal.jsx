@@ -1,7 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import AchievementToast from './AchievementToast';
 
-const Terminal = ({ onModeChange, isOpen, onToggle }) => {
+const Terminal = ({
+    onModeChange = () => {},
+    isOpen,
+    onToggle,
+    appearance = 'mobile',
+}) => {
     const [input, setInput] = useState('');
     const [history, setHistory] = useState([
         {
@@ -1056,7 +1061,9 @@ ${timestamp} (21.5 MB/s) - '${filename}' saved [2278683/2278683]
     const getCurrentPath = () => {
         // Read hash location since we use single-page scrolling
         try {
-            const path = window.location.hash.replace('#', '');
+            const path = appearance === 'desktop'
+                ? window.location.pathname.replace(/^\//, '')
+                : window.location.hash.replace('#', '');
             if (!path || path === 'home') return '~';
             return `~/${path}`;
         } catch (e) {
@@ -1067,10 +1074,10 @@ ${timestamp} (21.5 MB/s) - '${filename}' saved [2278683/2278683]
     return (
         <>
             {/* Terminal Window - always rendered to maintain state, visually hidden by parent */}
-            <div className={`bg-[var(--bg-terminal)] h-full flex flex-col font-mono text-xs sm:text-sm transition-all duration-300 ${isFocused ? 'terminal-focus-shadow' : ''} overflow-hidden`}>
+            <div className={`bg-[var(--bg-terminal)] h-full flex flex-col font-mono text-xs sm:text-sm transition-all duration-300 ${isFocused ? 'terminal-focus-shadow' : ''} ${appearance === 'desktop' ? 'terminal-desktop' : ''} overflow-hidden`}>
 
                 {/* Terminal Title Bar */}
-                <div className="bg-[var(--bg-panel)] border-b border-[var(--border-light)] px-4 py-2 flex items-center justify-between select-none shrink-0">
+                <div className={`bg-[var(--bg-panel)] border-b border-[var(--border-light)] px-4 py-2 flex items-center justify-between select-none shrink-0 ${appearance === 'desktop' ? 'hidden' : ''}`}>
                     <div className="flex items-center gap-3">
                         {/* Window Controls */}
                         <div className="flex items-center gap-2">
@@ -1103,7 +1110,7 @@ ${timestamp} (21.5 MB/s) - '${filename}' saved [2278683/2278683]
                 </div>
 
                 {/* Tab Bar */}
-                <div className="bg-[var(--bg-terminal)] border-b border-[var(--border-light)] px-4 py-1 flex items-center gap-2 shrink-0">
+                <div className={`bg-[var(--bg-terminal)] border-b border-[var(--border-light)] px-4 py-1 flex items-center gap-2 shrink-0 ${appearance === 'desktop' ? 'hidden' : ''}`}>
                     <div className="flex items-center gap-2 px-3 py-1 bg-[var(--bg-panel)] border-t border-l border-r border-[var(--border-light)] rounded-t text-xs text-[var(--accent-info)]">
                         <span className="w-2 h-2 rounded-full bg-[var(--accent-success)] animate-pulse" />
                         <span>bash</span>
@@ -1146,6 +1153,7 @@ ${timestamp} (21.5 MB/s) - '${filename}' saved [2278683/2278683]
                         <span className="text-[var(--accent-success)]">$</span>
                         <input
                             ref={inputRef}
+                            aria-label="Terminal command"
                             type="text"
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
@@ -1160,7 +1168,7 @@ ${timestamp} (21.5 MB/s) - '${filename}' saved [2278683/2278683]
                 </div>
 
                 {/* Status Bar */}
-                <div className="bg-[var(--bg-panel)] border-t border-[var(--border-light)] px-4 py-1.5 flex items-center justify-between text-xs text-[var(--text-muted)] shrink-0">
+                <div className={`bg-[var(--bg-panel)] border-t border-[var(--border-light)] px-4 py-1.5 flex items-center justify-between text-xs text-[var(--text-muted)] shrink-0 ${appearance === 'desktop' ? 'hidden' : ''}`}>
                     <div className="flex items-center gap-4">
                         <span className="text-[var(--accent-info)]">{isFocused ? 'INSERT' : 'NORMAL'}</span>
                         <span>{getCurrentPath()}</span>
