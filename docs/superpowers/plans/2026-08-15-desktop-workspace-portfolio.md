@@ -1,5 +1,7 @@
 # Desktop Workspace Portfolio Implementation Plan
 
+Status: working implementation plan, not a final locked product direction. Phase 1 is implemented first; later phases may revise app lineup and content surfaces before execution.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Replace the desktop landing page with a routed personal workstation while preserving the current portfolio below `1024px`, adding deterministic system telemetry, a persistent singleton Kitty terminal, a Files-style project browser, and a Markdown-backed Notes app.
@@ -12,6 +14,7 @@
 
 - Desktop mode starts at `1024px`; widths below it keep the current vertical portfolio.
 - `/` is a clean desktop. Document apps are route-backed at `/projects`, `/projects/:projectId`, `/blog`, `/blog/:slug`, `/contact`, and `/about`.
+- GitHub is a planned internal `Code` app for a later phase, likely route-backed at `/code`, but Phase 1 does not implement it.
 - Only one document app is visible. No app can be dragged or user-resized.
 - Kitty is not a route. It stays mounted within `DesktopShell`, can be hidden, and has one session shared by the dock and `Ctrl+J`.
 - Use the supplied `wallhaven-qrmykq_1920x1080.png` unchanged as the desktop wallpaper.
@@ -21,6 +24,7 @@
 - Document apps use light editorial surfaces; Kitty remains dark with a `#141B1E` base.
 - CPU and RAM are visibly simulated deterministic sequences, not random or claimed hardware readings.
 - Do not invent project screenshots, benchmarks, stars, users, system access, or Blog claims.
+- Do not invent GitHub activity, contribution counts, stars, followers, commit counts, or repository metrics.
 - Use existing Framer Motion only. Do not add GSAP.
 - Every visible launcher, menu item, close control, and external action must work with keyboard and pointer input.
 - Respect `prefers-reduced-motion` and keep compact metadata free from excessive uppercase tracking.
@@ -434,7 +438,7 @@
   Yusuf | active app | working contextual menu     CPU | RAM | Storage | Network | Battery | Volume | Clock | Power
   ```
 
-  The Yusuf menu routes to `/about` and exposes Resume, GitHub, and LinkedIn anchors. Context commands are `Close active app`, `Copy route link`, `Desktop`, `Files`, `Notes`, `Mail`, browser Back, and browser Forward. Power offers `Close active app`, `Close all app surfaces`, and `Reload desktop`.
+  The Yusuf menu routes to `/about` and exposes Resume, GitHub, and LinkedIn anchors. LinkedIn is external-only. GitHub remains an external anchor here, while richer GitHub activity belongs to a later internal `Code` app. Context commands are `Close active app`, `Copy route link`, `Desktop`, `Files`, `Notes`, `Mail`, browser Back, and browser Forward. Power offers `Close active app`, `Close all app surfaces`, and `Reload desktop`.
 
 - [ ] At `1024px` through `1279px`, collapse CPU, RAM, and Storage behind one icon button labelled `System telemetry`; keep all three values inside its popover.
 
@@ -542,6 +546,7 @@
 **Interfaces:**
 - Consumes: router location/navigation, `DESKTOP_APPS`, shell Kitty actions, and `/icons/kitty-dark.png`.
 - Produces: a bottom-centered dock with route indicators, accessible labels, tooltips, and one Kitty launcher.
+- Phase 1 dock intentionally stays limited to Files, Notes, Mail, and Kitty. Do not add LinkedIn. Do not add GitHub as a redirect-only dock item.
 
 - [ ] Write dock interaction tests for route navigation, active indicators, and Kitty toggling.
 
@@ -560,6 +565,8 @@
 - [ ] Run `npm test -- src/desktop/DesktopDock.test.jsx` and confirm the missing dock failure.
 
 - [ ] Implement document buttons with `useNavigate`, active state from `useLocation`, and icons `FiFolder`, `FiFileText`, and `FiMail`. Use the local PNG for Kitty.
+
+- [ ] Leave space in the app model for a future `Code` app, but do not implement `/code` in Phase 1.
 
 - [ ] Keep button dimensions at `48px` with a stable `4px` active-indicator track. Show labels through CSS tooltips on hover and `:focus-visible`; keep `aria-label` independent from tooltip visibility.
 

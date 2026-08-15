@@ -1,5 +1,7 @@
 # Desktop Workspace Portfolio Design
 
+Status: working design spec, not a final locked product direction. Decisions may be revised after Phase 1 visual review and before later implementation phases.
+
 ## Objective
 
 Redesign the desktop portfolio as a personal workstation that combines a macOS-like application shell with Linux-oriented tools and telemetry
@@ -49,6 +51,7 @@ The existing mobile composition is usable and should remain the mobile fallback 
 - A persistent singleton Kitty terminal
 - A Files-style Projects application
 - A Markdown-backed Notes or Blog application
+- A planned internal Code app for GitHub activity and source identity
 - A focused Mail or Contact application
 - An About Yusuf profile surface opened from the system menu
 - A responsive switch that preserves the current mobile portfolio
@@ -108,6 +111,7 @@ Routes are the source of truth for the active document app
 | `/projects/:projectId` | Selected project in Files | Files |
 | `/blog` | Fullscreen document app | Notes |
 | `/blog/:slug` | Selected article in Notes | Notes |
+| `/code` | Near-maximized fixed frame | Code |
 | `/contact` | Centered medium frame | Mail |
 | `/about` | Centered medium frame | About Yusuf |
 
@@ -158,6 +162,11 @@ The `Yusuf` menu contains:
 - Resume
 - GitHub
 - LinkedIn
+
+GitHub and LinkedIn behave differently:
+
+- LinkedIn is external-only and should open the profile from menus or contact surfaces
+- GitHub remains available as an external profile link, but may also be represented by a later internal `Code` app that summarizes public development activity
 
 Contextual menus only expose working commands. Likely groups include:
 
@@ -216,6 +225,8 @@ Dock apps:
 - Mail
 - Kitty
 
+Initial Phase 1 keeps the dock to these four apps. A later phase may add `Code` between Notes and Mail after the internal GitHub activity surface exists. Do not add a dock item that only redirects to an external website.
+
 Behavior:
 
 - Icons use familiar app metaphors rather than text-filled rounded rectangles
@@ -226,6 +237,31 @@ Behavior:
 - Kitty uses one local Kitty logo asset and controls the same terminal instance as `Ctrl+J`
 
 The dock should be compact enough that it does not dominate or obscure the wallpaper's central waterfall
+
+### Code And GitHub
+
+GitHub has enough portfolio content to become an internal app, but it should not be treated like LinkedIn.
+
+Presentation:
+
+- Planned route: `/code`
+- Near-maximized fixed frame, similar in scale to Files
+- Not part of Phase 1 unless explicitly pulled forward
+- Dock label: `Code`, not `GitHub`, so it feels like a portfolio surface rather than a web shortcut
+
+Content direction:
+
+- Contribution graph or existing contribution visualization
+- Highlighted repositories and Build-X-From-Scratch work
+- Language or focus summary based on truthful local data or GitHub API data
+- Recent public activity only if the data source is available and failure-tolerant
+- External actions to GitHub profile and selected repositories
+
+Constraints:
+
+- Do not fabricate stars, commit counts, contribution counts, followers, or activity
+- If GitHub API data fails, show a quiet fallback and keep the app useful with local curated repository data
+- LinkedIn remains external-only and does not get its own dock app
 
 ## Application Presentation Modes
 
@@ -322,6 +358,8 @@ Content:
 - Resume download
 - Optional action to open Kitty
 
+LinkedIn in Mail is an external profile action only. GitHub can link outward from Mail, but richer GitHub activity belongs in the planned Code app.
+
 No contact form backend is included in this phase
 
 ### About Yusuf
@@ -337,6 +375,8 @@ Content:
 - Existing working principles
 - Contribution heatmap
 - Resume and external links
+
+About may link to LinkedIn and GitHub externally. If a Code app exists, About may also include an internal `Open Code` action.
 
 ### Kitty
 
@@ -367,7 +407,7 @@ Lifecycle:
 - Only one Kitty instance can exist
 - Dock icon and `Ctrl+J` toggle the same instance
 - `Escape` closes Kitty when it is the topmost active surface
-- Kitty may open over Desktop, Files, Notes, Mail, or About and returns to the previous context when closed
+- Kitty may open over Desktop, Files, Notes, Code, Mail, or About and returns to the previous context when closed
 
 ## Color And Typography Direction
 
@@ -465,6 +505,8 @@ Avoid a single oversized desktop component. The shell, menu bar, dock, telemetry
 
 - Clean Desktop loads at `/`
 - Dock routes to Files, Notes, and Mail
+- LinkedIn remains external-only and is not a dock app
+- Planned Code app, when implemented, contains truthful GitHub activity rather than a bare external redirect
 - Browser back and forward restore the previous app
 - Direct Blog article URLs work
 - Closing a document app returns to Desktop
@@ -504,7 +546,8 @@ Check:
 - Desktop opens to a clean workstation view with the approved wallpaper
 - Top panel visibly includes Yusuf, active-app context, CPU, RAM, Storage, Network, Battery, Volume, Clock, and Power
 - CPU and RAM visibly cycle through deterministic values
-- Dock contains Files, Notes, Mail, and Kitty
+- Phase 1 dock contains Files, Notes, Mail, and Kitty
+- Final dock may contain Files, Notes, Code, Mail, and Kitty after the Code app is implemented
 - Files uses the approved sidebar-detail Projects layout in one near-maximized fixed frame
 - Notes supports Markdown-backed Blog list and article routes
 - Mail and About use focused fixed frames
