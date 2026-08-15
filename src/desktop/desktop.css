@@ -19,6 +19,126 @@
     inset: 30px 0 0;
 }
 
+.desktop-menu-bar {
+    position: fixed;
+    z-index: 20;
+    inset: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 30px;
+    padding: 0 12px;
+    color: #ecf6ef;
+    background: rgb(14 24 22 / 0.76);
+    border-bottom: 1px solid rgb(255 255 255 / 0.09);
+    box-shadow: 0 12px 28px rgb(0 0 0 / 0.16);
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+}
+
+.desktop-menu-left,
+.desktop-menu-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+}
+
+.desktop-menu-group {
+    position: relative;
+    display: inline-flex;
+}
+
+.desktop-menu-button,
+.desktop-status-widget {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    height: 22px;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: inherit;
+    padding: 0 7px;
+    font: inherit;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.desktop-menu-button {
+    cursor: pointer;
+}
+
+.desktop-menu-button:hover,
+.desktop-menu-button:focus-visible {
+    background: rgb(255 255 255 / 0.12);
+    outline: none;
+}
+
+.desktop-status-widget {
+    min-width: 56px;
+    justify-content: center;
+}
+
+.desktop-status-telemetry {
+    min-width: 70px;
+}
+
+.desktop-clock {
+    min-width: 56px;
+}
+
+.desktop-menu-popover {
+    position: absolute;
+    z-index: 30;
+    top: calc(100% + 6px);
+    left: 0;
+    display: grid;
+    min-width: 190px;
+    padding: 6px;
+    border: 1px solid rgb(223 230 224 / 0.72);
+    border-radius: 8px;
+    background: rgb(245 248 244 / 0.96);
+    box-shadow: 0 18px 42px rgb(0 0 0 / 0.22);
+}
+
+.desktop-menu-right .desktop-menu-popover {
+    right: 0;
+    left: auto;
+}
+
+.desktop-menu-popover a,
+.desktop-menu-popover button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: #17231f;
+    padding: 8px 10px;
+    font: inherit;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.desktop-menu-popover a:hover,
+.desktop-menu-popover a:focus-visible,
+.desktop-menu-popover button:hover,
+.desktop-menu-popover button:focus-visible {
+    background: #dde7df;
+    outline: none;
+}
+
+@media (width < 1280px) {
+    .desktop-status-widget:nth-of-type(2),
+    .desktop-status-widget:nth-of-type(3) {
+        display: none;
+    }
+}
+
 .desktop-dim-layer {
     position: fixed;
     inset: 30px 0 0;

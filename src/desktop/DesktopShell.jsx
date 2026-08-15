@@ -1,4 +1,5 @@
 import { useLocation } from 'react-router-dom'
+import DesktopMenuBar from './DesktopMenuBar'
 import DesktopRoutes from './DesktopRoutes'
 import { DesktopShellProvider } from './DesktopShellContext'
 import { resolveDesktopApp } from './desktopApps'
@@ -11,6 +12,7 @@ export default function DesktopShell() {
     return (
         <DesktopShellProvider>
             <div data-testid="desktop-shell" className="desktop-shell" data-active-app={activeApp?.id ?? 'desktop'}>
+                <DesktopMenuBar activeApp={activeApp} />
                 <div className="desktop-work-area">
                     <div className="desktop-dim-layer" />
                     <DesktopRoutes />
