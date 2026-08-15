@@ -11,7 +11,7 @@ export default function KittyWindow() {
             className="kitty-window"
             data-open={kittyOpen ? 'true' : 'false'}
             aria-hidden={!kittyOpen}
-            inert={kittyOpen ? undefined : ''}
+            inert={kittyOpen ? undefined : true}
         >
             <header className="kitty-titlebar">
                 <div className="kitty-title">

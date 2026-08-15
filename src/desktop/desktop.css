@@ -229,6 +229,97 @@
     background: #141b1e !important;
 }
 
+.desktop-dock {
+    position: fixed;
+    z-index: 18;
+    right: 0;
+    bottom: 16px;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: max-content;
+    max-width: calc(100vw - 48px);
+    height: 58px;
+    margin: 0 auto;
+    padding: 6px 8px;
+    border: 1px solid rgb(236 246 239 / 0.16);
+    border-radius: 8px;
+    background: rgb(17 28 25 / 0.72);
+    box-shadow: 0 18px 42px rgb(0 0 0 / 0.22);
+}
+
+.desktop-dock-button {
+    position: relative;
+    display: inline-grid;
+    width: 48px;
+    height: 48px;
+    place-items: center;
+    border: 0;
+    border-radius: 8px;
+    background: rgb(244 248 244 / 0.12);
+    color: #ecf6ef;
+    cursor: pointer;
+}
+
+.desktop-dock-button::after {
+    content: '';
+    position: absolute;
+    bottom: 3px;
+    left: 50%;
+    width: 4px;
+    height: 4px;
+    border-radius: 999px;
+    background: transparent;
+    transform: translateX(-50%);
+}
+
+.desktop-dock-button[data-active='true']::after {
+    background: #e6b450;
+}
+
+.desktop-dock-button::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    padding: 5px 7px;
+    border-radius: 6px;
+    background: rgb(245 248 244 / 0.96);
+    color: #17231f;
+    font-size: 11px;
+    line-height: 1;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-50%) translateY(4px);
+    transition: opacity 120ms ease, transform 120ms ease;
+    white-space: nowrap;
+}
+
+.desktop-dock-button:hover,
+.desktop-dock-button:focus-visible {
+    background: rgb(244 248 244 / 0.2);
+    outline: none;
+}
+
+.desktop-dock-button:hover::before,
+.desktop-dock-button:focus-visible::before {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.desktop-dock-button svg {
+    width: 22px;
+    height: 22px;
+}
+
+.desktop-dock-kitty img {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+}
+
 .desktop-app-frame {
     position: absolute;
     margin: auto;

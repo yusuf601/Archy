@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
+import DesktopDock from './DesktopDock'
 import DesktopMenuBar from './DesktopMenuBar'
 import DesktopRoutes from './DesktopRoutes'
 import KittyWindow from './KittyWindow'
@@ -52,6 +53,7 @@ function DesktopShellInner() {
                 <div className="desktop-dim-layer" />
                 <DesktopRoutes />
                 <KittyWindow />
+                <DesktopDock />
             </div>
         </div>
     )
