@@ -240,6 +240,19 @@ Behavior:
 
 The dock should be compact enough that it does not dominate or obscure the wallpaper's central waterfall
 
+### Provisional Application Icon Mapping
+
+The user-provided icon assets currently live under `asset/` and are not moved into the primary asset directory yet. The intended mapping for the desktop home screen is:
+
+| Asset | Destination | Role |
+| --- | --- | --- |
+| `Firefox_Dark_macOS_27_4iCRlbFK4m-1f9366d441_256x256x32.png` | Blog | Firefox reading browser |
+| `Folder_VS_fcoxSdbwDo-779593a228_256x256x32.png` | About | Yusuf profile surface |
+| `Github__Dark__Golden_Gate__14NwU1PtJ7-57d47ffb18_256x256x32.png` | GitHub | External GitHub profile or later Code surface |
+| `Visual_Studio_Code-394698efa8_512x512x32.png` | Projects | Project browser |
+
+This mapping is recorded for the next desktop shell revision. Asset relocation and dock implementation remain separate tasks and must not happen during this planning step.
+
 ### Code And GitHub
 
 GitHub has enough portfolio content to become an internal app, but it should not be treated like LinkedIn.
