@@ -2,6 +2,8 @@
 
 Status: working design spec, not a final locked product direction. Decisions may be revised after Phase 1 visual review and before later implementation phases.
 
+Current content direction: the blog document app is named `Firefox`. It is a focused personal reading browser, not a literal Notes app or a general-purpose web browser.
+
 ## Objective
 
 Redesign the desktop portfolio as a personal workstation that combines a macOS-like application shell with Linux-oriented tools and telemetry
@@ -50,7 +52,7 @@ The existing mobile composition is usable and should remain the mobile fallback 
 - App-specific presentation modes
 - A persistent singleton Kitty terminal
 - A Files-style Projects application
-- A Markdown-backed Notes or Blog application
+- A Markdown-backed Firefox reading application
 - A planned internal Code app for GitHub activity and source identity
 - A focused Mail or Contact application
 - An About Yusuf profile surface opened from the system menu
@@ -109,8 +111,8 @@ Routes are the source of truth for the active document app
 | `/` | Clean desktop | Desktop |
 | `/projects` | Near-maximized fixed frame | Files |
 | `/projects/:projectId` | Selected project in Files | Files |
-| `/blog` | Fullscreen document app | Notes |
-| `/blog/:slug` | Selected article in Notes | Notes |
+| `/blog` | Fullscreen document app | Firefox |
+| `/blog/:slug` | Selected article in Firefox | Firefox |
 | `/code` | Near-maximized fixed frame | Code |
 | `/contact` | Centered medium frame | Mail |
 | `/about` | Centered medium frame | About Yusuf |
@@ -119,7 +121,7 @@ Dock navigation must use the router so refresh, deep links, browser back, and br
 
 The active app is derived from the current route. It must not be duplicated in independent React state
 
-Unknown desktop routes render a shell-level not-found state with a clear Desktop action. A missing Blog slug stays inside Notes and offers a return to the article list
+Unknown desktop routes render a shell-level not-found state with a clear Desktop action. A missing Blog slug stays inside Firefox and offers a return to the article list
 
 ## Wallpaper
 
@@ -171,7 +173,7 @@ GitHub and LinkedIn behave differently:
 Contextual menus only expose working commands. Likely groups include:
 
 - `File`: close active app, copy route link, download resume when relevant
-- `View`: Desktop, Files, Notes, Mail
+- `View`: Desktop, Files, Firefox, Mail
 - `Go`: browser back and forward
 - App-specific menus when meaningful
 
@@ -221,11 +223,11 @@ The dock is centered at the bottom and remains visible in the initial implementa
 Dock apps:
 
 - Files
-- Notes
+- Firefox
 - Mail
 - Kitty
 
-Initial Phase 1 keeps the dock to these four apps. A later phase may add `Code` between Notes and Mail after the internal GitHub activity surface exists. Do not add a dock item that only redirects to an external website.
+Initial Phase 1 keeps the dock to these four apps. A later phase may add `Code` between Firefox and Mail after the internal GitHub activity surface exists. Do not add a dock item that only redirects to an external website.
 
 Behavior:
 
@@ -304,20 +306,25 @@ Do not invent screenshots, benchmarks, stars, users, or technical metrics. If no
 
 `SVector` remains the default flagship selection
 
-### Notes And Blog
+### Firefox And Blog
 
 Presentation:
 
 - Fullscreen document app below the global menu bar
 - Dock remains available
 - Reading content uses a constrained measure even though the app surface is fullscreen
+- The visual language is recognizably browser-like: tab strip, address field, navigation controls, and a New Tab surface
+- This is a portfolio reading environment, not a general web browser and not a literal browser clone
 
 Layout:
 
-- Article list or sidebar with title, date, category, and calculated read time
-- Main reading pane
-- `/blog/:slug` opens a shareable article route
-- Returning to `/blog` shows the article index
+- The initial New Tab shows the article index with title, date, category, tags, and calculated read time
+- Opening an article creates or focuses a tab; the same article must not be opened in duplicate tabs
+- Multiple article tabs may remain open at once and can be closed independently
+- Closing the final article tab returns to New Tab
+- Browser back, forward, reload, and address navigation remain real route-backed actions
+- `/blog/:slug` opens a shareable article route and focuses the corresponding tab
+- Returning to `/blog` shows New Tab
 
 Blog content moves out of `Blog.jsx` into Markdown files such as:
 
@@ -338,7 +345,17 @@ tags:
 draft: false
 ```
 
-Read time is derived from article word count. Use `react-markdown` with `remark-gfm` for rendering and a maintained structured frontmatter parser rather than an ad hoc HTML or string parser
+Content rules:
+
+- Articles are written manually as `.md` files. The initial phase does not require MDX components
+- Frontmatter is parsed structurally and validated before an article enters the production list
+- Read time is derived from article word count; it is not manually authored
+- Use `react-markdown` with `remark-gfm` for Markdown rendering
+- Use `remark-math` to parse inline `$...$` and block `$$...$$` equations
+- Use `rehype-katex` and the KaTeX stylesheet to render LaTeX equations
+- Equation rendering must support both inline and display math without breaking horizontal overflow or the reading measure
+- The loader may reserve `.mdx` support for a later phase, but `.mdx` is not required for the first Firefox implementation
+- Do not parse Markdown with ad hoc HTML or string manipulation
 
 Existing Blog content may be migrated, but implementation must not add unsupported performance claims or fabricated writing
 
@@ -407,7 +424,7 @@ Lifecycle:
 - Only one Kitty instance can exist
 - Dock icon and `Ctrl+J` toggle the same instance
 - `Escape` closes Kitty when it is the topmost active surface
-- Kitty may open over Desktop, Files, Notes, Code, Mail, or About and returns to the previous context when closed
+- Kitty may open over Desktop, Files, Firefox, Code, Mail, or About and returns to the previous context when closed
 
 ## Color And Typography Direction
 
@@ -428,7 +445,7 @@ Their surfaces may use controlled translucency, but text contrast must not depen
 
 ### Document Apps
 
-Files, Notes, Mail, and About use light editorial surfaces so the redesign does not return entirely to dark mode
+Files, Firefox, Mail, and About use light editorial surfaces so the redesign does not return entirely to dark mode
 
 Suggested starting values:
 
@@ -476,7 +493,7 @@ Typography keeps the established split:
 - Router location owns the active document app
 - `DesktopShell` owns menu, dock, telemetry, and Kitty visibility
 - `Terminal` retains its existing internal session state and remains mounted
-- Blog loader owns Markdown discovery and metadata normalization
+- Firefox content loader owns Markdown discovery, frontmatter validation, metadata normalization, and equation-ready source handling
 - Projects continue to use structured project data rather than duplicating content in JSX
 - App frames receive presentation mode and content through explicit props or route configuration
 
@@ -487,7 +504,7 @@ Avoid a single oversized desktop component. The shell, menu bar, dock, telemetry
 - Wallpaper load failure uses a deep forest fallback color
 - Unknown routes provide a Desktop action
 - Missing project IDs show a Files not-found state with an action that opens `SVector`
-- Missing Blog slugs show a Notes not-found state and article-list action
+- Missing Blog slugs show a Firefox not-found state and New Tab action
 - Invalid Markdown metadata is reported clearly during development and skipped safely in production
 - Network-offline state updates the top panel without blocking local portfolio content
 - External-link failures remain browser-controlled and do not corrupt app state
@@ -504,7 +521,7 @@ Avoid a single oversized desktop component. The shell, menu bar, dock, telemetry
 ### Behavior
 
 - Clean Desktop loads at `/`
-- Dock routes to Files, Notes, and Mail
+- Dock routes to Files, Firefox, and Mail
 - LinkedIn remains external-only and is not a dock app
 - Planned Code app, when implemented, contains truthful GitHub activity rather than a bare external redirect
 - Browser back and forward restore the previous app
@@ -536,7 +553,7 @@ Check:
 - Stable telemetry widths
 - Dock and content overlap
 - Project sidebar and detail scrolling
-- Blog reading measure
+- Firefox tab strip, New Tab index, and article reading measure
 - Kitty framing and backdrop
 - Light document contrast against dark shell
 - No text overflow or incoherent overlap
@@ -546,10 +563,11 @@ Check:
 - Desktop opens to a clean workstation view with the approved wallpaper
 - Top panel visibly includes Yusuf, active-app context, CPU, RAM, Storage, Network, Battery, Volume, Clock, and Power
 - CPU and RAM visibly cycle through deterministic values
-- Phase 1 dock contains Files, Notes, Mail, and Kitty
-- Final dock may contain Files, Notes, Code, Mail, and Kitty after the Code app is implemented
+- Phase 1 dock contains Files, Firefox, Mail, and Kitty
+- Final dock may contain Files, Firefox, Code, Mail, and Kitty after the Code app is implemented
 - Files uses the approved sidebar-detail Projects layout in one near-maximized fixed frame
-- Notes supports Markdown-backed Blog list and article routes
+- Firefox supports Markdown-backed Blog list and article routes with multiple article tabs
+- Firefox renders Markdown tables, fenced code, inline LaTeX, and display LaTeX equations
 - Mail and About use focused fixed frames
 - Only one document app is active at once
 - Kitty is near-maximized, singleton, and session-persistent
