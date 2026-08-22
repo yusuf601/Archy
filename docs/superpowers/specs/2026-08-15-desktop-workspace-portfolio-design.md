@@ -222,12 +222,12 @@ The dock is centered at the bottom and remains visible in the initial implementa
 
 Dock apps:
 
-- Files
+- About Yusuf
+- Projects
 - Firefox
-- Mail
 - Kitty
 
-Initial Phase 1 keeps the dock to these four apps. A later phase may add `Code` between Firefox and Mail after the internal GitHub activity surface exists. Do not add a dock item that only redirects to an external website.
+Initial Phase 1 keeps the dock to these four apps. GitHub remains available from the desktop surface or Yusuf menu and is not part of this dock lineup. Do not add a dock item that only redirects to an external website.
 
 Behavior:
 
@@ -576,8 +576,8 @@ Check:
 - Desktop opens to a clean workstation view with the approved wallpaper
 - Top panel visibly includes Yusuf, active-app context, CPU, RAM, Storage, Network, Battery, Volume, Clock, and Power
 - CPU and RAM visibly cycle through deterministic values
-- Phase 1 dock contains Files, Firefox, Mail, and Kitty
-- Final dock may contain Files, Firefox, Code, Mail, and Kitty after the Code app is implemented
+- Phase 1 dock contains About Yusuf, Projects, Firefox, and Kitty
+- GitHub is available as a separate desktop or menu action and is not part of the primary dock lineup
 - Files uses the approved sidebar-detail Projects layout in one near-maximized fixed frame
 - Firefox supports Markdown-backed Blog list and article routes with multiple article tabs
 - Firefox renders Markdown tables, fenced code, inline LaTeX, and display LaTeX equations
