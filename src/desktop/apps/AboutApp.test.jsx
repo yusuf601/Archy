@@ -45,13 +45,48 @@ it('defines curated confirmed profile and On Screen content', () => {
         currentLearning: ['Data science', 'Low-level programming', 'Machine learning'],
     })
     expect(aboutSections).toEqual([])
-    expect(onScreenItems).toEqual(expect.arrayContaining([
-        expect.objectContaining({ title: 'The Martian', year: 2015, type: 'film' }),
-        expect.objectContaining({ title: 'Leave the World Behind', year: 2023, type: 'film' }),
-        expect.objectContaining({ title: 'Cars', year: 2006, type: 'film' }),
-        expect.objectContaining({ title: 'Reply 1988', year: 2015, type: 'series' }),
-        expect.objectContaining({ title: 'FROM', year: 2022, type: 'series' }),
-        expect.objectContaining({ title: 'The Night Agent', year: 2023, type: 'series' }),
-    ]))
-    expect(onScreenItems).toHaveLength(6)
+    expect(onScreenItems).toEqual([
+        {
+            title: 'The Martian',
+            year: 2015,
+            type: 'film',
+            poster: '/src/assets/images/media/the-martian.jpg',
+            alt: 'Poster for The Martian',
+        },
+        {
+            title: 'Leave the World Behind',
+            year: 2023,
+            type: 'film',
+            poster: '/src/assets/images/media/leave-the-world-behind.jpg',
+            alt: 'Poster for Leave the World Behind',
+        },
+        {
+            title: 'Cars',
+            year: 2006,
+            type: 'film',
+            poster: '/src/assets/images/media/cars.jpg',
+            alt: 'Poster for Cars',
+        },
+        {
+            title: 'Reply 1988',
+            year: 2015,
+            type: 'series',
+            poster: '/src/assets/images/media/reply-1988.jpg',
+            alt: 'Poster for Reply 1988',
+        },
+        {
+            title: 'FROM',
+            year: 2022,
+            type: 'series',
+            poster: '/src/assets/images/media/from.jpg',
+            alt: 'Poster for FROM',
+        },
+        {
+            title: 'The Night Agent',
+            year: 2023,
+            type: 'series',
+            poster: '/src/assets/images/media/the-night-agent.jpg',
+            alt: 'Poster for The Night Agent',
+        },
+    ])
 })
