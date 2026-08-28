@@ -12,7 +12,7 @@ function getApprovedSection(section) {
     const heading = section.heading ?? section.title
     const copy = section.copy ?? section.content
 
-    if (typeof heading !== 'string' || typeof copy !== 'string' || !copy.trim()) {
+    if (typeof heading !== 'string' || typeof copy !== 'string' || !heading.trim() || !copy.trim()) {
         return null
     }
 

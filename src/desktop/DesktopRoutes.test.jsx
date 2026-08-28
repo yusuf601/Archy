@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { resolveDesktopApp } from './desktopApps'
+import { DESKTOP_APPS, resolveDesktopApp } from './desktopApps'
 
 describe('resolveDesktopApp', () => {
     it.each([
@@ -16,5 +16,9 @@ describe('resolveDesktopApp', () => {
 
     it('returns the shell not-found descriptor for unknown paths', () => {
         expect(resolveDesktopApp('/unknown').id).toBe('not-found')
+    })
+
+    it('keeps the About document in fullscreen mode', () => {
+        expect(DESKTOP_APPS.about.mode).toBe('fullscreen')
     })
 })

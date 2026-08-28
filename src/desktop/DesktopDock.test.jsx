@@ -4,6 +4,16 @@ import { MemoryRouter } from 'react-router-dom'
 import { expect, it } from 'vitest'
 import DesktopShell from './DesktopShell'
 
+it('opens the About app from the dock', async () => {
+    const user = userEvent.setup()
+    render(<MemoryRouter initialEntries={['/']}><DesktopShell /></MemoryRouter>)
+
+    await user.click(screen.getByRole('button', { name: 'Open About Yusuf' }))
+
+    expect(screen.getByRole('heading', { level: 2, name: 'Muh Yusuf' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Open About Yusuf' })).toHaveAttribute('aria-current', 'page')
+})
+
 it('routes document apps and toggles the same Kitty instance', async () => {
     const user = userEvent.setup()
     render(<MemoryRouter initialEntries={['/']}><DesktopShell /></MemoryRouter>)

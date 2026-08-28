@@ -1,9 +1,10 @@
-import { FiFileText, FiFolder, FiMail } from 'react-icons/fi'
+import { FiFileText, FiFolder, FiMail, FiUser } from 'react-icons/fi'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { DESKTOP_APPS } from './desktopApps'
 import { useDesktopShell } from './DesktopShellContext'
 
 const dockApps = [
+    { id: 'about', label: 'About Yusuf', route: DESKTOP_APPS.about.route, icon: FiUser },
     { id: 'files', label: 'Files', route: DESKTOP_APPS.files.route, icon: FiFolder },
     { id: 'notes', label: 'Notes', route: DESKTOP_APPS.notes.route, icon: FiFileText },
     { id: 'mail', label: 'Mail', route: DESKTOP_APPS.mail.route, icon: FiMail },

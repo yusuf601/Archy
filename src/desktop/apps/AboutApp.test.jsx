@@ -1,8 +1,17 @@
 import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
-import { expect, it } from 'vitest'
+import { afterEach, expect, it, vi } from 'vitest'
 import { DesktopShellProvider } from '../DesktopShellContext'
 import AboutApp from './AboutApp'
+
+const { mockAboutSections } = vi.hoisted(() => ({ mockAboutSections: [] }))
+
+vi.mock('../../data/aboutContent', async (importOriginal) => ({
+    ...await importOriginal(),
+    aboutSections: mockAboutSections,
+}))
+
+afterEach(() => mockAboutSections.splice(0))
 
 function renderAboutApp() {
     return render(
@@ -50,4 +59,17 @@ it('renders a personal section without unapproved subsections or the legacy stac
     for (const heading of ['Languages', 'Systems', 'Data / ML', 'Workflow']) {
         expect(screen.queryByRole('heading', { name: heading })).not.toBeInTheDocument()
     }
+})
+
+it('omits optional sections when either heading or copy is blank', () => {
+    mockAboutSections.push(
+        { heading: '', copy: 'Copy with no heading' },
+        { heading: '   ', copy: 'Copy with a whitespace heading' },
+        { heading: 'Heading with no copy', copy: '' },
+        { heading: 'Heading with whitespace copy', copy: '   ' },
+    )
+
+    renderAboutApp()
+
+    expect(document.querySelectorAll('.about-personal-section > .about-section')).toHaveLength(0)
 })
