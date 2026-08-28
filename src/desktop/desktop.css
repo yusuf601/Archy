@@ -27,12 +27,11 @@
     align-items: center;
     justify-content: space-between;
     height: 30px;
-    padding: 0 16px;
-    color: #d4e1d8;
-    background: rgb(7 22 17 / 0.72);
-    border-bottom: 1px solid rgb(189 222 197 / 0.14);
-    box-shadow: 0 8px 24px rgb(1 12 8 / 0.2);
-    backdrop-filter: blur(14px) saturate(125%);
+    padding: 0 12px;
+    color: #ecf6ef;
+    background: rgb(14 24 22 / 0.76);
+    border-bottom: 1px solid rgb(255 255 255 / 0.09);
+    box-shadow: 0 12px 28px rgb(0 0 0 / 0.16);
     font-size: 12px;
     font-variant-numeric: tabular-nums;
 }
@@ -41,7 +40,7 @@
 .desktop-menu-right {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 6px;
     min-width: 0;
 }
 
@@ -56,11 +55,11 @@
     align-items: center;
     gap: 5px;
     height: 22px;
-    border: 1px solid transparent;
+    border: 0;
     border-radius: 6px;
     background: transparent;
     color: inherit;
-    padding: 0 9px;
+    padding: 0 7px;
     font: inherit;
     line-height: 1;
     white-space: nowrap;
@@ -68,33 +67,17 @@
 
 .desktop-menu-button {
     cursor: pointer;
-    transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease, color 180ms ease;
 }
 
 .desktop-menu-button:hover,
 .desktop-menu-button:focus-visible {
-    background: rgb(13 43 31 / 0.54);
-    border-color: rgb(205 234 211 / 0.15);
-    box-shadow: inset 0 1px rgb(237 255 240 / 0.08);
-    color: #f0f7f2;
+    background: rgb(255 255 255 / 0.12);
     outline: none;
-}
-
-.desktop-menu-button[aria-expanded='true'] {
-    background: rgb(9 35 25 / 0.68);
-    border-color: rgb(205 234 211 / 0.22);
-    box-shadow: inset 0 1px rgb(237 255 240 / 0.1), 0 6px 16px rgb(1 12 8 / 0.16);
-    color: #f4fbf5;
 }
 
 .desktop-status-widget {
     min-width: 56px;
     justify-content: center;
-    color: #82958c;
-}
-
-.desktop-status-widget svg {
-    color: #72a989;
 }
 
 .desktop-status-telemetry {
@@ -113,11 +96,10 @@
     display: grid;
     min-width: 190px;
     padding: 6px;
-    border: 1px solid rgb(205 234 211 / 0.2);
+    border: 1px solid rgb(223 230 224 / 0.72);
     border-radius: 8px;
-    background: rgb(7 29 20 / 0.64);
-    box-shadow: 0 18px 42px rgb(1 12 8 / 0.28), inset 0 1px rgb(237 255 240 / 0.09);
-    backdrop-filter: blur(18px) saturate(125%);
+    background: rgb(245 248 244 / 0.96);
+    box-shadow: 0 18px 42px rgb(0 0 0 / 0.22);
 }
 
 .desktop-menu-right .desktop-menu-popover {
@@ -129,12 +111,12 @@
 .desktop-menu-popover button {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     width: 100%;
     border: 0;
     border-radius: 6px;
     background: transparent;
-    color: #dce9df;
+    color: #17231f;
     padding: 8px 10px;
     font: inherit;
     text-align: left;
@@ -146,8 +128,7 @@
 .desktop-menu-popover a:focus-visible,
 .desktop-menu-popover button:hover,
 .desktop-menu-popover button:focus-visible {
-    background: rgb(114 169 137 / 0.18);
-    color: #f4fbf5;
+    background: #dde7df;
     outline: none;
 }
 
@@ -260,9 +241,9 @@
     gap: 8px;
     width: max-content;
     max-width: calc(100vw - 48px);
-    height: 70px;
+    height: 58px;
     margin: 0 auto;
-    padding: 7px 10px;
+    padding: 6px 8px;
     border: 1px solid rgb(236 246 239 / 0.16);
     border-radius: 8px;
     background: rgb(17 28 25 / 0.72);
@@ -272,17 +253,14 @@
 .desktop-dock-button {
     position: relative;
     display: inline-grid;
-    width: 56px;
-    height: 56px;
+    width: 48px;
+    height: 48px;
     place-items: center;
     border: 0;
     border-radius: 8px;
     background: rgb(244 248 244 / 0.12);
     color: #ecf6ef;
     cursor: pointer;
-    transform: translateY(0) scale(1);
-    transition: background 140ms ease, transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
-    will-change: transform;
 }
 
 .desktop-dock-button::after {
@@ -323,7 +301,6 @@
 .desktop-dock-button:focus-visible {
     background: rgb(244 248 244 / 0.2);
     outline: none;
-    transform: translateY(-7px) scale(1.22);
 }
 
 .desktop-dock-button:hover::before,
@@ -332,15 +309,15 @@
     transform: translateX(-50%) translateY(0);
 }
 
-.desktop-dock-button img {
-    width: 48px;
-    height: 48px;
+.desktop-dock-button svg {
+    width: 22px;
+    height: 22px;
     object-fit: contain;
 }
 
 .desktop-dock-kitty img {
-    width: 42px;
-    height: 42px;
+    width: 34px;
+    height: 34px;
     object-fit: contain;
 }
 
