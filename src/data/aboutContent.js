@@ -1,9 +1,16 @@
+import aboutPortrait from '../assets/images/about-anime.png'
+import haluOleoLogo from '../assets/images/halu-oleo-logo.png'
 import theMartianPoster from '../assets/images/media/the-martian.jpg'
 import leaveTheWorldBehindPoster from '../assets/images/media/leave-the-world-behind.jpg'
 import carsPoster from '../assets/images/media/cars.jpg'
 import reply1988Poster from '../assets/images/media/reply-1988.jpg'
 import fromPoster from '../assets/images/media/from.jpg'
 import theNightAgentPoster from '../assets/images/media/the-night-agent.jpg'
+
+export const aboutVisualAssets = Object.freeze({
+    portrait: aboutPortrait,
+    universityLogo: haluOleoLogo,
+})
 
 export const aboutProfile = Object.freeze({
     name: 'Muh Yusuf',
