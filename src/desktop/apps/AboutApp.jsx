@@ -1,47 +1,81 @@
+import OnScreenShelf from '../../components/about/OnScreenShelf'
+import {
+    aboutProfile,
+    aboutSections,
+    aboutVisualAssets,
+    onScreenItems,
+} from '../../data/aboutContent'
 import DesktopAppFrame from '../DesktopAppFrame'
 import { DESKTOP_APPS } from '../desktopApps'
-import { FiExternalLink, FiDownload, FiGithub, FiLinkedin, FiMail } from 'react-icons/fi'
+
+function getApprovedSection(section) {
+    const heading = section.heading ?? section.title
+    const copy = section.copy ?? section.content
+
+    if (typeof heading !== 'string' || typeof copy !== 'string' || !copy.trim()) {
+        return null
+    }
+
+    return { heading, copy }
+}
 
 export default function AboutApp() {
+    const approvedSections = aboutSections
+        .map(getApprovedSection)
+        .filter(Boolean)
+
     return (
         <DesktopAppFrame app={DESKTOP_APPS.about} title="About Yusuf">
             <div className="about-app-content">
-                <header className="about-header">
-                    <h2>Muh Yusuf</h2>
-                    <p className="about-subtitle">Systems Programmer & AI Researcher</p>
-                </header>
+                <section className="about-profile-section" aria-labelledby="about-profile-heading">
+                    <div className="about-app-grid">
+                        <div className="about-app-copy">
+                            <header className="about-header">
+                                <p className="about-kicker">About</p>
+                                <h2 id="about-profile-heading">{aboutProfile.name}</h2>
+                                <p className="about-subtitle">
+                                    {aboutProfile.major} at {aboutProfile.university}
+                                </p>
+                            </header>
 
-                <section className="about-section">
-                    <h3>Profile</h3>
-                    <p>
-                        I build high-performance systems and explore the boundaries of AI stylometry. 
-                        My work focuses on optimizing algorithms, writing efficient C++/Rust code, 
-                        and building robust software architectures.
-                    </p>
-                </section>
+                            <section className="about-section">
+                                <h3>Profile</h3>
+                                <p>{aboutProfile.semester}</p>
+                                <p>{aboutProfile.specialization}</p>
+                                <p>{aboutProfile.operatingSystem}</p>
+                                <img
+                                    className="about-university-logo"
+                                    src={aboutVisualAssets.universityLogo}
+                                    alt={`${aboutProfile.university} logo`}
+                                />
+                            </section>
 
-                <section className="about-section">
-                    <h3>Working Principles</h3>
-                    <ul className="about-principles">
-                        <li><strong>Performance matters:</strong> Always profile before parallelizing.</li>
-                        <li><strong>Simplicity scales:</strong> Complex systems break in complex ways.</li>
-                        <li><strong>Understand the metal:</strong> High-level abstractions are built on hardware realities.</li>
-                    </ul>
-                </section>
+                            <section className="about-section">
+                                <h3>Currently learning</h3>
+                                <ul className="about-learning-list">
+                                    {aboutProfile.currentLearning.map((item) => <li key={item}>{item}</li>)}
+                                </ul>
+                            </section>
+                        </div>
 
-                <section className="about-section">
-                    <h3>Links & Resume</h3>
-                    <div className="about-links">
-                        <a href="https://github.com/yusuf601" target="_blank" rel="noopener noreferrer" className="about-link-button">
-                            <FiGithub /> GitHub <FiExternalLink />
-                        </a>
-                        <a href="https://linkedin.com/in/yusuf601" target="_blank" rel="noopener noreferrer" className="about-link-button">
-                            <FiLinkedin /> LinkedIn <FiExternalLink />
-                        </a>
-                        <a href="/MuhYusuf_Resume.pdf" download className="about-link-button primary">
-                            <FiDownload /> Download Resume
-                        </a>
+                        <aside className="about-app-visual" aria-label="Profile artwork">
+                            <img
+                                className="about-illustration"
+                                src={aboutVisualAssets.portrait}
+                                alt={`Anime portrait of ${aboutProfile.name}`}
+                            />
+                        </aside>
                     </div>
+                </section>
+
+                <section className="about-personal-section" aria-label="Personal details">
+                    {approvedSections.map((section) => (
+                        <section key={section.heading} className="about-section">
+                            <h3>{section.heading}</h3>
+                            <p>{section.copy}</p>
+                        </section>
+                    ))}
+                    <OnScreenShelf items={onScreenItems} />
                 </section>
             </div>
         </DesktopAppFrame>

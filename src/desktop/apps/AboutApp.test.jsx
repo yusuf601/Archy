@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { expect, it } from 'vitest'
-import { aboutProfile, aboutSections, onScreenItems } from '../../data/aboutContent'
 import { DesktopShellProvider } from '../DesktopShellContext'
 import AboutApp from './AboutApp'
 
@@ -15,78 +14,40 @@ function renderAboutApp() {
     )
 }
 
-it('presents Yusuf profile and current learning focus', () => {
+it('presents the profile document with local identity images', () => {
     renderAboutApp()
 
+    expect(screen.getByRole('heading', { name: 'Profile' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { level: 2, name: 'Muh Yusuf' })).toBeInTheDocument()
     expect(screen.getByText(/Halu Oleo University/)).toBeInTheDocument()
     expect(screen.getByText('5th semester')).toBeInTheDocument()
     expect(screen.getByText('Computer Vision & Computation')).toBeInTheDocument()
-    expect(screen.getByRole('heading', { level: 3, name: 'Current learning' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Currently learning' })).toBeInTheDocument()
     expect(screen.getByText('Data science')).toBeInTheDocument()
     expect(screen.getByText('Low-level programming')).toBeInTheDocument()
     expect(screen.getByText('Machine learning')).toBeInTheDocument()
+
+    expect(screen.getByRole('img', { name: 'Anime portrait of Muh Yusuf' })).toHaveAttribute(
+        'src',
+        expect.stringContaining('about-anime'),
+    )
+    expect(screen.getByRole('img', { name: 'Halu Oleo University logo' })).toHaveAttribute(
+        'src',
+        expect.stringContaining('halu-oleo-logo'),
+    )
 })
 
-it('does not render the legacy categorized stack', () => {
+it('renders a personal section without unapproved subsections or the legacy stack', () => {
     renderAboutApp()
+
+    expect(document.querySelector('.about-personal-section')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'On Screen' })).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Currently' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Outside the Stack' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Small Things' })).not.toBeInTheDocument()
+    expect(screen.queryByText('Builds with')).not.toBeInTheDocument()
 
     for (const heading of ['Languages', 'Systems', 'Data / ML', 'Workflow']) {
         expect(screen.queryByRole('heading', { name: heading })).not.toBeInTheDocument()
     }
-})
-
-it('defines curated confirmed profile and On Screen content', () => {
-    expect(aboutProfile).toMatchObject({
-        name: 'Muh Yusuf',
-        university: 'Halu Oleo University',
-        semester: '5th semester',
-        specialization: 'Computer Vision & Computation',
-        currentLearning: ['Data science', 'Low-level programming', 'Machine learning'],
-    })
-    expect(aboutSections).toEqual([])
-    expect(onScreenItems).toEqual([
-        {
-            title: 'The Martian',
-            year: 2015,
-            type: 'film',
-            poster: '/src/assets/images/media/the-martian.jpg',
-            alt: 'Poster for The Martian',
-        },
-        {
-            title: 'Leave the World Behind',
-            year: 2023,
-            type: 'film',
-            poster: '/src/assets/images/media/leave-the-world-behind.jpg',
-            alt: 'Poster for Leave the World Behind',
-        },
-        {
-            title: 'Cars',
-            year: 2006,
-            type: 'film',
-            poster: '/src/assets/images/media/cars.jpg',
-            alt: 'Poster for Cars',
-        },
-        {
-            title: 'Reply 1988',
-            year: 2015,
-            type: 'series',
-            poster: '/src/assets/images/media/reply-1988.jpg',
-            alt: 'Poster for Reply 1988',
-        },
-        {
-            title: 'FROM',
-            year: 2022,
-            type: 'series',
-            poster: '/src/assets/images/media/from.jpg',
-            alt: 'Poster for FROM',
-        },
-        {
-            title: 'The Night Agent',
-            year: 2023,
-            type: 'series',
-            poster: '/src/assets/images/media/the-night-agent.jpg',
-            alt: 'Poster for The Night Agent',
-        },
-    ])
 })
