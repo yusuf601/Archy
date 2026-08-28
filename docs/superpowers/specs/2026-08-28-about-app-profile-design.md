@@ -20,13 +20,13 @@ The content balance is approximately:
 
 Technical information must remain useful but restrained. Do not turn the page into a logo wall, technology stack grid, or list of tools.
 
-The content source of truth is:
+The content planning source is:
 
 ```text
 me.md
 ```
 
-`me.md` is a questionnaire and content reference owned by Yusuf. The implementation must not invent personal facts when an answer is missing. Missing optional answers should remove that subsection cleanly rather than displaying placeholder copy.
+`me.md` is a questionnaire owned by Yusuf, not a finished copy document. Only answers that Yusuf has explicitly filled in or marked as confirmed may be used in the interface. Questions, suggested prompts, empty fields, examples, and unfinished notes must never be rendered as user content. The implementation must not infer or invent personal facts when an answer is missing. Missing optional answers should remove that subsection cleanly rather than displaying placeholder copy.
 
 Confirmed profile facts:
 
@@ -63,7 +63,7 @@ The left column contains:
 - Informatics Engineering, Halu Oleo University
 - Fifth-semester status
 - Computer Vision & Computation specialization
-- A concise personal description sourced from `me.md`
+- A concise personal description sourced only from completed and confirmed answers in `me.md`
 - A `Currently learning` block containing:
   - Data science
   - Low-level programming
@@ -90,14 +90,14 @@ The supplied university logo may appear as a small supporting identity mark near
 
 The second section begins after a deliberate vertical transition from the profile section. It should feel like the reader is moving from identity into personal context.
 
-Recommended content order:
+Recommended content order, populated only when Yusuf has supplied the corresponding answers in `me.md`:
 
 1. `Currently` - a plain-language explanation of what Yusuf is learning and paying attention to now.
 2. `On Screen` - favorite films and series.
 3. `Outside the Stack` - non-technical interests, routines, preferences, or habits from `me.md`.
 4. `Small Things` - short curiosities, recurring preferences, or personal details that make the page specific.
 
-Sections should be rendered only when they have content. The page must not show empty headings, fake statistics, or generic filler paragraphs.
+Sections should be rendered only when they have approved content. The page must not show empty headings, questionnaire prompts, fake statistics, inferred preferences, or generic filler paragraphs.
 
 ## On Screen Section
 
@@ -174,7 +174,7 @@ This specification does not redesign the mobile portfolio shell. It only defines
 - Dock activation opens `/about`
 - Refreshing `/about` keeps the About app selected
 - Browser back/forward behavior remains owned by the existing application routing
-- All external links use real destinations from `me.md`
+- All external links use real destinations from completed and confirmed entries in `me.md`
 - Poster toggle changes visible content without navigating away from `/about`
 - Poster cards are non-interactive unless a real detail or external destination is provided
 - Images have meaningful accessible labels
@@ -211,7 +211,7 @@ The implementation must verify that imports resolve from source and that the app
 5. Personal content is visibly dominant; technical content is supportive and not presented as a stack dashboard.
 6. `On Screen` contains the three listed films and three listed series with a working Films/Series toggle.
 7. Poster presentation is consistent, horizontally organized, and usable with keyboard focus.
-8. Content is sourced from `me.md` or confirmed facts in this specification; no invented personal claims appear.
+8. Content is sourced from completed and confirmed entries in `me.md` or confirmed facts in this specification; unanswered questions and unfinished notes never appear.
 9. Missing optional content produces no empty section or placeholder text.
 10. Local asset imports work without root asset-folder access or runtime hotlinks.
 11. Desktop and narrow-width layouts have no horizontal overflow or overlapping text.
