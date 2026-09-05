@@ -1,8 +1,8 @@
 # About Yusuf: Personal Overview Design Specification
 
-Date: 2026-09-06  
-Target branch: `desktop-workspace-phase1`  
-Target worktree: `/home/kali/Archy/.worktrees/desktop-workspace-phase1`  
+Date: 2026-09-06
+Target branch: `desktop-workspace-phase1`
+Target worktree: `/home/kali/Archy/.worktrees/desktop-workspace-phase1`
 Status: Written from the agreed brainstorming decisions; implementation has not started.
 
 ## 1. Purpose
@@ -57,7 +57,7 @@ These are interests and learning topics, not claims of mastery. No ratings, skil
 
 ### Personal collection
 
-Section heading: **On Screen**  
+Section heading: **On Screen**
 Supporting copy: **Favorite films & series**
 
 | Group | Title | Year |
