@@ -3,7 +3,7 @@ import { aboutVisualAssets, onScreenItems } from './aboutContent'
 
 it('exports local portrait and university logo assets', () => {
     expect(aboutVisualAssets).toEqual({
-        portrait: expect.stringMatching(/about-anime\.png$/),
+        portrait: '/avatar.png',
         universityLogo: expect.stringMatching(/halu-oleo-logo\.png$/),
     })
 

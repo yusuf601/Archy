@@ -7,7 +7,10 @@ export default function OnScreenShelf({ items }) {
     return (
         <section className="on-screen-shelf" aria-labelledby="on-screen-heading">
             <header className="on-screen-shelf-header">
-                <h2 id="on-screen-heading">On Screen</h2>
+                <div>
+                    <h2 id="on-screen-heading">On Screen</h2>
+                    <p className="on-screen-shelf-caption">The personal collection</p>
+                </div>
                 <div className="on-screen-shelf-toggle" aria-label="On Screen type">
                     <button
                         type="button"
@@ -29,9 +32,11 @@ export default function OnScreenShelf({ items }) {
             <div className="on-screen-shelf-items">
                 {visibleItems.map((item) => (
                     <article key={item.title} className="on-screen-shelf-item">
-                        <img src={item.poster} alt={item.alt} />
-                        <h3>{item.title}</h3>
-                        <p>{item.year}</p>
+                        <img src={item.poster} alt={item.alt} width="200" height="300" />
+                        <div className="on-screen-shelf-info">
+                            <h3>{item.title}</h3>
+                            <p>{item.year}</p>
+                        </div>
                     </article>
                 ))}
             </div>

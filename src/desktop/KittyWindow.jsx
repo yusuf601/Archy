@@ -1,5 +1,6 @@
 import { FiX } from 'react-icons/fi'
 import Terminal from '../components/Terminal'
+import kittyIcon from '../assets/icons/kitty-dark.png'
 import { useDesktopShell } from './DesktopShellContext'
 
 export default function KittyWindow() {
@@ -15,7 +16,7 @@ export default function KittyWindow() {
         >
             <header className="kitty-titlebar">
                 <div className="kitty-title">
-                    <img src="/icons/kitty-dark.png" alt="" />
+                    <img src={kittyIcon} alt="" />
                     <span>Kitty</span>
                 </div>
                 <button type="button" aria-label="Close Kitty" onClick={closeKitty}>

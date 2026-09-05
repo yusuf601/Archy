@@ -1,13 +1,15 @@
-import { FiFileText, FiFolder, FiMail, FiUser } from 'react-icons/fi'
 import { useLocation, useNavigate } from 'react-router-dom'
+import aboutIcon from '../assets/icons/about-folder.png'
+import firefoxIcon from '../assets/icons/firefox.png'
+import kittyIcon from '../assets/icons/kitty-dark.png'
+import vscodeIcon from '../assets/icons/vscode.png'
 import { DESKTOP_APPS } from './desktopApps'
 import { useDesktopShell } from './DesktopShellContext'
 
 const dockApps = [
-    { id: 'about', label: 'About Yusuf', route: DESKTOP_APPS.about.route, icon: FiUser },
-    { id: 'files', label: 'Files', route: DESKTOP_APPS.files.route, icon: FiFolder },
-    { id: 'notes', label: 'Notes', route: DESKTOP_APPS.notes.route, icon: FiFileText },
-    { id: 'mail', label: 'Mail', route: DESKTOP_APPS.mail.route, icon: FiMail },
+    { id: 'about', label: 'About Yusuf', route: DESKTOP_APPS.about.route, icon: aboutIcon },
+    { id: 'files', label: 'Projects', route: DESKTOP_APPS.files.route, icon: vscodeIcon },
+    { id: 'notes', label: 'Firefox', route: DESKTOP_APPS.notes.route, icon: firefoxIcon },
 ]
 
 function isRouteActive(pathname, route) {
@@ -23,7 +25,6 @@ export default function DesktopDock() {
         <nav className="desktop-dock" aria-label="Desktop applications">
             {dockApps.map((app) => {
                 const active = isRouteActive(location.pathname, app.route)
-                const Icon = app.icon
 
                 return (
                     <button
@@ -36,7 +37,7 @@ export default function DesktopDock() {
                         data-active={active ? 'true' : 'false'}
                         onClick={() => (active ? focusActiveApp() : navigate(app.route))}
                     >
-                        <Icon aria-hidden="true" />
+                        <img src={app.icon} alt="" />
                     </button>
                 )
             })}
@@ -49,7 +50,7 @@ export default function DesktopDock() {
                 data-active={kittyOpen ? 'true' : 'false'}
                 onClick={(event) => toggleKitty(event.currentTarget)}
             >
-                <img src="/icons/kitty-dark.png" alt="" />
+                <img src={kittyIcon} alt="" />
             </button>
         </nav>
     )

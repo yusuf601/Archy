@@ -36,9 +36,9 @@ it('presents the profile document with local identity images', () => {
     expect(screen.getByText('Low-level programming')).toBeInTheDocument()
     expect(screen.getByText('Machine learning')).toBeInTheDocument()
 
-    expect(screen.getByRole('img', { name: 'Anime portrait of Muh Yusuf' })).toHaveAttribute(
+    expect(screen.getByRole('img', { name: 'Pixel-art portrait of Muh Yusuf' })).toHaveAttribute(
         'src',
-        expect.stringContaining('about-anime'),
+        '/avatar.png',
     )
     expect(screen.getByRole('img', { name: 'Halu Oleo University logo' })).toHaveAttribute(
         'src',

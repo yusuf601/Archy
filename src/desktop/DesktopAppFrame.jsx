@@ -23,7 +23,7 @@ export default function DesktopAppFrame({ app, title, children }) {
         >
             <header className="desktop-app-titlebar">
                 <div>
-                    <p>{app.label}</p>
+                    {app.label !== title && <p>{app.label}</p>}
                     <h1>{title}</h1>
                 </div>
                 <button type="button" aria-label={`Close ${app.label}`} onClick={() => navigate('/')}>

@@ -1,6 +1,41 @@
 import React, { useState, useRef, useEffect } from 'react';
 import AchievementToast from './AchievementToast';
 
+const CTF_STAGE_STORAGE_KEY = 'archy.ctf.archive-breach.stage';
+
+const getWelcomeMessage = (appearance) => appearance === 'desktop'
+    ? `Archy shell ready. Type "quest" to begin the Archive Breach.`
+    : `Welcome to the portfolio terminal. Type "help" for available commands.
+
+💡 Tip: This terminal has 30 hidden Easter eggs! Try exploring beyond the basics.
+    Hint: What happens if you try to get root access? 🔐
+    Type 'hint' for clues or 'achievements' to track your progress!`;
+
+function DesktopPrompt({ path, children, testId }) {
+    return (
+        <div className="desktop-terminal-prompt" data-testid={testId}>
+            <div className="desktop-terminal-context" aria-label="King Yusuf on cachyos Archy on main via node and npm">
+                <span className="terminal-prompt-mark">λ</span>
+                <span className="terminal-prompt-owner">King Yusuf</span>
+                <span className="terminal-prompt-muted">on</span>
+                <span className="terminal-prompt-host">cachyos</span>
+                <span className="terminal-prompt-project">Archy</span>
+                <span className="terminal-prompt-muted">on</span>
+                <span className="terminal-prompt-branch">main</span>
+                <span className="terminal-prompt-git">!2 ?44 ⇡26</span>
+                <span className="terminal-prompt-muted">via</span>
+                <span className="terminal-prompt-runtime">⬢ v26.7.0</span>
+                <span className="terminal-prompt-package">📦 v1.0.0</span>
+            </div>
+            <div className="desktop-terminal-command-line">
+                <span className="terminal-prompt-arrow">↪</span>
+                <span className="terminal-prompt-path">{path === '~' ? 'home' : path}</span>
+                {children}
+            </div>
+        </div>
+    );
+}
+
 const Terminal = ({
     onModeChange = () => {},
     isOpen,
@@ -11,11 +46,7 @@ const Terminal = ({
     const [history, setHistory] = useState([
         {
             type: 'output',
-            text: `Welcome to the portfolio terminal. Type "help" for available commands.
-
-💡 Tip: This terminal has 30 hidden Easter eggs! Try exploring beyond the basics.
-    Hint: What happens if you try to get root access? 🔐
-    Type 'hint' for clues or 'achievements' to track your progress!`
+            text: getWelcomeMessage(appearance)
         }
     ]);
     const [commandHistory, setCommandHistory] = useState([]);
@@ -28,8 +59,23 @@ const Terminal = ({
     const [achievements, setAchievements] = useState([]);
     const [hintsUsed, setHintsUsed] = useState(0);
     const [sessionStartTime] = useState(Date.now());
+    const [ctfStage, setCtfStage] = useState(() => {
+        try {
+            return window.localStorage?.getItem(CTF_STAGE_STORAGE_KEY) || 'briefing';
+        } catch (error) {
+            return 'briefing';
+        }
+    });
     const inputRef = useRef(null);
     const historyEndRef = useRef(null);
+
+    useEffect(() => {
+        try {
+            window.localStorage?.setItem(CTF_STAGE_STORAGE_KEY, ctfStage);
+        } catch (error) {
+            // The quest still works when browser storage is unavailable.
+        }
+    }, [ctfStage]);
 
     // Easter egg metadata
     const easterEggData = {
@@ -133,11 +179,7 @@ Share your achievement: "I found all 30 Easter eggs in @yusuf601's portfolio!"`
                 setHistory([
                     {
                         type: 'output',
-                        text: `Welcome to the portfolio terminal. Type "help" for available commands.
-
-💡 Tip: This terminal has 30 hidden Easter eggs! Try exploring beyond the basics.
-    Hint: What happens if you try to get root access? 🔐
-    Type 'hint' for clues or 'achievements' to track your progress!`
+                        text: getWelcomeMessage(appearance)
                     }
                 ]);
             }
@@ -151,9 +193,101 @@ Share your achievement: "I found all 30 Easter eggs in @yusuf601's portfolio!"`
 
         window.addEventListener('keydown', handleGlobalKeyDown);
         return () => window.removeEventListener('keydown', handleGlobalKeyDown);
-    }, [isFocused, onToggle]);
+    }, [appearance, isFocused, onToggle]);
 
     const commands = {
+        quest: () => {
+            const objectives = {
+                briefing: 'Stage 1/4 — Recon: search the virtual filesystem for a flag.\nSuggested command: find / -name flag.txt',
+                'beacon-found': 'Stage 2/4 — Service mapping: inspect the archive host.\nSuggested command: scan --target archy.local',
+                'service-mapped': 'Stage 3/4 — Contact: connect to the archivist service.\nSuggested command: ssh archivist@archy.local',
+                'archive-open': 'Stage 4/4 — Recovery: read the recovered archive flag.\nSuggested command: cat /.archive/first-contact.flag',
+                complete: 'Mission complete. The archivist signal has been restored.\nTry inventory to review your recovered artifact.',
+            };
+
+            return {
+                type: 'output',
+                text: `=== ARCHIVE BREACH PROTOCOL ===
+
+Objective: locate the forgotten archive before its signal disappears.
+${objectives[ctfStage]}`
+            };
+        },
+
+        find: (args) => {
+            if (args.join(' ') === '/ -name flag.txt') {
+                setCtfStage('beacon-found');
+                return {
+                    type: 'output',
+                    text: `=== ARCHIVE BEACON DISCOVERED ===
+
+/.archive/first-contact.flag
+
+The file is encrypted, but its metadata mentions an archivist listening on port 601.
+Next step: scan --target archy.local`
+                };
+            }
+
+            return {
+                type: 'error',
+                text: `find: no matching evidence. Try: find / -name flag.txt`
+            };
+        },
+
+        scan: (args) => {
+            if (args.join(' ') !== '--target archy.local') {
+                return { type: 'error', text: 'scan: use scan --target archy.local' };
+            }
+
+            if (ctfStage !== 'beacon-found') {
+                return { type: 'error', text: 'scan: no archive signal yet. Begin with: find / -name flag.txt' };
+            }
+
+            setCtfStage('service-mapped');
+            return {
+                type: 'output',
+                text: `=== ARCHIVE SERVICE MAP ===
+
+Host: archy.local (simulated)
+601/tcp  open  archivist
+8080/tcp  filtered  memories
+
+The archivist accepts a guest handshake.
+Next step: ssh archivist@archy.local`
+            };
+        },
+
+        ssh: (args) => {
+            if (args.join(' ') !== 'archivist@archy.local') {
+                return { type: 'error', text: 'ssh: unknown host. Try: ssh archivist@archy.local' };
+            }
+
+            if (ctfStage !== 'service-mapped') {
+                return { type: 'error', text: 'ssh: connection refused. Map the archive service first.' };
+            }
+
+            setCtfStage('archive-open');
+            return {
+                type: 'output',
+                text: `=== ARCHIVIST SESSION ESTABLISHED ===
+
+"Good recon, guest. The archive is now readable."
+
+Recovery key injected into virtual filesystem.
+Next step: cat /.archive/first-contact.flag`
+            };
+        },
+
+        inventory: () => ({
+            type: 'output',
+            text: `=== GUEST INVENTORY ===
+
+Archive beacon: ${ctfStage === 'briefing' ? 'not found' : 'recovered'}
+Service map: ${['service-mapped', 'archive-open', 'complete'].includes(ctfStage) ? 'recovered' : 'locked'}
+Archivist key: ${['archive-open', 'complete'].includes(ctfStage) ? 'recovered' : 'locked'}
+First-contact flag: ${ctfStage === 'complete' ? 'recovered' : 'locked'}`
+        }),
+
         help: () => ({
             type: 'output',
             text: `Available commands:
@@ -173,6 +307,11 @@ Share your achievement: "I found all 30 Easter eggs in @yusuf601's portfolio!"`
   exit          - Close terminal session
   hint          - Get a clue about hidden Easter eggs
   achievements  - View your Easter egg progress
+  quest         - Show the current Archive Breach CTF objective
+  inventory     - View recovered CTF artifacts
+  find          - Search the virtual filesystem for a clue
+  scan          - Map a simulated archive service
+  ssh           - Connect to a simulated archive service
   
   [C++ Developer Tools]
   g++           - GNU C++ compiler
@@ -424,6 +563,25 @@ Now check out my actual projects: cd projects`
                 return {
                     type: 'error',
                     text: 'cat: missing operand'
+                };
+            }
+
+            if (file === '/.archive/first-contact.flag') {
+                if (ctfStage !== 'archive-open') {
+                    return {
+                        type: 'error',
+                        text: 'cat: archive is encrypted. Complete the recon sequence first.'
+                    };
+                }
+
+                setCtfStage('complete');
+                return {
+                    type: 'output',
+                    text: `=== ARCHIVE RECOVERED ===
+
+FLAG{archivist_signal_restored}
+
+The first contact record is safe. Type inventory to review your artifacts.`
                 };
             }
 
@@ -1119,25 +1277,31 @@ ${timestamp} (21.5 MB/s) - '${filename}' saved [2278683/2278683]
                 </div>
 
                 {/* Terminal Content */}
-                <div className="p-4 flex-1 overflow-y-auto" onClick={() => inputRef.current?.focus()}>
+                <div className={`p-4 flex-1 overflow-y-auto ${appearance === 'desktop' ? 'desktop-terminal-content' : ''}`} onClick={() => inputRef.current?.focus()}>
                     <div className="space-y-2 mb-2">
                         {history.map((entry, index) => (
                             <div key={index}>
                                 {entry.type === 'command' && (
-                                    <div className="text-[var(--text-primary)]">
-                                        <span className="text-[var(--accent-success)]">yusuf@cpp-machine</span>
-                                        <span className="text-[var(--text-primary)]">:</span>
-                                        <span className="text-[var(--accent-info)]">{getCurrentPath()}</span>
-                                        <span className="text-[var(--accent-success)]">$</span> {entry.text}
-                                    </div>
+                                    appearance === 'desktop' ? (
+                                        <DesktopPrompt path={getCurrentPath()}>
+                                            <span className="desktop-terminal-command-text">{entry.text}</span>
+                                        </DesktopPrompt>
+                                    ) : (
+                                        <div className="text-[var(--text-primary)]">
+                                            <span className="text-[var(--accent-success)]">yusuf@cpp-machine</span>
+                                            <span className="text-[var(--text-primary)]">:</span>
+                                            <span className="text-[var(--accent-info)]">{getCurrentPath()}</span>
+                                            <span className="text-[var(--accent-success)]">$</span> {entry.text}
+                                        </div>
+                                    )
                                 )}
                                 {entry.type === 'output' && (
-                                    <div className="text-[var(--text-muted)] whitespace-pre-line pl-4 font-normal">
+                                    <div className={`text-[var(--text-muted)] whitespace-pre-line font-normal ${appearance === 'desktop' ? 'desktop-terminal-output' : 'pl-4'}`}>
                                         {entry.text}
                                     </div>
                                 )}
                                 {entry.type === 'error' && (
-                                    <div className="text-[var(--accent-danger)] pl-4 whitespace-pre-line font-normal">
+                                    <div className={`text-[var(--accent-danger)] whitespace-pre-line font-normal ${appearance === 'desktop' ? 'desktop-terminal-error' : 'pl-4'}`}>
                                         {entry.text}
                                     </div>
                                 )}
@@ -1146,24 +1310,42 @@ ${timestamp} (21.5 MB/s) - '${filename}' saved [2278683/2278683]
                         <div ref={historyEndRef} />
                     </div>
 
-                    <form onSubmit={handleSubmit} className="flex items-center mt-2">
-                        <span className="text-[var(--accent-success)]">yusuf@cpp-machine</span>
-                        <span className="text-[var(--text-primary)]">:</span>
-                        <span className="text-[var(--accent-info)]">{getCurrentPath()}</span>
-                        <span className="text-[var(--accent-success)]">$</span>
-                        <input
-                            ref={inputRef}
-                            aria-label="Terminal command"
-                            type="text"
-                            value={input}
-                            onChange={(e) => setInput(e.target.value)}
-                            onKeyDown={handleKeyDown}
-                            onFocus={handleFocus}
-                            onBlur={handleBlur}
-                            className="flex-1 ml-2 bg-transparent outline-none text-[var(--text-primary)] caret-[var(--text-primary)]"
-                            autoComplete="off"
-                            spellCheck="false"
-                        />
+                    <form onSubmit={handleSubmit} className={`flex items-center mt-2 ${appearance === 'desktop' ? 'desktop-terminal-command-form' : ''}`}>
+                        {appearance === 'desktop' ? (
+                            <DesktopPrompt path={getCurrentPath()} testId="desktop-terminal-prompt">
+                                <input
+                                    ref={inputRef}
+                                    aria-label="Terminal command"
+                                    type="text"
+                                    value={input}
+                                    onChange={(e) => setInput(e.target.value)}
+                                    onKeyDown={handleKeyDown}
+                                    onFocus={handleFocus}
+                                    onBlur={handleBlur}
+                                    className="desktop-terminal-input"
+                                    autoComplete="off"
+                                    spellCheck="false"
+                                />
+                            </DesktopPrompt>
+                        ) : <>
+                            <span className="text-[var(--accent-success)]">yusuf@cpp-machine</span>
+                            <span className="text-[var(--text-primary)]">:</span>
+                            <span className="text-[var(--accent-info)]">{getCurrentPath()}</span>
+                            <span className="text-[var(--accent-success)]">$</span>
+                            <input
+                                ref={inputRef}
+                                aria-label="Terminal command"
+                                type="text"
+                                value={input}
+                                onChange={(e) => setInput(e.target.value)}
+                                onKeyDown={handleKeyDown}
+                                onFocus={handleFocus}
+                                onBlur={handleBlur}
+                                className="flex-1 ml-2 bg-transparent outline-none text-[var(--text-primary)] caret-[var(--text-primary)]"
+                                autoComplete="off"
+                                spellCheck="false"
+                            />
+                        </>}
                     </form>
                 </div>
 
