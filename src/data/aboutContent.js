@@ -13,14 +13,14 @@ export const aboutVisualAssets = Object.freeze({
 
 export const aboutProfile = Object.freeze({
     name: 'Muh Yusuf',
+    role: 'Informatics student',
     university: 'Halu Oleo University',
     major: 'Informatics Engineering',
     semester: '5th semester',
     specialization: 'Computer Vision & Computation',
+    interests: Object.freeze(['Computer Vision', 'Computation', 'Systems']),
     currentLearning: Object.freeze([
-        'Data science',
-        'Low-level programming',
-        'Machine learning',
+        'Data Science', 'Low-level programming', 'Machine Learning',
     ]),
     operatingSystem: 'Arch Linux',
 })
