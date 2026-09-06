@@ -52,3 +52,26 @@ Initial source discovery found the [20th Century Studios Martian page](https://w
 and [IMP Awards 2023 Night Agent poster entry](https://www.impawards.com/tv/night_agent.html).
 These are possible leads only: no candidate images were acquired or accepted,
 and none establishes the source or rights of the existing local files.
+
+## Task 6 browser inspection (2026-09-06)
+
+The executable QA pass rendered and decoded all six originals at 1440×900 in
+light/dark mode, 1280×800, and 1024×768. Separate Films and Series screenshots
+in `/tmp/archy-about-overview-qa/` were visually inspected. The desktop frames
+are equally sized at 200×300 CSS pixels, use `object-fit: contain`, and preserve
+all source pixels. Titles and years remain readable below the frames.
+
+Visible artwork coverage is **not normalized**: The Martian occupies roughly
+150×222 CSS pixels, Reply 1988 roughly 110×158, and The Night Agent roughly
+147×200 inside their 200×300 frames. Their baked-in dark margins remain plainly
+visible next to Leave the World Behind, Cars, and FROM. Cars retains its scanned
+physical-poster presentation; FROM's “Returns Apr 19” / MGM+ / IGN Exclusive
+artwork still has unresolved season/date suitability. Origins and rights remain
+unknown for all six originals.
+
+The Task 6 takeover ruling stopped further open-ended sourcing and required
+retaining originals unless an already-downloaded, verifiable replacement was
+available. No such candidate was found in the working tree or inspected temporary
+asset files. No poster was downloaded, replaced, normalized, cropped, or altered
+in Task 6. Passing browser assertions establish loading, fit, dimensions and
+behavior; they do not establish equal visible artwork coverage or source rights.
