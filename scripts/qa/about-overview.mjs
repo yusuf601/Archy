@@ -1,6 +1,7 @@
 import { chromium } from '@playwright/test'
 import assert from 'node:assert/strict'
 import { mkdir, writeFile } from 'node:fs/promises'
+import { randomUUID } from 'node:crypto'
 
 // Run against a local Vite server, with an outer process deadline:
 // timeout 100s env ABOUT_BROWSER_EXECUTABLE=/usr/bin/google-chrome-stable node scripts/qa/about-overview.mjs
@@ -12,13 +13,15 @@ const errors = []
 const results = []
 const screenshots = []
 const limitations = [
-    'Original Martian, Reply 1988 and Night Agent artwork has baked-in margins; equal CSS frames do not imply equal visible artwork coverage.',
-    'Original poster sources remain unknown; Cars is a physical-poster scan and FROM season/date suitability remains unresolved. See src/assets/images/media/about/SOURCES.md.',
+    'Retained Cars and Leave the World Behind sources remain unknown; replacement poster rights remain with their respective owners. See src/assets/images/media/about/SOURCES.md.',
     '200% zoom uses an equivalent CSS viewport/DPR, not browser UI zoom.',
 ]
-let status = 'FAIL'
+const run = { id: randomUUID(), startedAt: new Date().toISOString(), url }
+let status = 'RUNNING'
+let browser
+const manifest = () => ({ run, status, results, errors, limitations, screenshots })
 await mkdir(output, { recursive: true })
-const browser = await chromium.launch({ headless: true, executablePath: process.env.ABOUT_BROWSER_EXECUTABLE || undefined })
+await writeFile(`${output}/results.json`, JSON.stringify(manifest(), null, 2))
 const paneOf = page => page.getByRole('region', { name: 'About Yusuf content' })
 const navOf = page => page.getByRole('navigation', { name: 'About sections' })
 const active = async (page, name) => {
@@ -112,6 +115,7 @@ async function theme(page) {
     cards.forEach(styles => assert.deepEqual(styles, ['rgba(0, 0, 0, 0)', 'none', '0px', '0px'], 'text groups have no cards'))
 }
 try {
+    browser = await chromium.launch({ headless: true, executablePath: process.env.ABOUT_BROWSER_EXECUTABLE || undefined })
     for (const colorScheme of ['light', 'dark']) {
         const { page, context } = await open({ colorScheme })
         await geometry(page)
@@ -143,27 +147,49 @@ try {
         const { page, context } = await open({ reducedMotion: 'reduce' })
         const pane = paneOf(page)
         const sidebarBefore = await navOf(page).boundingBox()
-        // Start from the existing close button, then use actual Tab key events.
-        await page.getByRole('button', { name: 'Close About Yusuf', exact: true }).focus()
+        // Activate each link from the opposite section using real Tab/Enter.
+        // Sample from click capture, before React handles navigation: waiting for
+        // aria-current first would hide a broken smooth-scroll implementation.
+        await pane.evaluate(el => el.scrollTo({ top: el.scrollHeight }))
+        await active(page, 'On Screen')
         for (const name of ['Overview', 'On Screen']) {
-            await page.keyboard.press('Tab')
+            await page.getByRole('button', { name: 'Close About Yusuf', exact: true }).focus()
+            for (let i = 0; i < (name === 'Overview' ? 1 : 2); i++) await page.keyboard.press('Tab')
             assert.equal(await page.evaluate(() => document.activeElement.textContent), name, `Tab reaches ${name}`)
             assert.ok(await page.evaluate(() => document.activeElement.matches(':focus-visible') && parseFloat(getComputedStyle(document.activeElement).outlineWidth) >= 2), 'visible keyboard focus')
-            if (name === 'Overview') continue
-            await capture(page, 'keyboard-sidebar-focus')
+            await capture(page, `keyboard-${name === 'Overview' ? 'overview' : 'on-screen'}-sidebar-focus`)
+            const headingId = name === 'Overview' ? 'about-profile-heading' : 'on-screen-heading'
+            await page.evaluate(({ name, headingId }) => {
+                const pane = document.querySelector('.about-reading-pane')
+                const heading = document.getElementById(headingId)
+                const desired = name === 'Overview' ? 0 : heading.getBoundingClientRect().top - pane.getBoundingClientRect().top + pane.scrollTop - 24
+                const expected = Math.max(0, Math.min(desired, pane.scrollHeight - pane.clientHeight))
+                window.__aboutNavigation = { name, headingId, expected, before: pane.scrollTop, samples: [] }
+                document.activeElement.addEventListener('click', () => {
+                    function sample() {
+                        window.__aboutNavigation.samples.push({ top: pane.scrollTop, focus: document.activeElement.id, offset: heading.getBoundingClientRect().top - pane.getBoundingClientRect().top })
+                        if (window.__aboutNavigation.samples.length < 5) requestAnimationFrame(sample)
+                    }
+                    requestAnimationFrame(sample)
+                }, { capture: true, once: true })
+            }, { name, headingId })
             await page.keyboard.press('Enter')
+            await page.waitForFunction(() => window.__aboutNavigation.samples.length === 5)
+            const navigation = await page.evaluate(() => window.__aboutNavigation)
+            assert.ok(Math.abs(navigation.before - navigation.expected) > 100, `${name} starts in opposite section`)
+            for (const [frame, sample] of navigation.samples.entries()) {
+                assert.ok(Math.abs(sample.top - navigation.expected) <= 1, `${name} reaches destination by frame ${frame + 1}: ${JSON.stringify(navigation)}`)
+                assert.equal(sample.focus, headingId, `${name} destination focused by first frame`)
+                assert.ok(sample.offset >= 0 && sample.offset <= 40, `${name} heading at pane top`)
+            }
+            results.push({ reducedMotionNavigation: navigation })
             await active(page, name)
-            assert.equal(await page.evaluate(() => document.activeElement.id), 'on-screen-heading')
-            assert.ok(await page.locator('#on-screen-heading').evaluate(el => el.matches(':focus-visible') && parseFloat(getComputedStyle(el).outlineWidth) >= 2), 'heading focus stays visible after Enter')
+            assert.ok(await page.locator(`#${headingId}`).evaluate(el => el.matches(':focus-visible') && parseFloat(getComputedStyle(el).outlineWidth) >= 2), 'heading focus stays visible after Enter')
+            await capture(page, `keyboard-${name === 'Overview' ? 'overview' : 'on-screen'}-heading-focus`)
         }
-        const top = await pane.evaluate(el => el.scrollTop)
-        assert.ok(top > 0, 'Enter scrolls to collection')
-        await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))))
-        assert.equal(await pane.evaluate(el => el.scrollTop), top, 'reduced-motion navigation finished immediately')
         await page.locator('.about-poster-frame').first().hover()
         assert.equal(await page.locator('.about-overview-app').evaluate(el => el.getAnimations({ subtree: true }).filter(a => a.playState === 'running').length), 0, 'no About hover/scroll animations under reduced motion')
         assert.deepEqual(await navOf(page).boundingBox(), sidebarBefore, 'sidebar remains stationary')
-        await capture(page, 'keyboard-heading-focus')
         await pane.evaluate(el => el.scrollTo({ top: 0 }))
         await active(page, 'Overview')
         await pane.evaluate(el => { const target = el.querySelector('#on-screen-heading'); el.scrollTop += target.getBoundingClientRect().top - el.getBoundingClientRect().top - 48 })
@@ -264,8 +290,13 @@ try {
     results.push('Existing mobile fallback: 390×844 and 200% page-zoom-equivalent 720×450 CSS viewport / DPR 2 (not browser UI zoom)')
     assert.deepEqual(errors, [], 'no uncaught browser errors')
     status = 'PASS'
-    console.log(JSON.stringify({ status, results, errors, limitations, screenshots }, null, 2))
+    console.log(JSON.stringify(manifest(), null, 2))
+} catch (error) {
+    status = 'FAIL'
+    errors.push(error.stack || error.message)
+    throw error
 } finally {
-    await writeFile(`${output}/results.json`, JSON.stringify({ status, results, errors, limitations, screenshots }, null, 2))
-    await browser.close()
+    run.finishedAt = new Date().toISOString()
+    await writeFile(`${output}/results.json`, JSON.stringify(manifest(), null, 2))
+    await browser?.close()
 }

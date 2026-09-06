@@ -1,10 +1,10 @@
 import haluOleoLogo from '../assets/images/halu-oleo-logo.png'
-import theMartianPoster from '../assets/images/media/the-martian.jpg'
+import theMartianPoster from '../assets/images/media/about/the-martian-2015.jpg'
 import leaveTheWorldBehindPoster from '../assets/images/media/leave-the-world-behind.jpg'
 import carsPoster from '../assets/images/media/cars.jpg'
-import reply1988Poster from '../assets/images/media/reply-1988.jpg'
-import fromPoster from '../assets/images/media/from.jpg'
-import theNightAgentPoster from '../assets/images/media/the-night-agent.jpg'
+import reply1988Poster from '../assets/images/media/about/reply-1988-2015.jpg'
+import fromPoster from '../assets/images/media/about/from-2022.jpg'
+import theNightAgentPoster from '../assets/images/media/about/the-night-agent-2023.jpg'
 
 export const aboutVisualAssets = Object.freeze({
     portrait: '/avatar.png',
