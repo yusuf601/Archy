@@ -1,6 +1,4 @@
-import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { MemoryRouter, useLocation } from 'react-router-dom'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import { expect, it } from 'vitest'
 import OnScreenShelf from './OnScreenShelf'
 
@@ -10,40 +8,33 @@ const items = [
     { title: 'Reply 1988', year: 2015, type: 'series', poster: '/reply-1988.jpg', alt: 'Poster for Reply 1988' },
 ]
 
-function CurrentPath() {
-    const { pathname } = useLocation()
-    return <output aria-label="Current path">{pathname}</output>
-}
-
-function renderShelf() {
-    return render(
-        <MemoryRouter initialEntries={['/about']}>
-            <OnScreenShelf items={items} />
-            <CurrentPath />
-        </MemoryRouter>,
-    )
-}
-
-it('shows film posters by default with accessible type controls', () => {
-    renderShelf()
-
-    expect(screen.getByRole('heading', { name: 'On Screen' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Films' })).toHaveAttribute('aria-pressed', 'true')
-    expect(screen.getByRole('button', { name: 'Series' })).toHaveAttribute('aria-pressed', 'false')
-    expect(screen.getByRole('img', { name: 'Poster for The Martian' })).toBeInTheDocument()
-    expect(screen.getByText('2015')).toBeInTheDocument()
-    expect(screen.queryByText('Reply 1988')).not.toBeInTheDocument()
+it('shows films and series together in reading order', () => {
+    render(<OnScreenShelf items={items} />)
+    const films = screen.getByRole('region', { name: 'Films', exact: true })
+    const series = screen.getByRole('region', { name: 'Series', exact: true })
+    expect(within(films).getByRole('img', {
+        name: 'Poster for The Martian',
+    })).toBeInTheDocument()
+    expect(within(series).getByRole('img', {
+        name: 'Poster for Reply 1988',
+    })).toBeInTheDocument()
+    expect(films.compareDocumentPosition(series) &
+        Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    expect(screen.queryByRole('button', { name: 'Films' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Series' })).not.toBeInTheDocument()
+    expect(screen.getByText('Favorite films & series')).toBeInTheDocument()
 })
 
-it('shows series without changing the About route when selected', async () => {
-    const user = userEvent.setup()
-    renderShelf()
+it('keeps a title and year readable if a poster fails', () => {
+    render(<OnScreenShelf items={[items[0]]} />)
+    fireEvent.error(screen.getByRole('img', { name: 'Poster for The Martian' }))
+    expect(screen.getByText('Poster unavailable')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'The Martian' })).toBeInTheDocument()
+    expect(screen.getByText('2015')).toBeInTheDocument()
+})
 
-    await user.click(screen.getByRole('button', { name: 'Series' }))
-
-    expect(screen.getByRole('button', { name: 'Films' })).toHaveAttribute('aria-pressed', 'false')
-    expect(screen.getByRole('button', { name: 'Series' })).toHaveAttribute('aria-pressed', 'true')
-    expect(screen.getByRole('img', { name: 'Poster for Reply 1988' })).toBeInTheDocument()
-    expect(screen.queryByText('The Martian')).not.toBeInTheDocument()
-    expect(screen.getByRole('status', { name: 'Current path' })).toHaveTextContent('/about')
+it('labels both empty groups', () => {
+    render(<OnScreenShelf items={[]} />)
+    expect(screen.getByText('No films listed.')).toBeInTheDocument()
+    expect(screen.getByText('No series listed.')).toBeInTheDocument()
 })
