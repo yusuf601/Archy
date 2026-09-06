@@ -23,7 +23,7 @@ export default function OnScreenShelf({ items }) {
         <section className="on-screen-shelf" aria-labelledby="on-screen-heading">
             <header className="on-screen-shelf-header">
                 <div>
-                    <h2 id="on-screen-heading">On Screen</h2>
+                    <h2 id="on-screen-heading" tabIndex={-1}>On Screen</h2>
                     <p className="on-screen-shelf-caption">Favorite films &amp; series</p>
                 </div>
             </header>
