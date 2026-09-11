@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import MotionText, { metadataItem } from '../components/MotionText';
+import { projectArtifacts } from '../data/projectArtifacts';
 
 const fadeUp = {
     hidden: { opacity: 0, y: 20 },
@@ -20,48 +21,10 @@ const metadataHoverItem = {
 };
 
 const Projects = () => {
-    const artifacts = [
-        {
-            name: 'SVector',
-            kind: 'container rebuild',
-            statement: 'A source-level rebuild of std::vector with allocator control, capacity rules, iterator behavior, and API-compatible muscle memory',
-            github: 'https://github.com/Build-X-From-Scratch/SVector',
-            tech: ['C++20', 'Allocator', 'STL'],
-            public: true,
-        },
-        {
-            name: 'forward_list_scratch',
-            kind: 'linked primitive',
-            statement: 'A forward-list implementation focused on splice, merge, sort, node ownership, and the real cost of pointer-shaped abstractions',
-            github: 'https://github.com/Build-X-From-Scratch/forward_list_sratch',
-            tech: ['C++20', 'Nodes', 'Algorithms'],
-            public: true,
-        },
-        {
-            name: 'Stack / Queue',
-            kind: 'linear adapters',
-            statement: 'Small primitives rebuilt to expose the tradeoffs behind interface simplicity',
-            github: 'https://github.com/Build-X-From-Scratch/Stack_Scratch',
-            tech: ['Adapters', 'Buffer'],
-            public: true,
-        },
-        {
-            name: 'Trees / Algorithms',
-            kind: 'algorithmic internals',
-            statement: 'Traversal, insertion, sorting, search, and the pieces hidden behind standard headers',
-            github: '#',
-            tech: ['Trees', 'Sort', 'Search'],
-            public: false,
-        },
-        {
-            name: 'Research Notes',
-            kind: 'systems to ML',
-            statement: 'Academic and experimental notes connecting implementation details to computational models',
-            github: 'https://github.com/yusuf601/my-paper',
-            tech: ['Research', 'ML'],
-            public: true,
-        },
-    ];
+    const artifacts = projectArtifacts.map((artifact) => ({
+        ...artifact,
+        public: artifact.visibility === 'public',
+    }));
     const featuredArtifact = artifacts.find((artifact) => artifact.name === 'SVector');
     const supportingArtifacts = artifacts.filter((artifact) => artifact.name !== 'SVector');
     const flagshipCues = ['allocator discipline', 'capacity semantics', 'iterator behavior'];

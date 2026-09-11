@@ -1,0 +1,197 @@
+@font-face {
+    font-family: 'About Caveat';
+    src: url('../../assets/fonts/about/caveat-latin-600.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+.desktop-shell[data-active-app='about'] .desktop-app-frame[data-mode='medium'] {
+    inset: 16px 0 calc(var(--desktop-dock-space) + 16px);
+    width: min(840px, calc(100% - 64px));
+    height: min(760px, calc(100% - var(--desktop-dock-space) - 32px));
+    border-radius: 12px;
+}
+
+.about-overview-app {
+    height: 100%;
+    min-height: 0;
+    background: #fff;
+    color: #282828;
+    color-scheme: light;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+.about-window-bar {
+    display: flex;
+    flex: 0 0 40px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px 0 14px;
+    border-bottom: 1px solid #ededed;
+    background: #fff;
+    color: #242424;
+    color-scheme: light;
+}
+.about-window-dots { display: flex; align-items: center; gap: 5px; }
+.about-window-dots span { width: 11px; height: 11px; border-radius: 50%; background: #ff5f57; }
+.about-window-dots span:nth-child(2) { background: #ffbd2e; }
+.about-window-dots span:nth-child(3) { background: #28c840; }
+.about-window-title {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+.about-window-actions { display: flex; align-items: center; gap: 2px; }
+.about-window-actions a,
+.about-window-actions button {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: 0;
+    border-radius: 4px;
+    color: inherit;
+    background: transparent;
+    text-decoration: none;
+    cursor: pointer;
+}
+.about-window-actions svg { width: 15px; height: 15px; stroke-width: 1.6; }
+.about-window-actions a:hover,
+.about-window-actions button:hover { background: #f0f0f0; }
+.about-window-actions :focus-visible { outline: 2px solid #2468bb; outline-offset: 1px; }
+.about-window-actions button { margin-left: 8px; }
+.about-overview-app .about-reading-pane {
+    height: 100%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    container-type: inline-size;
+    scrollbar-width: thin;
+}
+.about-overview-app :focus-visible { outline: 2px solid #2468bb; outline-offset: -3px; }
+.about-overview-app .about-dossier { padding: 38px 42px 48px; }
+.about-overview-app .about-byline {
+    margin: 0 0 10px;
+    color: #737373;
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 500;
+}
+.about-overview-app .about-identity h2 {
+    margin: 0;
+    font-family: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+    font-size: 44px;
+    line-height: 1.12;
+    letter-spacing: -.045em;
+    font-weight: 400;
+}
+.about-overview-app .about-introduction {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 176px;
+    gap: 44px;
+    margin-top: 22px;
+}
+.about-overview-app .about-letter { max-width: 48ch; }
+.about-overview-app .about-letter p {
+    margin: 0 0 14px;
+    font-size: 16px;
+    line-height: 1.7;
+    color: #555;
+    text-wrap: pretty;
+}
+.about-overview-app .about-letter p:last-child { margin-bottom: 0; }
+.about-overview-app .about-letter strong { color: #292929; font-weight: 500; }
+.about-overview-app .about-margin-note {
+    align-self: start;
+    padding-left: 20px;
+    border-left: 1px solid #e5e5e5;
+}
+.about-overview-app .about-margin-note h3 {
+    font-family: 'About Caveat', cursive;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: #666;
+    margin: 0 0 12px;
+}
+.about-overview-app .about-margin-note ul { list-style: none; padding: 0; margin: 0; }
+.about-overview-app .about-margin-note li { font-size: 12px; line-height: 1.6; color: #616161; margin-bottom: 7px; }
+.about-overview-app .on-screen-shelf { margin-top: 30px; padding-top: 24px; border-top: 1px solid #e9e9e9; }
+.about-overview-app .on-screen-shelf-header { margin-bottom: 22px; }
+.about-overview-app .on-screen-shelf-caption {
+    margin: 0;
+    font-family: 'About Caveat', cursive;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #666;
+}
+.about-overview-app .about-media-group + .about-media-group { margin-top: 36px; }
+.about-overview-app .about-media-group h3 { margin: 0 0 14px; font-size: 15px; font-weight: 600; letter-spacing: -.015em; }
+.about-overview-app .about-poster-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+.about-overview-app .about-media-item { min-width: 0; }
+.about-overview-app .about-poster-frame {
+    position: relative;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 2 / 3;
+    overflow: hidden;
+    background: #f5f5f5;
+    border-radius: 3px;
+    box-shadow: 0 2px 5px #0000000c;
+}
+.about-overview-app .about-poster-frame img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.about-overview-app .about-poster-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 16px;
+    color: #fff;
+    background: linear-gradient(180deg, rgb(0 0 0 / .66), rgb(0 0 0 / .26) 30%, rgb(0 0 0 / .86));
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 180ms ease, visibility 180ms ease;
+    overflow-y: auto;
+}
+.about-overview-app .about-poster-frame[aria-expanded='true'] .about-poster-overlay { opacity: 1; visibility: visible; }
+.about-overview-app .about-poster-meta { display: flex; justify-content: space-between; align-items: start; gap: 10px; font-size: 10px; line-height: 1.5; }
+.about-overview-app .about-poster-meta > :last-child { text-align: right; }
+.about-overview-app .about-poster-story { display: grid; gap: 10px; }
+.about-overview-app .about-poster-title { font-size: 21px; line-height: 1.12; font-weight: 600; letter-spacing: -.025em; }
+.about-overview-app .about-poster-description { font-size: 12px; line-height: 1.55; }
+.about-overview-app .about-poster-frame:focus-visible { outline: 2px solid #2468bb; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+    .about-overview-app .about-poster-overlay { transition: none; }
+}
+.about-overview-app .about-poster-fallback { padding: 16px; color: #6f6f6f; font-size: 13px; text-align: center; }
+.about-overview-app .about-media-item h4 { margin: 12px 0 4px; font-size: 13px; font-weight: 500; line-height: 1.4; }
+.about-overview-app .about-media-item p { margin: 0; color: #767676; font-size: 12px; line-height: 1.4; }
+@container (max-width: 620px) {
+    .about-overview-app .about-dossier { padding: 28px; }
+    .about-overview-app .about-introduction { grid-template-columns: 1fr; gap: 22px; }
+    .about-overview-app .about-margin-note { padding-left: 0; border-left: 0; }
+    .about-overview-app .about-margin-note ul { display: flex; flex-wrap: wrap; gap: 4px 16px; }
+    .about-overview-app .about-margin-note li { margin: 0; }
+    .about-overview-app .about-poster-grid { gap: 16px; }
+}
+@container (max-width: 420px) {
+    .about-overview-app .about-dossier { padding: 24px; }
+    .about-overview-app .about-identity h2 { font-size: 36px; }
+    .about-overview-app .about-poster-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
