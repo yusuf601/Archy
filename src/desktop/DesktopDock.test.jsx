@@ -29,11 +29,12 @@ it('routes document apps and toggles the same Kitty instance', async () => {
     const user = userEvent.setup()
     render(<MemoryRouter initialEntries={['/']}><DesktopShell /></MemoryRouter>)
 
-    const dockButtons = screen.getAllByRole('button', { name: /^(Open About Yusuf|Open Projects|Open Firefox|Open Kitty)$/ })
+    const dockButtons = screen.getAllByRole('button', { name: /^(Open About Yusuf|Open Projects|Open Firefox|Open GitHub|Open Kitty)$/ })
     expect(dockButtons.map((button) => button.getAttribute('aria-label'))).toEqual([
         'Open About Yusuf',
         'Open Projects',
         'Open Firefox',
+        'Open GitHub',
         'Open Kitty',
     ])
     expect(screen.getByRole('button', { name: 'Open About Yusuf' }).querySelector('img')).toHaveAttribute('src', expect.stringContaining('about-folder'))

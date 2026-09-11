@@ -4,6 +4,7 @@ import FilesApp from './apps/FilesApp'
 import MailApp from './apps/MailApp'
 import NotesApp from './apps/NotesApp'
 import DesktopNotFound from './DesktopNotFound'
+import GitHubApp from './apps/GitHubApp'
 
 export default function DesktopRoutes() {
     return (
@@ -15,6 +16,7 @@ export default function DesktopRoutes() {
             <Route path="/blog/:slug" element={<NotesApp />} />
             <Route path="/contact" element={<MailApp />} />
             <Route path="/about" element={<AboutApp />} />
+            <Route path="/github" element={<GitHubApp />} />
             <Route path="*" element={<DesktopNotFound />} />
         </Routes>
     )

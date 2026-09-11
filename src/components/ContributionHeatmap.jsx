@@ -50,7 +50,7 @@ const HeatmapSkeleton = () => (
     </div>
 );
 
-const ContributionHeatmap = () => {
+const ContributionHeatmap = ({ periodLabel = 'this year' }) => {
     const { data, loading, error } = useGitHubStats();
 
     const { svgWidth, svgHeight, cells, monthMarkers } = useMemo(() => {
@@ -160,7 +160,7 @@ const ContributionHeatmap = () => {
                             className="ml-3 text-[0.6rem] font-mono"
                             style={{ color: 'var(--text-secondary)', opacity: 0.4 }}
                         >
-                            {data.totalContributions} contributions this year
+                            {data.totalContributions} contributions {periodLabel}
                         </span>
                     </div>
                 </div>

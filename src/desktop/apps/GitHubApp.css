@@ -1,0 +1,44 @@
+.desktop-shell[data-active-app='github'] .desktop-app-frame {
+    width: min(880px, calc(100vw - 64px));
+    height: min(600px, calc(100dvh - 156px));
+    bottom: var(--desktop-dock-space);
+    border-radius: 12px;
+}
+.desktop-shell[data-active-app='github'] .desktop-app-titlebar { min-height: 40px; padding-block: 5px; }
+.github-app {
+    --text-primary: var(--app-ink);
+    --text-secondary: #616161;
+    --accent-success: #268747;
+    --accent-info: var(--app-muted);
+    --border-light: var(--app-line);
+    --bg-panel-hover: #e9ece9;
+    padding: 38px 42px 48px;
+    font-family: var(--app-font);
+}
+.github-profile { display: flex; align-items: center; gap: 14px; margin-bottom: 30px; }
+.github-profile-icon { display: grid; place-items: center; width: 48px; height: 48px; background: #f5f5f5; border-radius: 12px; font-size: 27px; color: var(--app-ink); }
+.github-profile p { font-size: 12px; font-weight: 500; line-height: 1.5; color: var(--app-muted); margin-bottom: 10px; }
+.github-profile h2 { font-family: var(--app-heading-font); font-size: 44px; line-height: 1.12; font-weight: 400; letter-spacing: -.045em; }
+.github-profile a { display: flex; align-items: center; gap: 8px; margin-left: auto; color: #2468bb; font-size: 12px; text-decoration: none; }
+.github-profile a:hover { text-decoration: underline; }
+.github-section-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.github-section-heading h3 { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600; letter-spacing: -.015em; }
+.github-section-heading > span { font-size: 12px; color: var(--app-muted); }
+.github-activity { padding: 20px; border: 1px solid var(--app-line); border-radius: 12px; background: var(--app-paper); }
+.github-activity > div.mt-8 { margin-top: 16px; }
+.github-activity > div.mt-8 > p { display: none; }
+.github-activity svg text { opacity: 1; font-family: var(--app-font); }
+.github-activity .font-mono { font-family: var(--app-font); }
+.github-summary { margin-top: 30px; }
+.github-summary dl { display: grid; grid-template-columns: repeat(5, 1fr); margin-top: 22px; }
+.github-summary dl > div { display: flex; flex-direction: column-reverse; gap: 8px; padding-left: 18px; border-left: 1px solid var(--app-line); }
+.github-summary dl > div:first-child { padding-left: 0; border-left: 0; }
+.github-summary dt { font-size: 12px; color: #616161; }
+.github-summary dd { font-family: var(--app-heading-font); font-size: 32px; font-variant-numeric: tabular-nums; line-height: 1.12; letter-spacing: -.025em; }
+.github-summary > p { font-size: 12px; color: var(--app-muted); line-height: 1.6; margin-top: 26px; max-width: 560px; }
+.github-loading, .github-unavailable { display: grid; align-content: center; justify-items: start; min-height: 150px; gap: 10px; color: #616161; font-size: 13px; }
+.github-unavailable h4 { color: var(--app-ink); }
+.github-unavailable button { border: 1px solid #dedede; background: #f5f5f5; color: var(--app-ink); border-radius: 7px; padding: 8px 14px; cursor: pointer; }
+.github-unavailable button:hover { background: #ededed; }
+.github-app :is(a, button):focus-visible { outline: 2px solid #2468bb; outline-offset: 4px; }
+.github-empty { font-size: 12px; color: #616161; margin-top: 12px; }

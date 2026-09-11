@@ -3,6 +3,7 @@ import aboutIcon from '../assets/icons/about-folder.png'
 import firefoxIcon from '../assets/icons/firefox.png'
 import kittyIcon from '../assets/icons/kitty-dark.png'
 import vscodeIcon from '../assets/icons/vscode.png'
+import githubIcon from '../../asset/Github__Dark__Golden_Gate__14NwU1PtJ7-57d47ffb18_1024x1024x32.png'
 import { DESKTOP_APPS } from './desktopApps'
 import { useDesktopShell } from './DesktopShellContext'
 
@@ -10,6 +11,7 @@ const dockApps = [
     { id: 'about', label: 'About Yusuf', route: DESKTOP_APPS.about.route, icon: aboutIcon },
     { id: 'files', label: 'Projects', route: DESKTOP_APPS.files.route, icon: vscodeIcon },
     { id: 'notes', label: 'Firefox', route: DESKTOP_APPS.notes.route, icon: firefoxIcon },
+    { id: 'github', label: 'GitHub', route: DESKTOP_APPS.github.route, icon: githubIcon },
 ]
 
 function isRouteActive(pathname, route) {

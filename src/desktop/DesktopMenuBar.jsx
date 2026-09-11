@@ -1,4 +1,4 @@
-import { FiBatteryCharging, FiChevronLeft, FiChevronRight, FiCpu, FiDatabase, FiHardDrive, FiPower, FiVolume2, FiWifi } from 'react-icons/fi'
+import { FiBatteryCharging, FiChevronLeft, FiChevronRight, FiCpu, FiDatabase, FiHardDrive, FiVolume2, FiWifi } from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom'
 import { profile } from '../data/profile'
 import { useClock } from '../hooks/useClock'
@@ -7,6 +7,7 @@ import { useSystemTelemetry } from '../hooks/useSystemTelemetry'
 import { DESKTOP_APPS } from './desktopApps'
 import { useDesktopShell } from './DesktopShellContext'
 import MenuPopover from './MenuPopover'
+import ControlCenter from './ControlCenter'
 
 function MenuButton({ id, label, activeMenu, openMenu, children }) {
     const open = activeMenu === id
@@ -39,7 +40,7 @@ export default function DesktopMenuBar({ activeApp }) {
     const telemetry = useSystemTelemetry()
     const clock = useClock()
     const online = useOnlineStatus()
-    const { activeMenu, openMenu, closeMenus, closeAll } = useDesktopShell()
+    const { activeMenu, openMenu, closeMenus } = useDesktopShell()
 
     const navigateMenu = (route) => {
         closeMenus()
@@ -80,6 +81,7 @@ export default function DesktopMenuBar({ activeApp }) {
                             <MenuItemButton onClick={() => navigateMenu(DESKTOP_APPS.files.route)}>Files</MenuItemButton>
                             <MenuItemButton onClick={() => navigateMenu(DESKTOP_APPS.notes.route)}>Notes</MenuItemButton>
                             <MenuItemButton onClick={() => navigateMenu(DESKTOP_APPS.mail.route)}>Mail</MenuItemButton>
+                            <MenuItemButton onClick={() => navigateMenu(DESKTOP_APPS.github.route)}>GitHub</MenuItemButton>
                             <MenuItemButton onClick={() => window.history.back()}><FiChevronLeft aria-hidden="true" /> Back</MenuItemButton>
                             <MenuItemButton onClick={() => window.history.forward()}><FiChevronRight aria-hidden="true" /> Forward</MenuItemButton>
                         </MenuPopover>
@@ -108,18 +110,7 @@ export default function DesktopMenuBar({ activeApp }) {
                 </span>
                 <span className="desktop-status-widget desktop-clock">{clock}</span>
 
-                <div className="desktop-menu-group">
-                    <MenuButton id="power" label="Power menu" activeMenu={activeMenu} openMenu={openMenu}>
-                        <FiPower aria-hidden="true" />
-                    </MenuButton>
-                    {activeMenu === 'power' && (
-                        <MenuPopover id="power-menu" labelledBy="power-menu-button" onClose={closeMenus}>
-                            <MenuItemButton onClick={() => navigateMenu('/')}>Close active app</MenuItemButton>
-                            <MenuItemButton onClick={closeAll}>Close all app surfaces</MenuItemButton>
-                            <MenuItemButton onClick={() => window.location.reload()}>Reload desktop</MenuItemButton>
-                        </MenuPopover>
-                    )}
-                </div>
+                <ControlCenter />
             </div>
         </header>
     )

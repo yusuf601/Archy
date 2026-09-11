@@ -7,6 +7,7 @@ export function DesktopShellProvider({ children }) {
     const navigate = useNavigate()
     const [activeMenu, setActiveMenu] = useState(null)
     const [kittyOpen, setKittyOpen] = useState(false)
+    const [quiet, setQuiet] = useState(false)
     const activeAppRef = useRef(null)
     const kittyTriggerRef = useRef(null)
 
@@ -46,6 +47,8 @@ export function DesktopShellProvider({ children }) {
         <DesktopShellContext.Provider
             value={{
                 activeMenu,
+                quiet,
+                setQuiet,
                 openMenu,
                 closeMenus,
                 kittyOpen,

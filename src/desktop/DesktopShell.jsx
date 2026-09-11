@@ -20,7 +20,7 @@ export default function DesktopShell() {
 function DesktopShellInner() {
     const location = useLocation()
     const activeApp = resolveDesktopApp(location.pathname)
-    const { activeMenu, closeMenus, kittyOpen, closeKitty, toggleKitty } = useDesktopShell()
+    const { activeMenu, closeMenus, kittyOpen, closeKitty, toggleKitty, quiet } = useDesktopShell()
 
     useEffect(() => {
         const handleKeyDown = (event) => {
@@ -49,7 +49,7 @@ function DesktopShellInner() {
             data-active-app={activeApp?.id ?? 'desktop'}
             data-kitty-open={kittyOpen ? 'true' : 'false'}
         >
-            <DesktopWallpaper appOpen={Boolean(activeApp) || kittyOpen} />
+            <DesktopWallpaper appOpen={Boolean(activeApp) || kittyOpen || quiet} />
             <DesktopMenuBar activeApp={activeApp} />
             <div className="desktop-work-area">
                 <div className="desktop-dim-layer" />

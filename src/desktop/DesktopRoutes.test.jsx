@@ -10,6 +10,7 @@ describe('resolveDesktopApp', () => {
         ['/blog/fuzzy-cmeans-parallel', 'notes'],
         ['/contact', 'mail'],
         ['/about', 'about'],
+        ['/github', 'github'],
     ])('maps %s to %s', (pathname, appId) => {
         expect(resolveDesktopApp(pathname)?.id ?? null).toBe(appId)
     })
@@ -26,6 +27,7 @@ describe('resolveDesktopApp', () => {
             notes: 'fullscreen',
             mail: 'medium',
             about: 'medium',
+            github: 'medium',
         })
     })
 })

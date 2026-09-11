@@ -5,6 +5,7 @@ export const DESKTOP_APPS = Object.freeze({
     notes: { id: 'notes', label: 'Notes', route: '/blog', mode: 'fullscreen' },
     mail: { id: 'mail', label: 'Mail', route: '/contact', mode: 'medium' },
     about: { id: 'about', label: 'About Yusuf', route: '/about', mode: 'medium' },
+    github: { id: 'github', label: 'GitHub', route: '/github', mode: 'medium' },
 })
 
 export function resolveDesktopApp(pathname) {
@@ -13,5 +14,6 @@ export function resolveDesktopApp(pathname) {
     if (pathname === '/blog' || matchPath('/blog/:slug', pathname)) return DESKTOP_APPS.notes
     if (pathname === '/contact') return DESKTOP_APPS.mail
     if (pathname === '/about') return DESKTOP_APPS.about
+    if (pathname === '/github') return DESKTOP_APPS.github
     return { id: 'not-found', label: 'Not Found', mode: 'medium' }
 }

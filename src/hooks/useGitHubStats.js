@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 /**
  * Custom hook — fetches GitHub stats from our Netlify function.
@@ -34,10 +34,11 @@ const useGitHubStats = () => {
     const [data, setData] = useState(cachedData);
     const [loading, setLoading] = useState(!cachedData);
     const [error, setError] = useState(null);
-    const mounted = useRef(true);
+    const [attempt, setAttempt] = useState(0);
 
     useEffect(() => {
-        mounted.current = true;
+        let active = true;
+        setError(null);
         if (cachedData) {
             setData(cachedData);
             setLoading(false);
@@ -46,22 +47,27 @@ const useGitHubStats = () => {
 
         fetchGitHubStats()
             .then(d => {
-                if (mounted.current) {
+                if (active) {
                     setData(d);
                     setLoading(false);
                 }
             })
             .catch(err => {
-                if (mounted.current) {
+                if (active) {
                     setError(err.message);
                     setLoading(false);
                 }
             });
 
-        return () => { mounted.current = false; };
-    }, []);
+        return () => { active = false; };
+    }, [attempt]);
 
-    return { data, loading, error };
+    const retry = () => {
+        setLoading(true);
+        setError(null);
+        setAttempt(value => value + 1);
+    };
+    return { data, loading, error, retry };
 };
 
 export default useGitHubStats;
