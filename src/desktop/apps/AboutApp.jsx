@@ -1,54 +1,56 @@
-import { useRef } from 'react'
-import AboutSectionNav from '../../components/about/AboutSectionNav'
+import { FiGithub, FiLinkedin, FiX } from 'react-icons/fi'
+import { useNavigate } from 'react-router-dom'
 import OnScreenShelf from '../../components/about/OnScreenShelf'
-import { aboutProfile, aboutVisualAssets, onScreenItems } from '../../data/aboutContent'
+import { aboutProfile, onScreenItems } from '../../data/aboutContent'
+import { profile } from '../../data/profile'
 import DesktopAppFrame from '../DesktopAppFrame'
 import { DESKTOP_APPS } from '../desktopApps'
 import './AboutApp.css'
 
 export default function AboutApp() {
-    const scrollRef = useRef(null)
-    const overviewRef = useRef(null)
-    const onScreenRef = useRef(null)
+    const navigate = useNavigate()
 
     return (
-        <DesktopAppFrame app={DESKTOP_APPS.about} title="About Yusuf">
+        <DesktopAppFrame app={DESKTOP_APPS.about} title="About Yusuf" titlebar={
+            <header className="about-window-bar">
+                <div className="about-window-dots" aria-hidden="true">
+                    <span /><span /><span />
+                </div>
+                <h1 className="about-window-title">About Yusuf</h1>
+                <div className="about-window-actions">
+                    <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn">
+                        <FiLinkedin aria-hidden="true" />
+                    </a>
+                    <a href={profile.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub">
+                        <FiGithub aria-hidden="true" />
+                    </a>
+                    <button type="button" aria-label="Close About Yusuf" title="Close" onClick={() => navigate('/')}>
+                        <FiX aria-hidden="true" />
+                    </button>
+                </div>
+            </header>
+        }>
             <div className="about-overview-app">
-                <AboutSectionNav scrollRef={scrollRef} overviewRef={overviewRef} onScreenRef={onScreenRef} />
-                <div ref={scrollRef} className="about-reading-pane" tabIndex={0}
-                    role="region" aria-label="About Yusuf content">
-                    <div className="about-document">
-                        <section ref={overviewRef} aria-labelledby="about-profile-heading">
-                            <div className="about-profile-header">
-                                <img src={aboutVisualAssets.portrait} alt="Pixel-art portrait of Muh Yusuf" width="112" height="112" />
-                                <div>
-                                    <h2 id="about-profile-heading" tabIndex={-1}>{aboutProfile.name}</h2>
-                                    <p>{aboutProfile.role}</p>
-                                    <div className="about-education">
-                                        <img src={aboutVisualAssets.universityLogo} alt="Halu Oleo University logo" width="40" height="40" />
-                                        <div>
-                                            <p>{aboutProfile.university}</p>
-                                            <p>{aboutProfile.major}</p>
-                                            <p>{aboutProfile.semester}</p>
-                                        </div>
-                                    </div>
-                                </div>
+                <div className="about-reading-pane" tabIndex={0} role="region" aria-label="About Yusuf content">
+                    <article className="about-dossier" aria-labelledby="about-profile-heading">
+                        <header className="about-identity">
+                            <p className="about-byline">{aboutProfile.name}</p>
+                            <h2 id="about-profile-heading">Hi, I’m Yusuf.</h2>
+                        </header>
+                        <div className="about-introduction">
+                            <div className="about-letter">
+                                <p>I’m an <span>Informatics student</span> at <strong>{aboutProfile.university}</strong>,
+                                    currently in my <span>{aboutProfile.semester}</span> of <span>{aboutProfile.major}</span>.</p>
+                                <p>My interests lie in <span>{aboutProfile.interests[0]}</span>, <span>{aboutProfile.interests[1]}</span>,
+                                    and <span>{aboutProfile.interests[2]}</span>.</p>
                             </div>
-                            <div className="about-learning-columns">
-                                <section aria-labelledby="about-interests-heading">
-                                    <h3 id="about-interests-heading">Interests</h3>
-                                    <ul>{aboutProfile.interests.map(item => <li key={item}>{item}</li>)}</ul>
-                                </section>
-                                <section aria-labelledby="about-learning-heading">
-                                    <h3 id="about-learning-heading">Currently Learning</h3>
-                                    <ul>{aboutProfile.currentLearning.map(item => <li key={item}>{item}</li>)}</ul>
-                                </section>
-                            </div>
-                        </section>
-                        <div ref={onScreenRef}>
-                            <OnScreenShelf items={onScreenItems} />
+                            <aside className="about-margin-note" aria-labelledby="about-learning-heading">
+                                <h3 id="about-learning-heading">Currently learning</h3>
+                                <ul>{aboutProfile.currentLearning.map(topic => <li key={topic}>{topic}</li>)}</ul>
+                            </aside>
                         </div>
-                    </div>
+                        <OnScreenShelf items={onScreenItems} />
+                    </article>
                 </div>
             </div>
         </DesktopAppFrame>

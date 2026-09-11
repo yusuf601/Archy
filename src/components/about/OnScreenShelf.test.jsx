@@ -1,6 +1,8 @@
 import { fireEvent, render, screen, within } from '@testing-library/react'
 import { expect, it } from 'vitest'
 import OnScreenShelf from './OnScreenShelf'
+import userEvent from '@testing-library/user-event'
+import { onScreenItems } from '../../data/aboutContent'
 
 const items = [
     { title: 'The Martian', year: 2015, type: 'film', poster: '/martian.jpg', alt: 'Poster for The Martian' },
@@ -22,7 +24,7 @@ it('shows films and series together in reading order', () => {
         Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
     expect(screen.queryByRole('button', { name: 'Films' })).not.toBeInTheDocument()
     expect(screen.queryByRole('button', { name: 'Series' })).not.toBeInTheDocument()
-    expect(screen.getByText('Favorite films & series')).toBeInTheDocument()
+    expect(screen.getByText('Away from the keyboard')).toBeInTheDocument()
 })
 
 it('keeps a title and year readable if a poster fails', () => {
@@ -37,4 +39,25 @@ it('labels both empty groups', () => {
     render(<OnScreenShelf items={[]} />)
     expect(screen.getByText('No films listed.')).toBeInTheDocument()
     expect(screen.getByText('No series listed.')).toBeInTheDocument()
+})
+
+it('toggles story details with click and dismisses with Escape or focus leaving', async () => {
+    const user = userEvent.setup()
+    render(<OnScreenShelf items={onScreenItems} />)
+    const poster = screen.getByRole('button', { name: 'About The Martian' })
+    expect(poster).toHaveAttribute('aria-expanded', 'false')
+    await user.click(poster)
+    expect(poster).toHaveAttribute('aria-expanded', 'true')
+    expect(within(poster).getByText('Sci-fi / Adventure')).toBeInTheDocument()
+    expect(within(poster).getByText(onScreenItems[0].description)).toBeInTheDocument()
+    await user.click(poster)
+    expect(poster).toHaveAttribute('aria-expanded', 'false')
+    await user.keyboard('{Enter}')
+    expect(poster).toHaveAttribute('aria-expanded', 'true')
+    await user.keyboard('{Escape}')
+    expect(poster).toHaveAttribute('aria-expanded', 'false')
+    await user.keyboard(' ')
+    expect(poster).toHaveAttribute('aria-expanded', 'true')
+    await user.tab()
+    expect(poster).toHaveAttribute('aria-expanded', 'false')
 })

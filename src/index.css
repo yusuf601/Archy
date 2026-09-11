@@ -323,10 +323,56 @@ html {
   font-weight: 300;
 }
 
+.mobile-gate {
+  display: grid;
+  min-height: 100dvh;
+  place-items: center;
+  padding: 32px;
+  background: #f8f8f6;
+  color: #202124;
+}
+
+.mobile-gate-content {
+  width: min(100%, 360px);
+}
+
+.mobile-gate-kicker {
+  margin: 0 0 18px;
+  color: #74746f;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.mobile-gate h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(34px, 11vw, 48px);
+  font-weight: 600;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+}
+
+.mobile-gate p:not(.mobile-gate-kicker) {
+  margin: 26px 0 0;
+  color: #494a4d;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.mobile-gate .mobile-gate-note {
+  margin-top: 12px;
+  color: #787875;
+  font-size: 13px;
+}
+
 /* Custom Cursor - desktop/mouse only */
 @media (pointer: fine) {
   * {
-    cursor: crosshair !important;
+    cursor: default !important;
   }
 
   button,

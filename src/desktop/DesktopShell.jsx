@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom'
 import DesktopDock from './DesktopDock'
 import DesktopMenuBar from './DesktopMenuBar'
 import DesktopRoutes from './DesktopRoutes'
+import DesktopWallpaper from './DesktopWallpaper'
 import KittyWindow from './KittyWindow'
 import { DesktopShellProvider, useDesktopShell } from './DesktopShellContext'
 import { resolveDesktopApp } from './desktopApps'
@@ -48,6 +49,7 @@ function DesktopShellInner() {
             data-active-app={activeApp?.id ?? 'desktop'}
             data-kitty-open={kittyOpen ? 'true' : 'false'}
         >
+            <DesktopWallpaper appOpen={Boolean(activeApp) || kittyOpen} />
             <DesktopMenuBar activeApp={activeApp} />
             <div className="desktop-work-area">
                 <div className="desktop-dim-layer" />

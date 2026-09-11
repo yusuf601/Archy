@@ -19,10 +19,13 @@ const setDesktop = (matches) => {
 describe('responsive application root', () => {
     beforeEach(() => setDesktop(false))
 
-    it('keeps the existing portfolio below the desktop breakpoint', () => {
+    it('renders only the desktop-only landing below the desktop breakpoint', () => {
         render(<MemoryRouter><App /></MemoryRouter>)
-        expect(screen.getByTestId('mobile-portfolio')).toBeInTheDocument()
+        expect(screen.getByRole('heading', { name: 'Built for a larger screen.' })).toBeInTheDocument()
+        expect(screen.getByText('This workspace is currently available on desktop only.')).toBeInTheDocument()
+        expect(screen.queryByTestId('mobile-portfolio')).not.toBeInTheDocument()
         expect(screen.queryByTestId('desktop-shell')).not.toBeInTheDocument()
+        expect(document.querySelector('video')).toBeNull()
     })
 
     it('renders only the workstation at desktop width', () => {

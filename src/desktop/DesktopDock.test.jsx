@@ -21,7 +21,7 @@ it('opens the About app from the dock', async () => {
     await user.click(screen.getByRole('button', { name: 'Open About Yusuf' }))
 
     expect(screen.getByTestId('location-pathname')).toHaveTextContent('/about')
-    expect(screen.getByRole('heading', { level: 2, name: 'Muh Yusuf' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'About Yusuf content' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Open About Yusuf' })).toHaveAttribute('aria-current', 'page')
 })
 

@@ -4,7 +4,7 @@ export const DESKTOP_APPS = Object.freeze({
     files: { id: 'files', label: 'Files', route: '/projects', mode: 'near-max' },
     notes: { id: 'notes', label: 'Notes', route: '/blog', mode: 'fullscreen' },
     mail: { id: 'mail', label: 'Mail', route: '/contact', mode: 'medium' },
-    about: { id: 'about', label: 'About Yusuf', route: '/about', mode: 'fullscreen' },
+    about: { id: 'about', label: 'About Yusuf', route: '/about', mode: 'medium' },
 })
 
 export function resolveDesktopApp(pathname) {

@@ -6,235 +6,192 @@
     font-display: swap;
 }
 
+.desktop-shell[data-active-app='about'] .desktop-app-frame[data-mode='medium'] {
+    inset: 16px 0 calc(var(--desktop-dock-space) + 16px);
+    width: min(840px, calc(100% - 64px));
+    height: min(760px, calc(100% - var(--desktop-dock-space) - 32px));
+    border-radius: 12px;
+}
+
 .about-overview-app {
-    --about-surface: #f7f7f9;
-    --about-sidebar: #ededf0;
-    --about-text: #242426;
-    --about-muted: #626268;
-    --about-line: #d6d6dc;
-    --about-accent: #1767c9;
-    --about-selection: #e0e8f4;
-    display: grid;
-    grid-template-columns: 168px minmax(0, 1fr);
     height: 100%;
     min-height: 0;
-    overflow: hidden;
-    color: var(--about-text);
-    background: var(--about-surface);
+    background: #fff;
+    color: #282828;
+    color-scheme: light;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
 }
 
-.about-overview-app .about-section-nav {
+.about-window-bar {
     display: flex;
-    flex-direction: column;
-    gap: 4px;
-    padding: 12px;
-    background: var(--about-sidebar);
-    border-right: 1px solid var(--about-line);
-}
-
-.about-overview-app .about-section-nav a {
-    display: flex;
+    flex: 0 0 40px;
     align-items: center;
-    min-height: 40px;
-    padding: 8px 12px;
-    border-radius: 6px;
-    color: var(--about-text);
-    font-size: 15px;
-    text-decoration: none;
+    justify-content: space-between;
+    padding: 0 10px 0 14px;
+    border-bottom: 1px solid #ededed;
+    background: #fff;
+    color: #242424;
+    color-scheme: light;
 }
-
-.about-overview-app .about-section-nav a:hover,
-.about-overview-app .about-section-nav a[aria-current='location'] {
-    background: var(--about-selection);
+.about-window-dots { display: flex; align-items: center; gap: 5px; }
+.about-window-dots span { width: 11px; height: 11px; border-radius: 50%; background: #ff5f57; }
+.about-window-dots span:nth-child(2) { background: #ffbd2e; }
+.about-window-dots span:nth-child(3) { background: #28c840; }
+.about-window-title {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
 }
-
-.about-overview-app :focus-visible {
-    outline: 2px solid var(--about-accent);
-    outline-offset: 3px;
-}
-
-.about-overview-app .about-reading-pane {
-    min-width: 0;
-    min-height: 0;
-    overflow-y: auto;
-    container-type: inline-size;
-    scroll-behavior: auto;
-}
-
-.about-overview-app .about-document {
-    max-width: 960px;
-    margin-inline: auto;
-    padding: 36px 40px 56px;
-}
-
-.about-overview-app .about-profile-header {
+.about-window-actions { display: flex; align-items: center; gap: 2px; }
+.about-window-actions a,
+.about-window-actions button {
     display: grid;
-    grid-template-columns: 112px minmax(0, 1fr);
-    gap: 24px;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: 0;
+    border-radius: 4px;
+    color: inherit;
+    background: transparent;
+    text-decoration: none;
+    cursor: pointer;
 }
-
-.about-overview-app .about-profile-header img {
-    display: block;
-    object-fit: contain;
+.about-window-actions svg { width: 15px; height: 15px; stroke-width: 1.6; }
+.about-window-actions a:hover,
+.about-window-actions button:hover { background: #f0f0f0; }
+.about-window-actions :focus-visible { outline: 2px solid #2468bb; outline-offset: 1px; }
+.about-window-actions button { margin-left: 8px; }
+.about-overview-app .about-reading-pane {
+    height: 100%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    container-type: inline-size;
+    scrollbar-width: thin;
 }
-
-.about-overview-app .about-profile-header > img {
-    width: 112px;
-    height: 112px;
+.about-overview-app :focus-visible { outline: 2px solid #2468bb; outline-offset: -3px; }
+.about-overview-app .about-dossier { padding: 38px 42px 48px; }
+.about-overview-app .about-byline {
+    margin: 0 0 10px;
+    color: #737373;
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 500;
 }
-
-.about-overview-app .about-profile-header h2 {
-    margin: 0 0 6px;
-    font-size: 36px;
+.about-overview-app .about-identity h2 {
+    margin: 0;
+    font-family: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+    font-size: 44px;
+    line-height: 1.12;
+    letter-spacing: -.045em;
+    font-weight: 400;
+}
+.about-overview-app .about-introduction {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 176px;
+    gap: 44px;
+    margin-top: 22px;
+}
+.about-overview-app .about-letter { max-width: 48ch; }
+.about-overview-app .about-letter p {
+    margin: 0 0 14px;
+    font-size: 16px;
+    line-height: 1.7;
+    color: #555;
+    text-wrap: pretty;
+}
+.about-overview-app .about-letter p:last-child { margin-bottom: 0; }
+.about-overview-app .about-letter strong { color: #292929; font-weight: 500; }
+.about-overview-app .about-margin-note {
+    align-self: start;
+    padding-left: 20px;
+    border-left: 1px solid #e5e5e5;
+}
+.about-overview-app .about-margin-note h3 {
+    font-family: 'About Caveat', cursive;
+    font-size: 22px;
     font-weight: 600;
     line-height: 1.2;
-    letter-spacing: -0.035em;
-}
-
-.about-overview-app .about-profile-header p {
-    margin: 0;
-    color: var(--about-muted);
-}
-
-.about-overview-app .about-education {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    margin-top: 24px;
-}
-
-.about-overview-app .about-education img {
-    flex: 0 0 40px;
-    width: 40px;
-    height: 40px;
-}
-
-.about-overview-app .about-education p:first-child {
-    color: var(--about-text);
-    font-weight: 600;
-}
-
-.about-overview-app .about-learning-columns {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 32px;
-    margin-block: 32px 40px;
-    padding-block: 28px;
-    border-block: 1px solid var(--about-line);
-}
-
-.about-overview-app h3 {
+    color: #666;
     margin: 0 0 12px;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 1.5;
 }
-
-.about-overview-app .about-learning-columns ul {
-    display: grid;
-    gap: 6px;
-    list-style: none;
+.about-overview-app .about-margin-note ul { list-style: none; padding: 0; margin: 0; }
+.about-overview-app .about-margin-note li { font-size: 12px; line-height: 1.6; color: #616161; margin-bottom: 7px; }
+.about-overview-app .on-screen-shelf { margin-top: 30px; padding-top: 24px; border-top: 1px solid #e9e9e9; }
+.about-overview-app .on-screen-shelf-header { margin-bottom: 22px; }
+.about-overview-app .on-screen-shelf-caption {
     margin: 0;
-    padding: 0;
-}
-
-.about-overview-app .on-screen-shelf-header {
-    margin-bottom: 24px;
-}
-
-.about-overview-app .on-screen-shelf h2 {
-    margin: 0;
+    font-family: 'About Caveat', cursive;
     font-size: 24px;
     font-weight: 600;
     line-height: 1.3;
-    letter-spacing: -0.025em;
+    color: #666;
 }
-
-.about-overview-app .on-screen-shelf-caption {
-    margin: 6px 0 0;
-    font-family: 'About Caveat', cursive;
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 1.4;
-    color: var(--about-muted);
-}
-
-.about-overview-app .about-media-group + .about-media-group {
-    margin-top: 40px;
-}
-
-.about-overview-app .about-poster-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 200px));
-    gap: 24px;
-}
-
-.about-overview-app .about-media-item {
-    min-width: 0;
-}
-
+.about-overview-app .about-media-group + .about-media-group { margin-top: 36px; }
+.about-overview-app .about-media-group h3 { margin: 0 0 14px; font-size: 15px; font-weight: 600; letter-spacing: -.015em; }
+.about-overview-app .about-poster-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+.about-overview-app .about-media-item { min-width: 0; }
 .about-overview-app .about-poster-frame {
-    aspect-ratio: 2 / 3;
+    position: relative;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
     display: grid;
     place-items: center;
+    aspect-ratio: 2 / 3;
     overflow: hidden;
-    background: var(--about-sidebar);
+    background: #f5f5f5;
+    border-radius: 3px;
+    box-shadow: 0 2px 5px #0000000c;
 }
-
-.about-overview-app .about-poster-frame img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-.about-overview-app .about-poster-fallback {
+.about-overview-app .about-poster-frame img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.about-overview-app .about-poster-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
     padding: 16px;
-    color: var(--about-muted);
-    font-size: 14px;
-    text-align: center;
+    color: #fff;
+    background: linear-gradient(180deg, rgb(0 0 0 / .66), rgb(0 0 0 / .26) 30%, rgb(0 0 0 / .86));
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 180ms ease, visibility 180ms ease;
+    overflow-y: auto;
 }
-
-.about-overview-app .about-media-item h4 {
-    margin: 12px 0 4px;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 1.5;
-    overflow-wrap: break-word;
+.about-overview-app .about-poster-frame[aria-expanded='true'] .about-poster-overlay { opacity: 1; visibility: visible; }
+.about-overview-app .about-poster-meta { display: flex; justify-content: space-between; align-items: start; gap: 10px; font-size: 10px; line-height: 1.5; }
+.about-overview-app .about-poster-meta > :last-child { text-align: right; }
+.about-overview-app .about-poster-story { display: grid; gap: 10px; }
+.about-overview-app .about-poster-title { font-size: 21px; line-height: 1.12; font-weight: 600; letter-spacing: -.025em; }
+.about-overview-app .about-poster-description { font-size: 12px; line-height: 1.55; }
+.about-overview-app .about-poster-frame:focus-visible { outline: 2px solid #2468bb; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+    .about-overview-app .about-poster-overlay { transition: none; }
 }
-
-.about-overview-app .about-media-item p {
-    margin: 0;
-    color: var(--about-muted);
-    font-size: 14px;
+.about-overview-app .about-poster-fallback { padding: 16px; color: #6f6f6f; font-size: 13px; text-align: center; }
+.about-overview-app .about-media-item h4 { margin: 12px 0 4px; font-size: 13px; font-weight: 500; line-height: 1.4; }
+.about-overview-app .about-media-item p { margin: 0; color: #767676; font-size: 12px; line-height: 1.4; }
+@container (max-width: 620px) {
+    .about-overview-app .about-dossier { padding: 28px; }
+    .about-overview-app .about-introduction { grid-template-columns: 1fr; gap: 22px; }
+    .about-overview-app .about-margin-note { padding-left: 0; border-left: 0; }
+    .about-overview-app .about-margin-note ul { display: flex; flex-wrap: wrap; gap: 4px 16px; }
+    .about-overview-app .about-margin-note li { margin: 0; }
+    .about-overview-app .about-poster-grid { gap: 16px; }
 }
-
-@media (width < 1200px) {
-    .about-overview-app { grid-template-columns: 152px minmax(0, 1fr); }
-}
-
-@container (max-width: 560px) {
-    .about-overview-app .about-learning-columns { grid-template-columns: 1fr; }
+@container (max-width: 420px) {
+    .about-overview-app .about-dossier { padding: 24px; }
+    .about-overview-app .about-identity h2 { font-size: 36px; }
     .about-overview-app .about-poster-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .about-overview-app .about-document { padding-inline: 24px; }
-}
-
-@container (max-width: 360px) {
-    .about-overview-app .about-profile-header { grid-template-columns: 1fr; }
-    .about-overview-app .about-poster-grid { grid-template-columns: minmax(0, 200px); }
-}
-
-@media (prefers-color-scheme: dark) {
-    .about-overview-app {
-        --about-surface: #202023;
-        --about-sidebar: #252528;
-        --about-text: #ededf0;
-        --about-muted: #b7b7bf;
-        --about-line: #47474e;
-        --about-accent: #94bfff;
-        --about-selection: #333e50;
-    }
 }

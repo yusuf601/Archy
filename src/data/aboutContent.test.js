@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import { aboutProfile, aboutVisualAssets, onScreenItems } from './aboutContent'
+import { aboutProfile, onScreenItems } from './aboutContent'
 
 it('provides the approved identity, interests and learning topics', () => {
     expect(aboutProfile.role).toBe('Informatics student')
@@ -11,17 +11,7 @@ it('provides the approved identity, interests and learning topics', () => {
     ])
 })
 
-it('exports local portrait and university logo assets', () => {
-    expect(aboutVisualAssets).toEqual({
-        portrait: '/avatar.png',
-        universityLogo: expect.stringMatching(/halu-oleo-logo\.png$/),
-    })
-
-    expect(aboutVisualAssets.portrait).not.toMatch(/^https?:\/\//)
-    expect(aboutVisualAssets.universityLogo).not.toMatch(/^https?:\/\//)
-})
-
-it('exports the exact production On Screen catalog with local posters', () => {
+it('exports the exact production favorites catalog with local posters', () => {
     expect(onScreenItems.map(({ title, year, type }) => ({ title, year, type }))).toEqual([
         {
             title: 'The Martian',

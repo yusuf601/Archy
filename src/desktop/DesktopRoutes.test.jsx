@@ -18,14 +18,14 @@ describe('resolveDesktopApp', () => {
         expect(resolveDesktopApp('/unknown').id).toBe('not-found')
     })
 
-    it('keeps the About document fullscreen without changing other app modes', () => {
+    it('opens About in a medium window without changing other app modes', () => {
         expect(Object.fromEntries(
             Object.entries(DESKTOP_APPS).map(([id, app]) => [id, app.mode]),
         )).toEqual({
             files: 'near-max',
             notes: 'fullscreen',
             mail: 'medium',
-            about: 'fullscreen',
+            about: 'medium',
         })
     })
 })

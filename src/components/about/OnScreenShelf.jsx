@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useId, useState } from 'react'
 
 const groups = [
     { type: 'film', title: 'Films', id: 'about-films', empty: 'No films listed.' },
@@ -7,25 +7,47 @@ const groups = [
 
 function Poster({ item }) {
     const [failed, setFailed] = useState(false)
+    const [reveal, setReveal] = useState('closed')
+    const detailsId = useId()
+    const open = reveal !== 'closed'
 
     return (
-        <div className="about-poster-frame">
+        <button type="button" className="about-poster-frame"
+            aria-label={`About ${item.title}`} aria-expanded={open} aria-controls={detailsId}
+            onPointerEnter={event => {
+                if (event.pointerType === 'mouse') setReveal(value => value === 'closed' ? 'preview' : value)
+            }}
+            onPointerLeave={() => setReveal(value => value === 'preview' ? 'closed' : value)}
+            onClick={() => setReveal(value => value === 'pinned' ? 'closed' : 'pinned')}
+            onBlur={() => setReveal('closed')}
+            onKeyDown={event => {
+                if (event.key === 'Escape') { event.preventDefault(); setReveal('closed') }
+            }}>
             {failed
                 ? <span className="about-poster-fallback">Poster unavailable</span>
                 : <img src={item.poster} alt={item.alt} width="600" height="900"
-                    loading="lazy" decoding="async" onError={() => setFailed(true)} />}
-        </div>
+                    loading="eager" decoding="async" onError={() => setFailed(true)} />}
+            <span id={detailsId} className="about-poster-overlay" aria-hidden={!open}>
+                {open && <>
+                <span className="about-poster-meta">
+                    <span>{item.year}</span>
+                    <span>{item.genre}</span>
+                </span>
+                <span className="about-poster-story">
+                    <span className="about-poster-title">{item.title}</span>
+                    <span className="about-poster-description">{item.description}</span>
+                </span>
+                </>}
+            </span>
+        </button>
     )
 }
 
 export default function OnScreenShelf({ items }) {
     return (
-        <section className="on-screen-shelf" aria-labelledby="on-screen-heading">
+        <section className="on-screen-shelf" aria-label="Favorite films and series">
             <header className="on-screen-shelf-header">
-                <div>
-                    <h2 id="on-screen-heading" tabIndex={-1}>On Screen</h2>
-                    <p className="on-screen-shelf-caption">Favorite films &amp; series</p>
-                </div>
+                <p className="on-screen-shelf-caption">Away from the keyboard</p>
             </header>
 
             <div className="on-screen-shelf-items">
